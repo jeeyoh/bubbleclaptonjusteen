@@ -3,6 +3,7 @@ using System.Collections;
 
 public enum GameState {
 	main = 0,
+	startGame,
 	playing,
 	paused,
 	gameOver,
@@ -65,6 +66,9 @@ public class GameController : MonoBehaviour {
 		case GameState.main:
 			LoadMainScene();
 			break;
+		case GameState.startGame:
+			LoadGameScene();
+			break;
 		case GameState.playing:
 			Resume();
 			break;
@@ -82,6 +86,10 @@ public class GameController : MonoBehaviour {
 
 	private void LoadMainScene() {
 		Application.LoadLevel("MainScene");
+	}
+
+	private void LoadGameScene() {
+
 	}
 
 	private void Pause() {
