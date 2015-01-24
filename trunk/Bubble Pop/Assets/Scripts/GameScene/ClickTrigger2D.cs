@@ -2,9 +2,6 @@
 using System.Collections;
 
 public class ClickTrigger2D : MonoBehaviour {
-	
-//	public GameObject hitMarker;
-//	public bool isPlaying;
 
 	private RaycastHit2D myHit;
 //	private SoundHandler soundHandler;
@@ -19,47 +16,18 @@ public class ClickTrigger2D : MonoBehaviour {
 	void Update () {
 		myHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-		float x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-		float y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+//		float x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+//		float y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 
 		// check for other objects hit
 		if(myHit.collider != null && Input.GetMouseButtonDown(0)) {
 			Debug.Log(myHit.collider.name);
 			if(myHit.collider.tag == "Bubble") {
-				Debug.Log("Bubble HIT!!! " + myHit.collider.name);
-//				Destroy(myHit.collider.gameObject);
 				myHit.collider.Recycle();
+			} else if(myHit.collider.tag == "BadBubble") {
+				Debug.Log("Game Over!!!");
+//				myHit.collider.Recycle();
 			}
-//
-//			if(myHit.collider.name == "Pause")
-//			{
-//				// play button clicked sound
-//				soundHandler.playButtonClick();
-//
-//				isPlaying = false;
-//				myHit.collider.SendMessage("PauseGame");
-//			}
-//
-//			if(!isPlaying && pause.isPaused)
-//			{
-//				if(myHit.collider.name == "BTN_Menu")
-//				{
-//					soundHandler.playButtonClick();
-//					Application.LoadLevel(0);
-//				}
-//
-//				if(myHit.collider.name == "BTN_Games")
-//				{
-//					soundHandler.playButtonClick();
-//				}
-//
-//				if(myHit.collider.name == "BTN_Ready")
-//				{
-//					soundHandler.playButtonClick();
-//					isPlaying = true;
-//					GameObject.Find("Pause").SendMessage("ResumeGame");
-//				}
-//			}
 		}
 	}
 }
