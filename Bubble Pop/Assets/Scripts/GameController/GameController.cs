@@ -10,14 +10,44 @@ public enum GameState {
 	playAgain,
 }
 
+public enum GameMode {
+	timeMode50,
+	timeMode100,
+	timeMode150,
+	endlessMode5,
+	endlessMode25,
+	endlessMode50,
+}
+
 public class GameController : MonoBehaviour {
 
 	public static GameController instance { get; private set; }
 
 	public GameState gameState = GameState.main;
+	public GameMode gameMode;
+	public bool allowAds;
 	public int highScore;
 	public int playerScore;
 	public bool isPaused = false;
+
+	public bool AllowAds {
+		get { 
+			if(PlayerPrefs.HasKey("AllowAds")) {
+				allowAds = (PlayerPrefs.GetInt("AllowAds") == 1 ? true : false);
+				return allowAds;
+			} else {
+				allowAds = true; // default value
+				PlayerPrefs.SetInt("AllowAds", 1);
+				PlayerPrefs.Save();
+				return false;
+			}
+		}
+		set {
+			allowAds = value;
+			PlayerPrefs.SetInt("AllowAds", value ? 1 : 0);
+			PlayerPrefs.Save();
+		}
+	}
 
 	public int HighScore {
 		get { 
