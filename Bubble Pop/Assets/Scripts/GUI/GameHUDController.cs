@@ -6,6 +6,8 @@ public class GameHUDController : MonoBehaviour {
 
 	public static GameHUDController instance;
 
+	[SerializeField] private GameObject m_startBtn;
+
 	[SerializeField] private Text m_stopWatch;
 	private float m_timeStopWatch;
 	private bool m_isTimeRunning;
@@ -15,10 +17,14 @@ public class GameHUDController : MonoBehaviour {
 	}
 
 	void Start() {
+		m_startBtn.SetActive(true);
 		ResetTime();
 	}
 
 	public void StartGame() {
+		m_startBtn.SetActive(false);
+		GameController.instance.ChangeState(GameState.playing);
+		LevelController.instance.StartGame();
 		StartTime();
 	}
 
@@ -28,6 +34,10 @@ public class GameHUDController : MonoBehaviour {
 
 	public void StopTime() {
 		m_isTimeRunning = false;
+	}
+
+	public float GetTime() {
+		return m_timeStopWatch;
 	}
 
 	public void ResetTime() {

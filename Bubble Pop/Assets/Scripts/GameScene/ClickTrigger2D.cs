@@ -7,13 +7,18 @@ public class ClickTrigger2D : MonoBehaviour {
 //	private SoundHandler soundHandler;
 //	private Pause pause;
 
+	public bool isGameOver;
+
 	void Start() {
+		isGameOver = false;
 //		isPlaying = false;
 //		soundHandler = this.GetComponent<SoundHandler>();
 //		pause = GameObject.Find("Pause").GetComponent<Pause>();
 	}
 
 	void Update () {
+		if(isGameOver) return;
+
 		myHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
 //		float x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
@@ -21,12 +26,12 @@ public class ClickTrigger2D : MonoBehaviour {
 
 		// check for other objects hit
 		if(myHit.collider != null && Input.GetMouseButtonDown(0)) {
-			Debug.Log(myHit.collider.name);
 			if(myHit.collider.tag == "Bubble") {
 				myHit.collider.Recycle();
 			} else if(myHit.collider.tag == "BadBubble") {
-				Debug.Log("Game Over!!!");
-//				myHit.collider.Recycle();
+				isGameOver = true;
+				BubbleCreator.instance.isGameOver = true;
+				GameController.instance.ChangeState(GameState.gameOver);
 			}
 		}
 	}
