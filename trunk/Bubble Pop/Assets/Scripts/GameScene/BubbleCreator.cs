@@ -15,6 +15,13 @@ public class BubbleArea {
 	public float bottom;
 }
 
+[System.Serializable]
+public enum BubbleType {
+	randomBubble,
+	goodBubble,
+	badBubble,
+}
+
 public class BubbleCreator : MonoBehaviour {
 
 	public static BubbleCreator instance;
@@ -31,8 +38,10 @@ public class BubbleCreator : MonoBehaviour {
 	public BubbleArea bubbleArea;
 	public int goodBubblesCount;
 	public int badBubblesCount;
+	public bool isGameOver;
 
 	private float m_timeOfNextBubble = 0f;
+	private bool m_checkGoodBubblesCount;
 
 	void Awake() {
 		instance = this;
@@ -44,38 +53,52 @@ public class BubbleCreator : MonoBehaviour {
 
 	private void Init() {
 		m_timeOfNextBubble = Time.timeSinceLevelLoad;
+		m_checkGoodBubblesCount = false;
 	}
 
 	void Update() {
+		if(isGameOver) return;
+
 		if(generateBubbles && m_timeOfNextBubble < Time.timeSinceLevelLoad) {
 
 			m_timeOfNextBubble += m_bubbleTimeInterval;
 
-			bool _isBadBubble = (m_badBubbleChance >= Random.Range(0, 100)) ? true : false;
-			CreateBubble(_isBadBubble);
+			CreateBubble(BubbleType.randomBubble);
 		}
 
 		goodBubblesCount = m_goodBubblesHolder.childCount;
 		badBubblesCount = m_badBubblesHolder.childCount;
-	}
 
-//	public void GenerateBubbles() {
-//		generateBubbles = true;
-//		m_timeOfNextBubble = Time.timeSinceLevelLoad;
-//	}
-
-	public void CreateStartingBubbles(int p_count) {
-		for(int i = 0; i < p_count; i++) {
-			CreateBubble(false);
+		if(m_checkGoodBubblesCount) {
+			if(goodBubblesCount == 0) {
+				isGameOver = true;
+				GameController.instance.timeModeSuccess = true;
+				GameController.instance.ChangeState(GameState.gameOver);
+			}
 		}
 	}
 
-	private void CreateBubble(bool p_isBadBubble) {
+	public void CreateStartingBubbles(int p_count, BubbleType p_bubbleType) {
+		for(int i = 0; i < p_count; i++) {
+			CreateBubble(p_bubbleType);
+		}
+	}
 
-		int _randomBuble = Random.Range(0, m_stageBubbles.Length);
-		GameObject _bubbleType = m_stageBubbles[_randomBuble].bubble;
+	public void CheckGoodBubblesCount() {
+		m_checkGoodBubblesCount = true;
+	}
 
-		if(p_isBadBubble) {
+	private void CreateBubble(BubbleType p_bubbleType) {
+
+		int _randomGoodBuble = Random.Range(0, m_stageBubbles.Length);
+		GameObject _bubbleType = m_stageBubbles[_randomGoodBuble].bubble;
+
+		if(p_bubbleType == BubbleType.randomBubble) {
+			bool _isBadBubble = (m_badBubbleChance >= Random.Range(0, 100)) ? true : false;
+			if(_isBadBubble) {
+				_bubbleType = m_badBubble;
+			}
+		} else if(p_bubbleType == BubbleType.badBubble) {
 			_bubbleType = m_badBubble;
 		}
 
@@ -87,7 +110,7 @@ public class BubbleCreator : MonoBehaviour {
 		Vector3 _rot = new Vector3(0f, 0f, _zRot);
 		
 		GameObject _bubble = _bubbleType.Spawn();
-		if(p_isBadBubble) _bubble.transform.parent = m_badBubblesHolder;
+		if(_bubbleType == m_badBubble) _bubble.transform.parent = m_badBubblesHolder;
 		else _bubble.transform.parent = m_goodBubblesHolder;
 		_bubble.transform.localPosition = _pos;
 		_bubble.transform.localEulerAngles = _rot;

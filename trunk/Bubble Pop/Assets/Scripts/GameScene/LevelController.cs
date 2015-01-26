@@ -9,28 +9,35 @@ public class LevelController : MonoBehaviour {
 		instance = this;
 	}
 
-	void Start() {
-		StartGame();
-	}
-
 	public void StartGame() {
 		GameMode _gameMode = GameController.instance.gameMode;
 		switch(_gameMode) {
 		case GameMode.timeMode50:
-			BubbleCreator.instance.CreateStartingBubbles(50);
+			BubbleCreator.instance.CreateStartingBubbles(50, BubbleType.goodBubble);
+			BubbleCreator.instance.CreateStartingBubbles(5, BubbleType.badBubble);
 			BubbleCreator.instance.generateBubbles = false;
+			BubbleCreator.instance.CheckGoodBubblesCount();
 			break;
 		case GameMode.timeMode100:
-			BubbleCreator.instance.CreateStartingBubbles(100);
+			BubbleCreator.instance.CreateStartingBubbles(100, BubbleType.goodBubble);
+			BubbleCreator.instance.CreateStartingBubbles(10, BubbleType.badBubble);
+			BubbleCreator.instance.generateBubbles = false;
+			BubbleCreator.instance.CheckGoodBubblesCount();
 			break;
 		case GameMode.timeMode150:
-			BubbleCreator.instance.CreateStartingBubbles(150);
+			BubbleCreator.instance.CreateStartingBubbles(150, BubbleType.goodBubble);
+			BubbleCreator.instance.CreateStartingBubbles(15, BubbleType.badBubble);
+			BubbleCreator.instance.generateBubbles = false;
+			BubbleCreator.instance.CheckGoodBubblesCount();
 			break;
 		case GameMode.endlessMode5:
+			BubbleCreator.instance.generateBubbles = true;
 			break;
 		case GameMode.endlessMode25:
+			BubbleCreator.instance.generateBubbles = true;
 			break;
 		case GameMode.endlessMode50:
+			BubbleCreator.instance.generateBubbles = true;
 			break;
 		}
 	}

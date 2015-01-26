@@ -25,25 +25,24 @@ public class MainMenuController : MonoBehaviour {
 		m_splashScreen.SetActive(false);
 		m_mainMenu.SetActive(true);
 	}
-
-	public void LoadGameScene() {
-		Debug.Log("Load Game Scene");
-	}
 	
 	public void OpenTimeMode() {
 		Debug.Log("OpenTimeMode");
 	}
 
 	public void StartTimeMode(int p_mode) {
-		Debug.Log("StartTimeMode " + p_mode);
 		switch(p_mode) {
 		case Constants.TIME_MODE_50:
+			GameController.instance.gameMode = GameMode.timeMode50;
 			break;
 		case Constants.TIME_MODE_100:
+			GameController.instance.gameMode = GameMode.timeMode100;
 			break;
 		case Constants.TIME_MODE_150:
+			GameController.instance.gameMode = GameMode.timeMode150;
 			break;
 		}
+		GameController.instance.ChangeState(GameState.startGame);
 	}
 
 	public void OpenEndlessMode() {
@@ -51,15 +50,18 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartEndlessMode(int p_mode) {
-		Debug.Log("StartEndlessMode " + p_mode);
 		switch(p_mode) {
 		case Constants.ENDLESS_MODE_5:
+			GameController.instance.gameMode = GameMode.endlessMode5;
 			break;
 		case Constants.ENDLESS_MODE_25:
+			GameController.instance.gameMode = GameMode.endlessMode25;
 			break;
 		case Constants.ENDLESS_MODE_50:
+			GameController.instance.gameMode = GameMode.endlessMode50;
 			break;
 		}
+		GameController.instance.ChangeState(GameState.startGame);
 	}
 
 	public void OpenPowerUpMenu() {

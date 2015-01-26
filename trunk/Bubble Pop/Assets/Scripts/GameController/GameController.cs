@@ -26,8 +26,10 @@ public class GameController : MonoBehaviour {
 	public GameState gameState = GameState.main;
 	public GameMode gameMode;
 	public bool allowAds;
-	public int highScore;
-	public int playerScore;
+	public bool timeModeSuccess;
+	public float playerTimeScore;
+	public float bestTimeModeScore;
+	public float bestEndlessModeScore;
 	public bool isPaused = false;
 
 	public bool AllowAds {
@@ -49,21 +51,21 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public int HighScore {
+	public float TimeModeBestScore {
 		get { 
-			if(PlayerPrefs.HasKey("HighScore")) {
-				highScore = PlayerPrefs.GetInt("HighScore");
-				return  highScore;
+			if(PlayerPrefs.HasKey("BestTimeModeScore")) {
+				bestTimeModeScore = PlayerPrefs.GetFloat("BestTimeModeScore");
+				return  bestTimeModeScore;
 			} else {
-				highScore = 0;
-				PlayerPrefs.SetInt("HighScore", 0);
+				bestTimeModeScore = 0;
+				PlayerPrefs.SetFloat("BestTimeModeScore", 0);
 				PlayerPrefs.Save();
 				return 0;
 			}
 		}
 		set {
-			highScore = value;
-			PlayerPrefs.SetInt("HighScore", value);
+			bestTimeModeScore = value;
+			PlayerPrefs.SetFloat("BestTimeModeScore", value);
 			PlayerPrefs.Save();
 		}
 	}
@@ -80,10 +82,11 @@ public class GameController : MonoBehaviour {
 
 	void Start() {
 		Init ();
+//		PlayerPrefs.DeleteAll();
 	}
 
 	private void Init() {
-		highScore = HighScore;
+		bestTimeModeScore = TimeModeBestScore;
 	}
 
 	public void ChangeState(GameState p_newState) {
@@ -119,7 +122,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void LoadGameScene() {
-
+		timeModeSuccess = false;
+		Application.LoadLevel("GameScene");
 	}
 
 	private void Pause() {
@@ -133,9 +137,14 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void GameOver() {
-		Debug.Log("GAME OVER!!!");
-		HighScore = (playerScore > HighScore) ? playerScore : HighScore;
-		// TODO GameHUD - show Score and HighScore
+		GameHUDController.instance.StopTime();
+		if(timeModeSuccess) {
+			playerTimeScore = GameHUDController.instance.GetTime();
+			TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+		} else {
+			playerTimeScore = 0.00f;
+		}
+		Application.LoadLevel("GameOverScene");
 	}
 
 	public IEnumerator LoadLevel() {
