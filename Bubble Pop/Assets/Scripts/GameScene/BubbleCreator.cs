@@ -22,6 +22,18 @@ public enum BubbleType {
 	badBubble,
 }
 
+[System.Serializable]
+public class TimeModeSettings {
+	public int goodBubblesCount;
+	public int badBubblesCount;
+}
+
+[System.Serializable]
+public class EndlessModeSettings {
+	public float addtionalSpeedPerIncrease;
+	public float intervalBetweenSpeedIncrease;
+}
+
 public class BubbleCreator : MonoBehaviour {
 
 	public static BubbleCreator instance;
@@ -38,10 +50,13 @@ public class BubbleCreator : MonoBehaviour {
 	public BubbleArea bubbleArea;
 	public int goodBubblesCount;
 	public int badBubblesCount;
+	public TimeModeSettings timeModeSettings;
+	public EndlessModeSettings endlessModeSettings;
 	public bool isGameOver;
 
 	private float m_timeOfNextBubble = 0f;
 	private bool m_checkGoodBubblesCount;
+	private GameModeType gameModeType;
 
 	void Awake() {
 		instance = this;
@@ -49,26 +64,29 @@ public class BubbleCreator : MonoBehaviour {
 
 	void Start() {
 		Init ();
+		timeModeSettings.goodBubblesCount = 3;
 	}
 
 	private void Init() {
 		m_timeOfNextBubble = Time.timeSinceLevelLoad;
 		m_checkGoodBubblesCount = false;
+		gameModeType = GameController.instance.gameModeType;
 	}
 
 	void Update() {
 		if(isGameOver) return;
 
-		if(generateBubbles && m_timeOfNextBubble < Time.timeSinceLevelLoad) {
-
-			m_timeOfNextBubble += m_bubbleTimeInterval;
-
-			CreateBubble(BubbleType.randomBubble);
-		}
-
 		goodBubblesCount = m_goodBubblesHolder.childCount;
 		badBubblesCount = m_badBubblesHolder.childCount;
 
+		if(gameModeType == GameModeType.timeMode) {
+			TimeModeUpdate();
+		} else if(gameModeType == GameModeType.endlessMode) {
+			EndlessModeUpdate();
+		}
+	}
+
+	private void TimeModeUpdate() {
 		if(m_checkGoodBubblesCount) {
 			if(goodBubblesCount == 0) {
 				isGameOver = true;
@@ -78,10 +96,36 @@ public class BubbleCreator : MonoBehaviour {
 		}
 	}
 
+	private void EndlessModeUpdate() {
+		if(generateBubbles && m_timeOfNextBubble < Time.timeSinceLevelLoad) {
+			
+			m_timeOfNextBubble += m_bubbleTimeInterval;
+			
+			CreateBubble(BubbleType.randomBubble);
+		}
+	}
+
+	public void StartTimeMode(int p_goodBubblesCount, int p_badBubblesCount) {
+		CreateStartingBubbles(p_goodBubblesCount, BubbleType.goodBubble);
+		CreateStartingBubbles(p_badBubblesCount, BubbleType.badBubble);
+		generateBubbles = false;
+	}
+
+	public void StartEndlessMode() {
+
+	}
+
 	public void CreateStartingBubbles(int p_count, BubbleType p_bubbleType) {
+		StartCoroutine(CreateBubbles(p_count, p_bubbleType));
+	}
+
+	private IEnumerator CreateBubbles(int p_count, BubbleType p_bubbleType) {
+		yield return null;
 		for(int i = 0; i < p_count; i++) {
 			CreateBubble(p_bubbleType);
+			yield return new WaitForSeconds(0.05f);
 		}
+		m_checkGoodBubblesCount = true;
 	}
 
 	public void CheckGoodBubblesCount() {

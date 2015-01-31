@@ -27,7 +27,8 @@ public class BubbleMovement : MonoBehaviour {
 		BubbleArea _bubbleArea = BubbleCreator.instance.bubbleArea;
 		float _x = Random.Range(_bubbleArea.left, _bubbleArea.right);
 		float _y = Random.Range(_bubbleArea.top, _bubbleArea.bottom);
-		float _z = Random.Range(0f, 1f);
+//		float _z = Random.Range(0f, 1f);
+		float _z = this.transform.position.z;
 		targetLocalPosition = new Vector3(_x, _y, _z);
 	}
 
