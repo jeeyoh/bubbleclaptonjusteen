@@ -10,6 +10,11 @@ public enum GameState {
 	playAgain,
 }
 
+public enum GameModeType {
+	timeMode,
+	endlessMode,
+}
+
 public enum GameMode {
 	timeMode50,
 	timeMode100,
@@ -24,6 +29,7 @@ public class GameController : MonoBehaviour {
 	public static GameController instance { get; private set; }
 
 	public GameState gameState = GameState.main;
+	public GameModeType gameModeType;
 	public GameMode gameMode;
 	public bool allowAds;
 	public bool timeModeSuccess;
@@ -80,9 +86,19 @@ public class GameController : MonoBehaviour {
 		DontDestroyOnLoad(this.gameObject);
 	}
 
+	public bool deletePlayerPrefs;
 	void Start() {
 		Init ();
-//		PlayerPrefs.DeleteAll();
+		if(deletePlayerPrefs) PlayerPrefs.DeleteAll();
+	}
+
+	public bool playerWins;
+	void Update() {
+		if(playerWins) {
+			playerWins = false;
+			timeModeSuccess = true;
+			ChangeState(GameState.gameOver);
+		}
 	}
 
 	private void Init() {
@@ -140,9 +156,13 @@ public class GameController : MonoBehaviour {
 		GameHUDController.instance.StopTime();
 		if(timeModeSuccess) {
 			playerTimeScore = GameHUDController.instance.GetTime();
-			TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+			if(TimeModeBestScore == 0) {
+				TimeModeBestScore = playerTimeScore;
+			} else {
+				TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+			}
 		} else {
-			playerTimeScore = 0.00f;
+			playerTimeScore = 0;
 		}
 		Application.LoadLevel("GameOverScene");
 	}

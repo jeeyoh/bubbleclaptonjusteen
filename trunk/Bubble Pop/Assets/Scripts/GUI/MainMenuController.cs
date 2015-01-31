@@ -31,6 +31,7 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartTimeMode(int p_mode) {
+		GameController.instance.gameModeType = GameModeType.timeMode;
 		switch(p_mode) {
 		case Constants.TIME_MODE_50:
 			GameController.instance.gameMode = GameMode.timeMode50;
@@ -50,6 +51,7 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartEndlessMode(int p_mode) {
+		GameController.instance.gameModeType = GameModeType.endlessMode;
 		switch(p_mode) {
 		case Constants.ENDLESS_MODE_5:
 			GameController.instance.gameMode = GameMode.endlessMode5;
