@@ -22,13 +22,13 @@ public class LevelController : MonoBehaviour {
 			BubbleCreator.instance.StartTimeMode(150, 15);
 			break;
 		case GameMode.endlessMode5:
-			BubbleCreator.instance.generateBubbles = true;
+			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 5);
 			break;
 		case GameMode.endlessMode25:
-			BubbleCreator.instance.generateBubbles = true;
+			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 25);
 			break;
 		case GameMode.endlessMode50:
-			BubbleCreator.instance.generateBubbles = true;
+			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 50);
 			break;
 		}
 	}

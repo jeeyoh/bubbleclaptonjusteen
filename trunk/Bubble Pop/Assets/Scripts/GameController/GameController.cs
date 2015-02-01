@@ -92,14 +92,14 @@ public class GameController : MonoBehaviour {
 		if(deletePlayerPrefs) PlayerPrefs.DeleteAll();
 	}
 
-	public bool playerWins;
-	void Update() {
-		if(playerWins) {
-			playerWins = false;
-			timeModeSuccess = true;
-			ChangeState(GameState.gameOver);
-		}
-	}
+//	public bool playerWins;
+//	void Update() {
+//		if(playerWins) {
+//			playerWins = false;
+//			timeModeSuccess = true;
+//			ChangeState(GameState.gameOver);
+//		}
+//	}
 
 	private void Init() {
 		bestTimeModeScore = TimeModeBestScore;
@@ -172,6 +172,15 @@ public class GameController : MonoBehaviour {
 		yield return null;
 		PlayAgain();
 	}
+
+	public void TimeModeSuccess() {
+		timeModeSuccess = true;
+		ChangeState(GameState.gameOver);
+	}
+
+//	public void EndlessModeDone() {
+//		ChangeState(GameState.gameOver);
+//	}
 
 	private void PlayAgain() {
 		Debug.Log("PLAY AGAIN");

@@ -30,8 +30,10 @@ public class TimeModeSettings {
 
 [System.Serializable]
 public class EndlessModeSettings {
+	public float bubbleTimeInterval;
 	public float addtionalSpeedPerIncrease;
 	public float intervalBetweenSpeedIncrease;
+	public int maxGoodBubblesAllowed;
 }
 
 public class BubbleCreator : MonoBehaviour {
@@ -40,7 +42,7 @@ public class BubbleCreator : MonoBehaviour {
 
 	[SerializeField] private StageBubble[] m_stageBubbles;
 	[SerializeField] private GameObject m_badBubble;
-	[SerializeField] private float m_bubbleTimeInterval;
+//	[SerializeField] private float m_bubbleTimeInterval;
 	[SerializeField] private int m_badBubbleChance; // int 0 - 100
 	[SerializeField] private Transform m_goodBubblesHolder;
 	[SerializeField] private Transform m_badBubblesHolder;
@@ -57,6 +59,9 @@ public class BubbleCreator : MonoBehaviour {
 	private float m_timeOfNextBubble = 0f;
 	private bool m_checkGoodBubblesCount;
 	private GameModeType gameModeType;
+	private float m_origBubbleTimeInterval;
+	private float m_timeUntilNextInterval;
+	private float m_timeUntilNextSpeedIncrease;
 
 	void Awake() {
 		instance = this;
@@ -64,11 +69,10 @@ public class BubbleCreator : MonoBehaviour {
 
 	void Start() {
 		Init ();
-		timeModeSettings.goodBubblesCount = 3;
+//		timeModeSettings.goodBubblesCount = 3;
 	}
 
 	private void Init() {
-		m_timeOfNextBubble = Time.timeSinceLevelLoad;
 		m_checkGoodBubblesCount = false;
 		gameModeType = GameController.instance.gameModeType;
 	}
@@ -90,29 +94,52 @@ public class BubbleCreator : MonoBehaviour {
 		if(m_checkGoodBubblesCount) {
 			if(goodBubblesCount == 0) {
 				isGameOver = true;
-				GameController.instance.timeModeSuccess = true;
-				GameController.instance.ChangeState(GameState.gameOver);
+				GameController.instance.TimeModeSuccess();
 			}
 		}
 	}
 
 	private void EndlessModeUpdate() {
-		if(generateBubbles && m_timeOfNextBubble < Time.timeSinceLevelLoad) {
-			
-			m_timeOfNextBubble += m_bubbleTimeInterval;
-			
+		if((Time.time >= m_timeOfNextBubble) && generateBubbles) {			
+			m_timeOfNextBubble += endlessModeSettings.bubbleTimeInterval;			
 			CreateBubble(BubbleType.randomBubble);
+
+			if(Time.time >= m_timeUntilNextSpeedIncrease) {
+				FasterBubbleGeneration();
+			}
+		}
+		if(goodBubblesCount > endlessModeSettings.maxGoodBubblesAllowed) {
+			isGameOver = true;
+			GameController.instance.ChangeState(GameState.gameOver);
 		}
 	}
 
+	private void FasterBubbleGeneration() {
+		if(endlessModeSettings.bubbleTimeInterval < 0.1f) return; // limit generation speed to 0.1f as lowest
+
+		m_timeUntilNextSpeedIncrease += endlessModeSettings.intervalBetweenSpeedIncrease;
+		endlessModeSettings.bubbleTimeInterval -= endlessModeSettings.addtionalSpeedPerIncrease;
+	}
+
 	public void StartTimeMode(int p_goodBubblesCount, int p_badBubblesCount) {
+		timeModeSettings.goodBubblesCount = p_goodBubblesCount;
+		timeModeSettings.badBubblesCount = p_badBubblesCount;
 		CreateStartingBubbles(p_goodBubblesCount, BubbleType.goodBubble);
 		CreateStartingBubbles(p_badBubblesCount, BubbleType.badBubble);
 		generateBubbles = false;
 	}
 
-	public void StartEndlessMode() {
+	public void StartEndlessMode(float p_bubbleTimeInterval, float p_addtionalSpeedPerIncrease, float p_intervalBetweenSpeedIncrease, int p_maxGoodBubblesAllowed) {
+		endlessModeSettings.bubbleTimeInterval = p_bubbleTimeInterval;
+		endlessModeSettings.addtionalSpeedPerIncrease = p_addtionalSpeedPerIncrease;
+		endlessModeSettings.intervalBetweenSpeedIncrease = p_intervalBetweenSpeedIncrease;
+		endlessModeSettings.maxGoodBubblesAllowed = p_maxGoodBubblesAllowed;
 
+		m_origBubbleTimeInterval = endlessModeSettings.bubbleTimeInterval;
+		m_timeOfNextBubble = endlessModeSettings.bubbleTimeInterval + Time.time;
+		m_timeUntilNextSpeedIncrease = endlessModeSettings.intervalBetweenSpeedIncrease + Time.time;
+		generateBubbles = true;
+		m_checkGoodBubblesCount = true;
 	}
 
 	public void CreateStartingBubbles(int p_count, BubbleType p_bubbleType) {
@@ -150,7 +177,7 @@ public class BubbleCreator : MonoBehaviour {
 		float _y = Random.Range(bubbleArea.top, bubbleArea.bottom);
 		float _z = Random.Range(0f, 1f);
 		Vector3 _pos = new Vector3(_x, _y, _z);
-		float _zRot = _z * 360;
+		float _zRot = Random.Range(0f, 1f) * 360;
 		Vector3 _rot = new Vector3(0f, 0f, _zRot);
 		
 		GameObject _bubble = _bubbleType.Spawn();
