@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MainMenuController : MonoBehaviour {
@@ -7,6 +8,10 @@ public class MainMenuController : MonoBehaviour {
 
 	[SerializeField] private GameObject m_splashScreen;
 	[SerializeField] private GameObject m_mainMenu;
+	
+	[SerializeField] private GameObject[] TimeModeButtons = default ( GameObject[] );
+	[SerializeField] private GameObject[] EndlessModeButtons = default ( GameObject[] );
+
 
 	void Awake () {
 		instance = this;
@@ -27,7 +32,17 @@ public class MainMenuController : MonoBehaviour {
 	}
 	
 	public void OpenTimeMode() {
-		Debug.Log("OpenTimeMode");
+
+		for (int i=0; i<EndlessModeButtons.Length; i++)
+		{
+			if ( EndlessModeButtons[i].GetComponent<Image>().enabled )
+				EndlessModeButtons[i].GetComponent<Animator>().Play("Bubble_Pop");
+		}
+
+		for (int i=0; i<TimeModeButtons.Length; i++)
+		{
+			TimeModeButtons[i].GetComponent<Animator>().Play("Bubble_Show");
+		}
 	}
 
 	public void StartTimeMode(int p_mode) {
@@ -43,11 +58,22 @@ public class MainMenuController : MonoBehaviour {
 			GameController.instance.gameMode = GameMode.timeMode150;
 			break;
 		}
+
 		GameController.instance.ChangeState(GameState.startGame);
 	}
 
 	public void OpenEndlessMode() {
-		Debug.Log("OpenEndlessMode");
+
+		for (int i=0; i<TimeModeButtons.Length; i++)
+		{
+			if ( TimeModeButtons[i].GetComponent<Image>().enabled )
+				TimeModeButtons[i].GetComponent<Animator>().Play("Bubble_Pop");
+		}
+
+		for (int i=0; i<EndlessModeButtons.Length; i++)
+		{
+			EndlessModeButtons[i].GetComponent<Animator>().Play("Bubble_Show");
+		}
 	}
 
 	public void StartEndlessMode(int p_mode) {
@@ -72,5 +98,34 @@ public class MainMenuController : MonoBehaviour {
 
 	public void OpenMoreMenu() {
 		Debug.Log("OpenMoreMenu");
+	}
+
+	IEnumerator StartGame ()
+	{
+//		for (int i=0; i<TimeModeButtons.Length; i++)
+//		{
+//			if ( TimeModeButtons[i].GetComponent<Button>().enabled )
+//				TimeModeButtons[i].GetComponent<Button>().onClick
+//		}
+
+		switch ( GameController.instance.gameMode )
+		{
+		case GameMode.timeMode50:
+			break;
+		case GameMode.timeMode100:
+			break;
+		case GameMode.timeMode150:
+			break;
+		case GameMode.endlessMode5:
+			break;
+		case GameMode.endlessMode25:
+			break;
+		case GameMode.endlessMode50:
+			break;
+		}
+
+		yield return null;
+
+		GameController.instance.ChangeState(GameState.startGame);
 	}
 }
