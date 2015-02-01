@@ -27,7 +27,7 @@ public class ClickTrigger2D : MonoBehaviour {
 		// check for other objects hit
 		if(myHit.collider != null && Input.GetMouseButtonDown(0)) {
 			if(myHit.collider.tag == "Bubble") {
-				myHit.collider.Recycle();
+				myHit.collider.GetComponent<Bubble>().Pop();
 			} else if(myHit.collider.tag == "BadBubble") {
 				isGameOver = true;
 				BubbleCreator.instance.isGameOver = true;
