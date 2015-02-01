@@ -7,7 +7,7 @@ public class GameOverMenuController : MonoBehaviour {
 	public static GameOverMenuController instance;
 
 	[SerializeField] private GameObject m_failedPanel;
-	[SerializeField] private GameObject m_timeModeScoreImg;
+	[SerializeField] private GameObject m_currentTimeScoreImg;
 	[SerializeField] private GameObject m_timeModePanel;
 	[SerializeField] private GameObject m_timeMode50Img;
 	[SerializeField] private GameObject m_timeMode100Img;
@@ -73,17 +73,25 @@ public class GameOverMenuController : MonoBehaviour {
 			break;
 		}
 
-		if(GameController.instance.timeModeSuccess) {
+		GameModeType _gameModeType = GameController.instance.gameModeType;
+		switch(_gameModeType) {
+		case GameModeType.timeMode:
+			if(GameController.instance.timeModeSuccess) {
+				m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
+			} else {
+				m_failedPanel.SetActive(true);
+				m_currentTimeScoreImg.SetActive(false);
+			}
+			if(GameController.instance.TimeModeBestScore == 0f) {
+				m_bestTimeScoreLbl.text = "";
+			} else {
+				m_bestTimeScoreLbl.text = GameController.instance.TimeModeBestScore.ToString("F2");
+			}
+			break;
+		case GameModeType.endlessMode:
 			m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
-		} else {
-			m_failedPanel.SetActive(true);
-			m_timeModeScoreImg.SetActive(false);
-		}
-
-		if(GameController.instance.TimeModeBestScore == 0f) {
-			m_bestTimeScoreLbl.text = "";
-		} else {
-			m_bestTimeScoreLbl.text = GameController.instance.TimeModeBestScore.ToString("F2");
+			m_bestTimeScoreLbl.text = GameController.instance.EndlessModeBestScore.ToString("F2");
+			break;
 		}
 	}
 
