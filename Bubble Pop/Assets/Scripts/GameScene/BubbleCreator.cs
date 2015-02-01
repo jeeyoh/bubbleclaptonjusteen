@@ -69,12 +69,20 @@ public class BubbleCreator : MonoBehaviour {
 
 	void Start() {
 		Init ();
-//		timeModeSettings.goodBubblesCount = 3;
+		GameController.instance.OnGameOver += GameOver;
 	}
 
 	private void Init() {
 		m_checkGoodBubblesCount = false;
 		gameModeType = GameController.instance.gameModeType;
+	}
+
+//	void OnEnable() {
+//		GameController.instance.OnGameOver += GameOver;
+//	}
+	
+	void OnDisable() {
+		GameController.instance.OnGameOver -= GameOver;
 	}
 
 	void Update() {
@@ -93,7 +101,7 @@ public class BubbleCreator : MonoBehaviour {
 	private void TimeModeUpdate() {
 		if(m_checkGoodBubblesCount) {
 			if(goodBubblesCount == 0) {
-				isGameOver = true;
+//				isGameOver = true;
 				GameController.instance.TimeModeSuccess();
 			}
 		}
@@ -109,7 +117,7 @@ public class BubbleCreator : MonoBehaviour {
 			}
 		}
 		if(goodBubblesCount > endlessModeSettings.maxGoodBubblesAllowed) {
-			isGameOver = true;
+//			isGameOver = true;
 			GameController.instance.ChangeState(GameState.gameOver);
 		}
 	}
@@ -136,7 +144,7 @@ public class BubbleCreator : MonoBehaviour {
 		endlessModeSettings.maxGoodBubblesAllowed = p_maxGoodBubblesAllowed;
 
 		m_origBubbleTimeInterval = endlessModeSettings.bubbleTimeInterval;
-		m_timeOfNextBubble = endlessModeSettings.bubbleTimeInterval + Time.time;
+		m_timeOfNextBubble = Time.time;
 		m_timeUntilNextSpeedIncrease = endlessModeSettings.intervalBetweenSpeedIncrease + Time.time;
 		generateBubbles = true;
 		m_checkGoodBubblesCount = true;
@@ -185,5 +193,9 @@ public class BubbleCreator : MonoBehaviour {
 		else _bubble.transform.parent = m_goodBubblesHolder;
 		_bubble.transform.localPosition = _pos;
 		_bubble.transform.localEulerAngles = _rot;
+	}
+
+	private void GameOver() {
+		isGameOver = true;
 	}
 }

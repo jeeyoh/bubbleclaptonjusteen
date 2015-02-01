@@ -8,8 +8,8 @@ public class GameHUDController : MonoBehaviour {
 
 	[SerializeField] private GameObject m_timeModeImg;
 	[SerializeField] private GameObject m_endlessModeImg;
-	[SerializeField] private GameObject m_startBtn;
-	[SerializeField] private CustomText m_stopWatch;
+//	[SerializeField] private GameObject m_startBtn;
+	[SerializeField] private Text m_stopWatch;
 
 	private float m_timeStopWatch;
 	private bool m_isTimeRunning;
@@ -31,16 +31,16 @@ public class GameHUDController : MonoBehaviour {
 			m_endlessModeImg.SetActive(true);
 		}
 
-		m_startBtn.SetActive(true);
+//		m_startBtn.SetActive(true);
 		ResetTime();
 	}
 
-	public void StartGame() {
-		m_startBtn.SetActive(false);
-		GameController.instance.ChangeState(GameState.playing);
-		LevelController.instance.StartGame();
-		StartTime();
-	}
+//	public void StartGame() {
+//		m_startBtn.SetActive(false);
+//		GameController.instance.ChangeState(GameState.playing);
+//		LevelController.instance.StartGame();
+//		StartTime();
+//	}
 
 	public void StartTime() {
 		m_isTimeRunning = true;
@@ -56,14 +56,14 @@ public class GameHUDController : MonoBehaviour {
 
 	public void ResetTime() {
 		m_timeStopWatch = 0;
-		m_stopWatch.SetText("0s");
+		m_stopWatch.text = "0s";
 		m_isTimeRunning = false;
 	}
 
 	void Update() {
 		if(m_isTimeRunning) {
 			m_timeStopWatch += Time.deltaTime;
-			m_stopWatch.SetText(m_timeStopWatch.ToString("F2") + "s");
+			m_stopWatch.text = m_timeStopWatch.ToString("F2") + "s";
 		}
 	}
 }

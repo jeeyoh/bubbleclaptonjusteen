@@ -11,9 +11,22 @@ public class ClickTrigger2D : MonoBehaviour {
 
 	void Start() {
 		isGameOver = false;
+		GameController.instance.OnGameOver += GameOver;
 //		isPlaying = false;
 //		soundHandler = this.GetComponent<SoundHandler>();
 //		pause = GameObject.Find("Pause").GetComponent<Pause>();
+	}
+
+//	void OnEnable() {
+//		GameController.instance.OnGameOver += GameOver;
+//	}
+
+	void OnDisable() {
+		GameController.instance.OnGameOver -= GameOver;
+	}
+
+	private void GameOver() {
+		isGameOver = true;
 	}
 
 	void Update () {
@@ -29,8 +42,7 @@ public class ClickTrigger2D : MonoBehaviour {
 			if(myHit.collider.tag == "Bubble") {
 				myHit.collider.GetComponent<Bubble>().Pop();
 			} else if(myHit.collider.tag == "BadBubble") {
-				isGameOver = true;
-				BubbleCreator.instance.isGameOver = true;
+//				BubbleCreator.instance.isGameOver = true;
 				GameController.instance.ChangeState(GameState.gameOver);
 			}
 		}

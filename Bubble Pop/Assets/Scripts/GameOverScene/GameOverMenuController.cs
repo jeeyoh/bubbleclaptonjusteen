@@ -33,9 +33,9 @@ public class GameOverMenuController : MonoBehaviour {
 		m_timeMode50Img.SetActive(false);
 		m_timeMode100Img.SetActive(false);
 		m_timeMode150Img.SetActive(false);
-		m_timeMode50Img.SetActive(false);
-		m_timeMode100Img.SetActive(false);
-		m_timeMode150Img.SetActive(false);
+		m_endlessMode5Img.SetActive(false);
+		m_endlessMode25Img.SetActive(false);
+		m_endlessMode50Img.SetActive(false);
 	}
 
 	private void SetScore() {

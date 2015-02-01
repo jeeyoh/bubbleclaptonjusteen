@@ -6,6 +6,18 @@ public class BubbleMovement : MonoBehaviour {
 	public Vector3 targetLocalPosition;
 	public float speed;
 
+	[SerializeField] private bool m_customMovement;
+	[SerializeField] private float m_borderTop;
+	[SerializeField] private float m_borderBottom;
+	[SerializeField] private float m_borderLeft;
+	[SerializeField] private float m_borderRight;
+
+	private Vector3 m_defaultLocalPosition;
+
+	void Awake() {
+		m_defaultLocalPosition = this.transform.localPosition;
+	}
+
 	public void OnEnable() {
 		StartCoroutine("ChangeTargetPosition");
 	}
@@ -24,11 +36,19 @@ public class BubbleMovement : MonoBehaviour {
 	}
 
 	private void SetTargetPosition() {
-		BubbleArea _bubbleArea = BubbleCreator.instance.bubbleArea;
-		float _x = Random.Range(_bubbleArea.left, _bubbleArea.right);
-		float _y = Random.Range(_bubbleArea.top, _bubbleArea.bottom);
-//		float _z = Random.Range(0f, 1f);
-		float _z = this.transform.position.z;
+		float _x = 0;
+		float _y = 0;
+		float _z = 0;
+		if(m_customMovement) {
+			_x = (m_defaultLocalPosition.x - m_borderLeft) + Random.Range(m_borderLeft, m_borderRight);
+			_y = (m_defaultLocalPosition.y + m_borderTop) + Random.Range(m_borderTop, m_borderBottom);
+			_z = 1;
+		} else {
+			BubbleArea _bubbleArea = BubbleCreator.instance.bubbleArea;
+			_x = Random.Range(_bubbleArea.left, _bubbleArea.right);
+			_y = Random.Range(_bubbleArea.top, _bubbleArea.bottom);
+			_z = this.transform.position.z;
+		}
 		targetLocalPosition = new Vector3(_x, _y, _z);
 	}
 

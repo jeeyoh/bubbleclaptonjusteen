@@ -9,7 +9,17 @@ public class LevelController : MonoBehaviour {
 		instance = this;
 	}
 
+	void Start() {
+		Init ();
+	}
+
+	public void Init() {
+		Invoke("StartGame", 1f);
+	}
+
 	public void StartGame() {
+		GameController.instance.ChangeState(GameState.playing);
+
 		GameMode _gameMode = GameController.instance.gameMode;
 		switch(_gameMode) {
 		case GameMode.timeMode50:
@@ -31,5 +41,7 @@ public class LevelController : MonoBehaviour {
 			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 50);
 			break;
 		}
+
+		GameHUDController.instance.StartTime();
 	}
 }
