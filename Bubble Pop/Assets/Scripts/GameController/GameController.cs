@@ -76,6 +76,25 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public float EndlessModeBestScore {
+		get { 
+			if(PlayerPrefs.HasKey("BestEndlessModeScore")) {
+				bestEndlessModeScore = PlayerPrefs.GetFloat("BestEndlessModeScore");
+				return  bestEndlessModeScore;
+			} else {
+				bestEndlessModeScore = 0;
+				PlayerPrefs.SetFloat("BestEndlessModeScore", 0);
+				PlayerPrefs.Save();
+				return 0;
+			}
+		}
+		set {
+			bestEndlessModeScore = value;
+			PlayerPrefs.SetFloat("BestEndlessModeScore", value);
+			PlayerPrefs.Save();
+		}
+	}
+
 	void Awake() {
 		if(instance != null && instance != this) {
 			Destroy(this.gameObject);
@@ -154,16 +173,38 @@ public class GameController : MonoBehaviour {
 
 	private void GameOver() {
 		GameHUDController.instance.StopTime();
-		if(timeModeSuccess) {
-			playerTimeScore = GameHUDController.instance.GetTime();
-			if(TimeModeBestScore == 0) {
-				TimeModeBestScore = playerTimeScore;
+		switch(gameModeType) {
+		case GameModeType.timeMode:
+			if(timeModeSuccess) {
+				playerTimeScore = GameHUDController.instance.GetTime();
+				if(TimeModeBestScore == 0) {
+					TimeModeBestScore = playerTimeScore;
+				} else {
+					TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+				}
 			} else {
-				TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+				playerTimeScore = 0;
 			}
-		} else {
-			playerTimeScore = 0;
+			break;
+		case GameModeType.endlessMode:
+			playerTimeScore = GameHUDController.instance.GetTime();
+			if(EndlessModeBestScore == 0) {
+				EndlessModeBestScore = playerTimeScore;
+			} else {
+				EndlessModeBestScore = ((playerTimeScore > EndlessModeBestScore) ? playerTimeScore : EndlessModeBestScore);
+			}
+			break;
 		}
+//		if(timeModeSuccess) {
+//			playerTimeScore = GameHUDController.instance.GetTime();
+//			if(TimeModeBestScore == 0) {
+//				TimeModeBestScore = playerTimeScore;
+//			} else {
+//				TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+//			}
+//		} else {
+//			playerTimeScore = 0;
+//		}
 		Application.LoadLevel("GameOverScene");
 	}
 
