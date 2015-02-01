@@ -38,6 +38,9 @@ public class GameController : MonoBehaviour {
 	public float bestEndlessModeScore;
 	public bool isPaused = false;
 
+	public delegate void GameOverEvent();
+	public event GameOverEvent OnGameOver;
+
 	public bool AllowAds {
 		get { 
 			if(PlayerPrefs.HasKey("AllowAds")) {
@@ -111,17 +114,9 @@ public class GameController : MonoBehaviour {
 		if(deletePlayerPrefs) PlayerPrefs.DeleteAll();
 	}
 
-//	public bool playerWins;
-//	void Update() {
-//		if(playerWins) {
-//			playerWins = false;
-//			timeModeSuccess = true;
-//			ChangeState(GameState.gameOver);
-//		}
-//	}
-
 	private void Init() {
 		bestTimeModeScore = TimeModeBestScore;
+		bestEndlessModeScore = EndlessModeBestScore;
 	}
 
 	public void ChangeState(GameState p_newState) {
@@ -147,18 +142,18 @@ public class GameController : MonoBehaviour {
 			GameOver();
 			break;
 		case GameState.playAgain:
-			PlayAgain();
+//			PlayAgain();
 			break;
 		}
 	}
 
 	private void LoadMainScene() {
-		Application.LoadLevel("MainScene");
+		StartCoroutine(LoadScene("MainScene", 0));
 	}
 
 	private void LoadGameScene() {
 		timeModeSuccess = false;
-		Application.LoadLevel("GameScene");
+		StartCoroutine(LoadScene("GameScene", 0));
 	}
 
 	private void Pause() {
@@ -172,6 +167,17 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void GameOver() {
+		if(OnGameOver != null) OnGameOver();
+		RecordScore();
+		StartCoroutine(LoadScene("GameOverScene", 1.5f));
+	}
+
+	private IEnumerator LoadScene(string p_sceneName, float p_delay) {
+		yield return new WaitForSeconds(p_delay);
+		Application.LoadLevel(p_sceneName);
+	}
+
+	private void RecordScore() {
 		GameHUDController.instance.StopTime();
 		switch(gameModeType) {
 		case GameModeType.timeMode:
@@ -195,24 +201,13 @@ public class GameController : MonoBehaviour {
 			}
 			break;
 		}
-//		if(timeModeSuccess) {
-//			playerTimeScore = GameHUDController.instance.GetTime();
-//			if(TimeModeBestScore == 0) {
-//				TimeModeBestScore = playerTimeScore;
-//			} else {
-//				TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
-//			}
-//		} else {
-//			playerTimeScore = 0;
-//		}
-		Application.LoadLevel("GameOverScene");
 	}
 
-	public IEnumerator LoadLevel() {
-		Application.LoadLevel("GameScene");
-		yield return null;
-		PlayAgain();
-	}
+//	public IEnumerator LoadLevel() {
+//		Application.LoadLevel("GameScene");
+//		yield return null;
+//		PlayAgain();
+//	}
 
 	public void TimeModeSuccess() {
 		timeModeSuccess = true;
@@ -223,12 +218,12 @@ public class GameController : MonoBehaviour {
 //		ChangeState(GameState.gameOver);
 //	}
 
-	private void PlayAgain() {
-		Debug.Log("PLAY AGAIN");
-		// TODO Clean all object instance including player instance
-		// TODO Restart GameHud
-		// TODO Restart Level
-		// TODO Instantiate player instance
-		// TODO ChangeState(GameState.playing)
-	}
+//	private void PlayAgain() {
+//		Debug.Log("PLAY AGAIN");
+//		 TODO Clean all object instance including player instance
+//		 TODO Restart GameHud
+//		 TODO Restart Level
+//		 TODO Instantiate player instance
+//		 TODO ChangeState(GameState.playing)
+//	}
 }

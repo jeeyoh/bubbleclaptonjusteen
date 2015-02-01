@@ -16,11 +16,18 @@ public class Bubble : MonoBehaviour {
 	}
 
 	void OnEnable() {
+		if(GameController.instance.gameState == GameState.gameOver) {
+			Pop ();
+			return;
+		}
+
 		Init();
+		GameController.instance.OnGameOver += Pop;
 	}
 
 	void OnDisable() {
 		m_popAnimation.SetActive(false);
+		GameController.instance.OnGameOver -= Pop;
 	}
 
 	private void Init() {
