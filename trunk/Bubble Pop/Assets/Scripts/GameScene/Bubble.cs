@@ -44,9 +44,24 @@ public class Bubble : MonoBehaviour {
 	}
 
 	public void Pop() {
+		this.transform.parent = BubbleCreator.instance.GetPoppedBubblesHolder();
 		m_spriteRenderer.enabled = false;
 		m_circleCollider2D.enabled = false;
 		m_popAnimation.SetActive(true);
 		Invoke("Deactivate", 1f);
+	}
+
+	public void BadBubbleClicked() {
+		if(this.tag != "BadBubble") return;
+
+		m_tweenScale.from = m_tweenScale.to;
+		m_tweenScale.to = new Vector3(2.3f, 2.3f, 1);
+		m_tweenScale.ResetToBeginning();
+		m_tweenScale.PlayForward();
+		this.GetComponent<TweenColor>().PlayForward();
+		Vector3 _localPos = this.transform.localPosition;
+		_localPos.z = 0;
+		this.transform.localPosition = _localPos;
+		this.GetComponent<SpriteRenderer>().color = new Color(128, 128, 128, 128);
 	}
 }
