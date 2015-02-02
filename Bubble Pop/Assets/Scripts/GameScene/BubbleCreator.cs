@@ -46,6 +46,7 @@ public class BubbleCreator : MonoBehaviour {
 	[SerializeField] private int m_badBubbleChance; // int 0 - 100
 	[SerializeField] private Transform m_goodBubblesHolder;
 	[SerializeField] private Transform m_badBubblesHolder;
+	[SerializeField] private Transform m_poppedBubblesHolder;
 
 	public bool generateBubbles;
 
@@ -76,10 +77,6 @@ public class BubbleCreator : MonoBehaviour {
 		m_checkGoodBubblesCount = false;
 		gameModeType = GameController.instance.gameModeType;
 	}
-
-//	void OnEnable() {
-//		GameController.instance.OnGameOver += GameOver;
-//	}
 	
 	void OnDisable() {
 		GameController.instance.OnGameOver -= GameOver;
@@ -90,6 +87,7 @@ public class BubbleCreator : MonoBehaviour {
 
 		goodBubblesCount = m_goodBubblesHolder.childCount;
 		badBubblesCount = m_badBubblesHolder.childCount;
+//		GameHUDController.instance.SetBubblesCount(goodBubblesCount);
 
 		if(gameModeType == GameModeType.timeMode) {
 			TimeModeUpdate();
@@ -165,6 +163,10 @@ public class BubbleCreator : MonoBehaviour {
 
 	public void CheckGoodBubblesCount() {
 		m_checkGoodBubblesCount = true;
+	}
+
+	public Transform GetPoppedBubblesHolder() {
+		return m_poppedBubblesHolder;
 	}
 
 	private void CreateBubble(BubbleType p_bubbleType) {
