@@ -19,6 +19,8 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private Text m_timeScoreLbl;
 	[SerializeField] private Text m_bestTimeScoreLbl;
 
+	private Animator m_targetBubbleAnimator;
+
 	void Awake() {
 		instance = this;
 	}
@@ -45,33 +47,40 @@ public class GameOverMenuController : MonoBehaviour {
 			m_timeMode50Img.SetActive(true);
 			m_timeModePanel.SetActive(true);
 			m_endlessModePanel.SetActive(false);
+			m_targetBubbleAnimator = m_timeMode50Img.GetComponent<Animator>();
 			break;
 		case GameMode.timeMode100:
 			m_timeMode100Img.SetActive(true);
 			m_timeModePanel.SetActive(true);
 			m_endlessModePanel.SetActive(false);
+			m_targetBubbleAnimator = m_timeMode100Img.GetComponent<Animator>();
 			break;
 		case GameMode.timeMode150:
 			m_timeMode150Img.SetActive(true);
 			m_timeModePanel.SetActive(true);
 			m_endlessModePanel.SetActive(false);
+			m_targetBubbleAnimator = m_timeMode150Img.GetComponent<Animator>();
 			break;
 		case GameMode.endlessMode5:
 			m_endlessMode5Img.SetActive(true);
 			m_timeModePanel.SetActive(false);
 			m_endlessModePanel.SetActive(true);
+			m_targetBubbleAnimator = m_endlessMode5Img.GetComponent<Animator>();
 			break;
 		case GameMode.endlessMode25:
 			m_endlessMode25Img.SetActive(true);
 			m_timeModePanel.SetActive(false);
 			m_endlessModePanel.SetActive(true);
+			m_targetBubbleAnimator = m_endlessMode25Img.GetComponent<Animator>();
 			break;
 		case GameMode.endlessMode50:
 			m_endlessMode50Img.SetActive(true);
 			m_timeModePanel.SetActive(false);
 			m_endlessModePanel.SetActive(true);
+			m_targetBubbleAnimator = m_endlessMode50Img.GetComponent<Animator>();
 			break;
 		}
+		m_targetBubbleAnimator.SetTrigger("Show");
 
 		GameModeType _gameModeType = GameController.instance.gameModeType;
 		switch(_gameModeType) {
@@ -96,14 +105,26 @@ public class GameOverMenuController : MonoBehaviour {
 	}
 
 	public void ReturnToMain() {
-		GameController.instance.ChangeState(GameState.main);
+//		m_targetBubbleAnimator.SetTrigger("Pop");
+//		GameController.instance.ChangeState(GameState.main);
+		StartCoroutine(ChangeState(GameState.main, 1f));
 	}
 
 	public void ShareGame() {
 		Debug.Log("Share score!");
+		m_targetBubbleAnimator.Play("Bubble_Pop");
 	}
 
 	public void PlayAgain() {
-		GameController.instance.ChangeState(GameState.startGame);
+//		m_targetBubbleAnimator.SetTrigger("Pop");
+//		GameController.instance.ChangeState(GameState.startGame);
+		StartCoroutine(ChangeState(GameState.startGame, 1f));
+	}
+
+	private IEnumerator ChangeState(GameState p_gameState, float p_delay) {
+		m_targetBubbleAnimator.Play("Bubble_Pop");
+		m_targetBubbleAnimator.GetComponent<Image>().enabled = false;
+		yield return new WaitForSeconds(p_delay);
+		GameController.instance.ChangeState(p_gameState);
 	}
 }
