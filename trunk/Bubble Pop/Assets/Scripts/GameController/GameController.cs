@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour {
 	public GameModeType gameModeType;
 	public GameMode gameMode;
 	public bool allowAds;
+	public bool allowSound;
 	public bool timeModeSuccess;
 	public float playerTimeScore;
 	public float bestTimeModeScore;
@@ -56,6 +57,25 @@ public class GameController : MonoBehaviour {
 		set {
 			allowAds = value;
 			PlayerPrefs.SetInt("AllowAds", value ? 1 : 0);
+			PlayerPrefs.Save();
+		}
+	}
+
+	public bool AllowSound {
+		get { 
+			if(PlayerPrefs.HasKey("AllowSound")) {
+				allowSound = (PlayerPrefs.GetInt("AllowSound") == 1 ? true : false);
+				return allowSound;
+			} else {
+				allowSound = true; // default value
+				PlayerPrefs.SetInt("AllowSound", 1);
+				PlayerPrefs.Save();
+				return true;
+			}
+		}
+		set {
+			allowSound = value;
+			PlayerPrefs.SetInt("AllowSound", value ? 1 : 0);
 			PlayerPrefs.Save();
 		}
 	}
@@ -115,6 +135,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void Init() {
+		allowAds = AllowAds;
+		allowSound = AllowSound;
 		bestTimeModeScore = TimeModeBestScore;
 		bestEndlessModeScore = EndlessModeBestScore;
 	}

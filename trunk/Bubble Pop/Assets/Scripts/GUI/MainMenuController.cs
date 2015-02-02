@@ -7,11 +7,14 @@ public class MainMenuController : MonoBehaviour {
 	public static MainMenuController instance;
 
 	[SerializeField] private GameObject m_splashScreen;
-	[SerializeField] private GameObject m_mainMenu;
-	
+	[SerializeField] private GameObject m_mainMenu;	
 	[SerializeField] private GameObject[] TimeModeButtons = default ( GameObject[] );
 	[SerializeField] private GameObject[] EndlessModeButtons = default ( GameObject[] );
+	[SerializeField] private Image m_soundToggle;
+	[SerializeField] private Sprite m_soundOn;
+	[SerializeField] private Sprite m_soundOff;
 
+	private bool isSoundOn;
 
 	void Awake () {
 		instance = this;
@@ -22,8 +25,16 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	void Init() {
+		isSoundOn = GameController.instance.AllowSound;
+		if(isSoundOn) {
+			m_soundToggle.sprite = m_soundOn;
+		} else {
+			m_soundToggle.sprite = m_soundOff;
+		}
+		m_soundToggle.SetNativeSize();
 		m_splashScreen.SetActive(true);
 		m_mainMenu.SetActive(false);
+		Invoke ("CloseSplashScreen", 1f);
 	}
 
 	public void CloseSplashScreen() {
@@ -98,6 +109,17 @@ public class MainMenuController : MonoBehaviour {
 
 	public void OpenMoreMenu() {
 		Debug.Log("OpenMoreMenu");
+	}
+
+	public void ToggleSound() {
+		isSoundOn = !isSoundOn;
+		GameController.instance.AllowSound = isSoundOn;
+		if(isSoundOn) {
+			m_soundToggle.sprite = m_soundOn;
+		} else {
+			m_soundToggle.sprite = m_soundOff;
+		}
+		m_soundToggle.SetNativeSize();
 	}
 
 	IEnumerator StartGame ()
