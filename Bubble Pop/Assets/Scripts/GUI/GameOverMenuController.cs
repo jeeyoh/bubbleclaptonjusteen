@@ -18,6 +18,7 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private GameObject m_endlessMode50Img;
 	[SerializeField] private Text m_timeScoreLbl;
 	[SerializeField] private Text m_bestTimeScoreLbl;
+	[SerializeField] private GameObject m_blocker;
 
 	private Animator m_targetBubbleAnimator;
 
@@ -38,6 +39,7 @@ public class GameOverMenuController : MonoBehaviour {
 		m_endlessMode5Img.SetActive(false);
 		m_endlessMode25Img.SetActive(false);
 		m_endlessMode50Img.SetActive(false);
+		m_blocker.SetActive(false);
 	}
 
 	private void SetScore() {
@@ -123,7 +125,8 @@ public class GameOverMenuController : MonoBehaviour {
 
 	private IEnumerator ChangeState(GameState p_gameState, float p_delay) {
 		m_targetBubbleAnimator.Play("Bubble_Pop");
-		m_targetBubbleAnimator.GetComponent<Image>().enabled = false;
+//		m_targetBubbleAnimator.GetComponent<Image>().enabled = false;
+		m_blocker.SetActive(true);
 		yield return new WaitForSeconds(p_delay);
 		GameController.instance.ChangeState(p_gameState);
 	}
