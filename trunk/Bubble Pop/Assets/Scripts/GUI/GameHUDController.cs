@@ -6,11 +6,14 @@ public class GameHUDController : MonoBehaviour {
 
 	public static GameHUDController instance;
 
+	private const string BUBBLES_TO_POP = "Bubbles to Pop : ";
+	private const string BUBBLES_COUNT = "Bubbles Count : ";
+
 	[SerializeField] private GameObject m_timeModeImg;
 	[SerializeField] private GameObject m_endlessModeImg;
 //	[SerializeField] private GameObject m_startBtn;
 	[SerializeField] private Text m_stopWatchText;
-	[SerializeField] private Text m_bubblesToPopText;
+	[SerializeField] private Text m_bubblesText;
 	[SerializeField] private Text m_bubblesCountText;
 
 	private float m_timeStopWatch;
@@ -59,7 +62,8 @@ public class GameHUDController : MonoBehaviour {
 				m_maxBubbles = 150;
 				break;
 			}
-			m_bubblesToPopText.text = m_bubblesCount + "/" + m_maxBubbles;
+			m_bubblesText.text = BUBBLES_TO_POP;
+			m_bubblesCountText.text = m_bubblesCount + "/" + m_maxBubbles;
 			break;
 		case GameModeType.endlessMode:
 			switch(_gameMode) {
@@ -76,6 +80,7 @@ public class GameHUDController : MonoBehaviour {
 				m_maxBubbles = 50;
 				break;
 			}
+			m_bubblesText.text = BUBBLES_COUNT;
 			m_bubblesCountText.text = m_bubblesCount + "/" + m_maxBubbles;
 			break;
 		}
@@ -117,7 +122,7 @@ public class GameHUDController : MonoBehaviour {
 		}
 
 		m_bubblesCount = BubbleCreator.instance.goodBubblesCount;
-		m_bubblesToPopText.text = m_bubblesCount + "/" + m_maxBubbles;
+//		m_bubblesText.text = m_bubblesCount + "/" + m_maxBubbles;
 		m_bubblesCountText.text = m_bubblesCount + "/" + m_maxBubbles;
 	}
 }
