@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameBackgroundController : MonoBehaviour {
 
-	public static GameBackgroundController instance;
+	public static GameBackgroundController instance {get; private set;}
 
 	[SerializeField] private SpriteRenderer m_backgroundImageHolder; 
 	[SerializeField] private Sprite[] m_backgroundImages; 

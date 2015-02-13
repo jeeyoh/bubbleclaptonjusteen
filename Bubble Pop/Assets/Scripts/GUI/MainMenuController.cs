@@ -4,7 +4,7 @@ using System.Collections;
 
 public class MainMenuController : MonoBehaviour {
 
-	public static MainMenuController instance;
+	public static MainMenuController instance {get; private set;}
 
 	[SerializeField] private GameObject m_splashScreen;
 	[SerializeField] private GameObject m_mainMenu;	
@@ -29,6 +29,7 @@ public class MainMenuController : MonoBehaviour {
 		isSoundOn = GameController.instance.AllowSound;
 		if(isSoundOn) {
 			m_soundToggle.sprite = m_soundOn;
+			SoundController.instance.PlayMenuBGM(1f);
 		} else {
 			m_soundToggle.sprite = m_soundOff;
 		}
@@ -42,6 +43,8 @@ public class MainMenuController : MonoBehaviour {
 	public void CloseSplashScreen() {
 		m_splashScreen.SetActive(false);
 		m_mainMenu.SetActive(true);
+		SoundController.instance.SetSounds(isSoundOn, isSoundOn);
+		if(isSoundOn) SoundController.instance.PlayMenuBGM(1f);
 	}
 	
 	public void OpenTimeMode() {
@@ -52,6 +55,8 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartTimeMode(int p_mode) {
+		SoundController.instance.StopMusic();
+		SoundController.instance.PlayBubblePoppedSFX();
 		GameController.instance.gameModeType = GameModeType.timeMode;
 		switch(p_mode) {
 		case Constants.TIME_MODE_50:
@@ -79,6 +84,8 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartEndlessMode(int p_mode) {
+		SoundController.instance.StopMusic();
+		SoundController.instance.PlayBubblePoppedSFX();
 		GameController.instance.gameModeType = GameModeType.endlessMode;
 		switch(p_mode) {
 		case Constants.ENDLESS_MODE_5:
@@ -117,24 +124,30 @@ public class MainMenuController : MonoBehaviour {
 	private void PopTimeModeBubbles(int p_exempt = -1) {
 		for (int i = 0; i < TimeModeButtons.Length; i++) {
 			if(i == p_exempt) continue;
-			if (TimeModeButtons[i].GetComponent<Image>().enabled) 
+			if (TimeModeButtons[i].GetComponent<Image>().enabled) {
+				SoundController.instance.PlayBubblePoppedSFX();
 				TimeModeButtons[i].GetComponent<Animator>().Play("Bubble_Pop");
+			}
 		}
 	}
 
 	private void PopEndlessModeBubbles(int p_exempt = -1) {
 		for (int i = 0; i < EndlessModeButtons.Length; i++)	{
 			if(i == p_exempt) continue;
-			if ( EndlessModeButtons[i].GetComponent<Image>().enabled )
+			if ( EndlessModeButtons[i].GetComponent<Image>().enabled ) {
+				SoundController.instance.PlayBubblePoppedSFX();
 				EndlessModeButtons[i].GetComponent<Animator>().Play("Bubble_Pop");
+			}
 		}
 	}
 
 	public void ToggleSound() {
 		isSoundOn = !isSoundOn;
 		GameController.instance.AllowSound = isSoundOn;
+		SoundController.instance.SetSounds(isSoundOn, isSoundOn);
 		if(isSoundOn) {
 			m_soundToggle.sprite = m_soundOn;
+			SoundController.instance.PlayMenuBGM(1f);
 		} else {
 			m_soundToggle.sprite = m_soundOff;
 		}

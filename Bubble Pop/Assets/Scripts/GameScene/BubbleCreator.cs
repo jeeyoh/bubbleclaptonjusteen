@@ -38,7 +38,7 @@ public class EndlessModeSettings {
 
 public class BubbleCreator : MonoBehaviour {
 
-	public static BubbleCreator instance;
+	public static BubbleCreator instance {get; private set;}
 
 	[SerializeField] private StageBubble[] m_stageBubbles;
 	[SerializeField] private GameObject m_badBubble;

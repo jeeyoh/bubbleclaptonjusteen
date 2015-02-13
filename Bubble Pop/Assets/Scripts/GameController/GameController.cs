@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public enum GameState {
@@ -35,8 +35,12 @@ public class GameController : MonoBehaviour {
 	public bool allowSound;
 	public bool timeModeSuccess;
 	public float playerTimeScore;
-	public float bestTimeModeScore;
-	public float bestEndlessModeScore;
+	public float timeMode50BestTime;
+	public float timeMode100BestTime;
+	public float timeMode150BestTime;
+	public float endlessMode5BestTime;
+	public float endlessMode25BestTime;
+	public float endlessMode50BestTime;
 	public bool isPaused = false;
 
 	public delegate void GameOverEvent();
@@ -44,77 +48,89 @@ public class GameController : MonoBehaviour {
 
 	public bool AllowAds {
 		get { 
-			if(PlayerPrefs.HasKey("AllowAds")) {
-				allowAds = (PlayerPrefs.GetInt("AllowAds") == 1 ? true : false);
-				return allowAds;
-			} else {
-				allowAds = true; // default value
-				PlayerPrefs.SetInt("AllowAds", 1);
-				PlayerPrefs.Save();
-				return false;
-			}
+			allowAds = PlayerPrefsManager.GetBool(PlayerPrefsManager.ALLOW_ADS, true);
+			return allowAds;
 		}
 		set {
 			allowAds = value;
-			PlayerPrefs.SetInt("AllowAds", value ? 1 : 0);
-			PlayerPrefs.Save();
+			PlayerPrefsManager.SetBool(PlayerPrefsManager.ALLOW_ADS, value);
 		}
 	}
 
 	public bool AllowSound {
 		get { 
-			if(PlayerPrefs.HasKey("AllowSound")) {
-				allowSound = (PlayerPrefs.GetInt("AllowSound") == 1 ? true : false);
-				return allowSound;
-			} else {
-				allowSound = true; // default value
-				PlayerPrefs.SetInt("AllowSound", 1);
-				PlayerPrefs.Save();
-				return true;
-			}
+			allowSound = PlayerPrefsManager.GetBool(PlayerPrefsManager.ALLOW_SOUND, true);
+			return allowSound;
 		}
 		set {
 			allowSound = value;
-			PlayerPrefs.SetInt("AllowSound", value ? 1 : 0);
-			PlayerPrefs.Save();
+			PlayerPrefsManager.SetBool(PlayerPrefsManager.ALLOW_SOUND, value);
 		}
 	}
 
-	public float TimeModeBestScore {
+	public float TimeMode50BestTime {
 		get { 
-			if(PlayerPrefs.HasKey("BestTimeModeScore")) {
-				bestTimeModeScore = PlayerPrefs.GetFloat("BestTimeModeScore");
-				return  bestTimeModeScore;
-			} else {
-				bestTimeModeScore = 0;
-				PlayerPrefs.SetFloat("BestTimeModeScore", 0);
-				PlayerPrefs.Save();
-				return 0;
-			}
+			timeMode50BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.TIME_MODE_50_BEST_TIME, -1);
+			return  timeMode50BestTime;
 		}
 		set {
-			bestTimeModeScore = value;
-			PlayerPrefs.SetFloat("BestTimeModeScore", value);
-			PlayerPrefs.Save();
+			timeMode50BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.TIME_MODE_50_BEST_TIME, value);
 		}
 	}
 
-	public float EndlessModeBestScore {
+	public float TimeMode100BestTime {
 		get { 
-			if(PlayerPrefs.HasKey("BestEndlessModeScore")) {
-				bestEndlessModeScore = PlayerPrefs.GetFloat("BestEndlessModeScore");
-				return  bestEndlessModeScore;
-			} else {
-				bestEndlessModeScore = 0;
-				PlayerPrefs.SetFloat("BestEndlessModeScore", 0);
-				PlayerPrefs.Save();
-				return 0;
-			}
+			timeMode100BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.TIME_MODE_100_BEST_TIME, -1);
+			return  timeMode100BestTime;
 		}
 		set {
-			bestEndlessModeScore = value;
-			PlayerPrefs.SetFloat("BestEndlessModeScore", value);
-			PlayerPrefs.Save();
+			timeMode100BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.TIME_MODE_100_BEST_TIME, value);
+		}
+	}
+
+	public float TimeMode150BestTime {
+		get { 
+			timeMode150BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.TIME_MODE_150_BEST_TIME, -1);
+			return  timeMode150BestTime;
+		}
+		set {
+			timeMode150BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.TIME_MODE_150_BEST_TIME, value);
+		}
+	}
+
+	public float EndlessMode5BestTime {
+		get { 
+			endlessMode5BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.ENDLESS_MODE_5_BEST_TIME, 0);
+			return  endlessMode5BestTime;
+		}
+		set {
+			endlessMode5BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.ENDLESS_MODE_5_BEST_TIME, value);
+		}
+	}
+
+	public float EndlessMode25BestTime {
+		get { 
+			endlessMode25BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.ENDLESS_MODE_25_BEST_TIME, 0);
+			return  endlessMode25BestTime;
+		}
+		set {
+			endlessMode25BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.ENDLESS_MODE_25_BEST_TIME, value);
+		}
+	}
+
+	public float EndlessMode50BestTime {
+		get { 
+			endlessMode50BestTime = PlayerPrefsManager.GetFloat(PlayerPrefsManager.ENDLESS_MODE_50_BEST_TIME, 0);
+			return  endlessMode50BestTime;
+		}
+		set {
+			endlessMode50BestTime = value;
+			PlayerPrefsManager.SetFloat(PlayerPrefsManager.ENDLESS_MODE_50_BEST_TIME, value);
 		}
 	}
 
@@ -137,8 +153,12 @@ public class GameController : MonoBehaviour {
 	private void Init() {
 		allowAds = AllowAds;
 		allowSound = AllowSound;
-		bestTimeModeScore = TimeModeBestScore;
-		bestEndlessModeScore = EndlessModeBestScore;
+		timeMode50BestTime = TimeMode50BestTime;
+		timeMode100BestTime = TimeMode100BestTime;
+		timeMode150BestTime = TimeMode150BestTime;
+		endlessMode5BestTime = EndlessMode5BestTime;
+		endlessMode25BestTime = EndlessMode25BestTime;
+		endlessMode50BestTime = EndlessMode50BestTime;
 	}
 
 	public void ChangeState(GameState p_newState) {
@@ -190,6 +210,7 @@ public class GameController : MonoBehaviour {
 
 	private void GameOver() {
 		if(OnGameOver != null) OnGameOver();
+		SoundController.instance.StopMusic();
 		RecordScore();
 		StartCoroutine(LoadScene("GameOverScene", 1.5f));
 	}
@@ -205,21 +226,57 @@ public class GameController : MonoBehaviour {
 		case GameModeType.timeMode:
 			if(timeModeSuccess) {
 				playerTimeScore = GameHUDController.instance.GetTime();
-				if(TimeModeBestScore == 0) {
-					TimeModeBestScore = playerTimeScore;
-				} else {
-					TimeModeBestScore = ((playerTimeScore < TimeModeBestScore) ? playerTimeScore : TimeModeBestScore);
+				switch(gameMode) {
+				case GameMode.timeMode50:
+					if(TimeMode50BestTime == -1) {
+						TimeMode50BestTime = playerTimeScore;
+					} else {
+						TimeMode50BestTime = ((playerTimeScore < TimeMode50BestTime) ? playerTimeScore : TimeMode50BestTime);
+					}
+					break;
+				case GameMode.timeMode100:
+					if(TimeMode100BestTime == -1) {
+						TimeMode100BestTime = playerTimeScore;
+					} else {
+						TimeMode100BestTime = ((playerTimeScore < TimeMode100BestTime) ? playerTimeScore : TimeMode100BestTime);
+					}
+					break;
+				case GameMode.timeMode150:
+					if(TimeMode150BestTime == -1) {
+						TimeMode150BestTime = playerTimeScore;
+					} else {
+						TimeMode150BestTime = ((playerTimeScore < TimeMode150BestTime) ? playerTimeScore : TimeMode150BestTime);
+					}
+					break;
 				}
 			} else {
-				playerTimeScore = 0;
+				playerTimeScore = -1;
 			}
 			break;
 		case GameModeType.endlessMode:
 			playerTimeScore = GameHUDController.instance.GetTime();
-			if(EndlessModeBestScore == 0) {
-				EndlessModeBestScore = playerTimeScore;
-			} else {
-				EndlessModeBestScore = ((playerTimeScore > EndlessModeBestScore) ? playerTimeScore : EndlessModeBestScore);
+			switch(gameMode) {
+			case GameMode.endlessMode5:
+				if(EndlessMode5BestTime == 0) {
+					EndlessMode5BestTime = playerTimeScore;
+				} else {
+					EndlessMode5BestTime = ((playerTimeScore > EndlessMode5BestTime) ? playerTimeScore : EndlessMode5BestTime);
+				}
+				break;
+			case GameMode.endlessMode25:
+				if(EndlessMode25BestTime == 0) {
+					EndlessMode25BestTime = playerTimeScore;
+				} else {
+					EndlessMode25BestTime = ((playerTimeScore > EndlessMode25BestTime) ? playerTimeScore : EndlessMode25BestTime);
+				}
+				break;
+			case GameMode.endlessMode50:
+				if(EndlessMode50BestTime == 0) {
+					EndlessMode50BestTime = playerTimeScore;
+				} else {
+					EndlessMode50BestTime = ((playerTimeScore > EndlessMode50BestTime) ? playerTimeScore : EndlessMode50BestTime);
+				}
+				break;
 			}
 			break;
 		}
