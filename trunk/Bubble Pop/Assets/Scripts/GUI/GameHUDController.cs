@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameHUDController : MonoBehaviour {
 
-	public static GameHUDController instance;
+	public static GameHUDController instance {get; private set;}
 
 	private const string BUBBLES_TO_POP = "Bubbles to Pop : ";
 	private const string BUBBLES_COUNT = "Bubbles Count : ";
@@ -30,6 +30,7 @@ public class GameHUDController : MonoBehaviour {
 	}
 
 	private void Init() {
+		SoundController.instance.PlayInGameBGM(1.5f);
 		if(GameController.instance.gameModeType == GameModeType.timeMode) {
 			m_timeModeImg.SetActive(true);
 			m_endlessModeImg.SetActive(false);

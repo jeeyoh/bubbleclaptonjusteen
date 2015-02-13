@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LevelController : MonoBehaviour {
 
-	public static LevelController instance;
+	public static LevelController instance {get; private set;}
 
 	void Awake() {
 		instance = this;
