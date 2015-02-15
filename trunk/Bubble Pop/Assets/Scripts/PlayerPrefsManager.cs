@@ -18,7 +18,7 @@ public static class PlayerPrefsManager {
 		} else {
 			PlayerPrefs.SetInt(p_key, p_defaultValue ? 1 : 0);
 			PlayerPrefs.Save();
-			return false;
+			return p_defaultValue;
 		}
 	}
 

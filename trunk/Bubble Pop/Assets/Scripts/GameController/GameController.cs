@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
 	public float endlessMode25BestTime;
 	public float endlessMode50BestTime;
 	public bool isPaused = false;
+	public bool deletePlayerPrefs;
 
 	public delegate void GameOverEvent();
 	public event GameOverEvent OnGameOver;
@@ -143,8 +144,7 @@ public class GameController : MonoBehaviour {
 		instance = this;
 		DontDestroyOnLoad(this.gameObject);
 	}
-
-	public bool deletePlayerPrefs;
+	
 	void Start() {
 		Init ();
 		if(deletePlayerPrefs) PlayerPrefs.DeleteAll();
