@@ -210,7 +210,7 @@ public class GameController : MonoBehaviour {
 
 	private void GameOver() {
 		if(OnGameOver != null) OnGameOver();
-		SoundController.instance.StopMusic();
+//		SoundController.instance.StopMusic();
 		RecordScore();
 		StartCoroutine(LoadScene("GameOverScene", 1.5f));
 	}
@@ -282,27 +282,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-//	public IEnumerator LoadLevel() {
-//		Application.LoadLevel("GameScene");
-//		yield return null;
-//		PlayAgain();
-//	}
-
 	public void TimeModeSuccess() {
 		timeModeSuccess = true;
 		ChangeState(GameState.gameOver);
 	}
-
-//	public void EndlessModeDone() {
-//		ChangeState(GameState.gameOver);
-//	}
-
-//	private void PlayAgain() {
-//		Debug.Log("PLAY AGAIN");
-//		 TODO Clean all object instance including player instance
-//		 TODO Restart GameHud
-//		 TODO Restart Level
-//		 TODO Instantiate player instance
-//		 TODO ChangeState(GameState.playing)
-//	}
 }

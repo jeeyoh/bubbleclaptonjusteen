@@ -44,7 +44,11 @@ public class Bubble : MonoBehaviour {
 	}
 
 	public void Pop() {
-		SoundController.instance.PlayBubblePoppedSFX();
+		if(this.tag != "BadBubble") {
+			SoundController.instance.PlayBubblePoppedSFX();
+		} else {
+			SoundController.instance.PlayBlackBubblePoppedSFX();
+		}
 		this.transform.parent = BubbleCreator.instance.GetPoppedBubblesHolder();
 		m_spriteRenderer.enabled = false;
 		m_circleCollider2D.enabled = false;
