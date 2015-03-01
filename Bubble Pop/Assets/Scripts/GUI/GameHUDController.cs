@@ -116,6 +116,10 @@ public class GameHUDController : MonoBehaviour {
 		m_bubblesCount = p_count;
 	}
 
+	public void ReturnToMain() {
+		GameController.instance.ChangeState(GameState.main);
+	}
+	
 	void Update() {
 		if(m_isTimeRunning) {
 			m_timeStopWatch += Time.deltaTime;
@@ -123,7 +127,6 @@ public class GameHUDController : MonoBehaviour {
 		}
 
 		m_bubblesCount = BubbleCreator.instance.goodBubblesCount;
-//		m_bubblesText.text = m_bubblesCount + "/" + m_maxBubbles;
 		m_bubblesCountText.text = m_bubblesCount + "/" + m_maxBubbles;
 	}
 }

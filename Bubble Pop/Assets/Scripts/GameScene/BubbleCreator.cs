@@ -115,7 +115,6 @@ public class BubbleCreator : MonoBehaviour {
 			}
 		}
 		if(goodBubblesCount > endlessModeSettings.maxGoodBubblesAllowed) {
-//			isGameOver = true;
 			GameController.instance.ChangeState(GameState.gameOver);
 		}
 	}

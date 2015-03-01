@@ -117,7 +117,7 @@ public class GameOverMenuController : MonoBehaviour {
 			if(GameController.instance.playerTimeScore >= _bestTime) {
 				SoundController.instance.PlayNewBestTimeBGM();
 			} else {
-				SoundController.instance.PlayMenuBGM(1.5f);
+				SoundController.instance.PlayMenuBGM(1);
 //				SoundController.instance.PlayGameOverBGM();
 			}
 			m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
@@ -149,7 +149,6 @@ public class GameOverMenuController : MonoBehaviour {
 		SoundController.instance.PlayBubblePoppedSFX();
 		SoundController.instance.StopMusic();
 		m_targetBubbleAnimator.Play("Bubble_Pop");
-//		m_targetBubbleAnimator.GetComponent<Image>().enabled = false;
 		m_blocker.SetActive(true);
 		yield return new WaitForSeconds(p_delay);
 		GameController.instance.ChangeState(p_gameState);
