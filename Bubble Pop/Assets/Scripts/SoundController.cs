@@ -110,8 +110,9 @@ public class SoundController : MonoBehaviour {
 	}
 
 	public void StopMusic() {
-		if(audioSource.isPlaying) audioSource.Pause();
+//		if(audioSource.isPlaying) audioSource.Pause();
 //		audioSource.volume = 0;
+		audioSource.Stop();
 	}
 
 	public void PlayBubblePoppedSFX() {

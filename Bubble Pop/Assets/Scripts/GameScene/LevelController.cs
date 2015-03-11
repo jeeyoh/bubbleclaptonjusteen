@@ -32,13 +32,16 @@ public class LevelController : MonoBehaviour {
 			BubbleCreator.instance.StartTimeMode(150, 15);
 			break;
 		case GameMode.endlessMode5:
-			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 5);
+			EndlessModeSettings _endless5Settings = new EndlessModeSettings(1, 0.1f, 5, 5, 2);
+			BubbleCreator.instance.StartEndlessMode(_endless5Settings);
 			break;
 		case GameMode.endlessMode25:
-			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 25);
+			EndlessModeSettings _endless25Settings = new EndlessModeSettings(1, 0.1f, 5, 25, 5);
+			BubbleCreator.instance.StartEndlessMode(_endless25Settings);
 			break;
 		case GameMode.endlessMode50:
-			BubbleCreator.instance.StartEndlessMode(1, 0.1f, 5, 50);
+			EndlessModeSettings _endless50Settings = new EndlessModeSettings(1, 0.1f, 5, 50, 10);
+			BubbleCreator.instance.StartEndlessMode(_endless50Settings);
 			break;
 		}
 

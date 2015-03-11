@@ -34,6 +34,15 @@ public class EndlessModeSettings {
 	public float addtionalSpeedPerIncrease;
 	public float intervalBetweenSpeedIncrease;
 	public int maxGoodBubblesAllowed;
+	public int maxBadBubbles;
+
+	public EndlessModeSettings(float p_bubbleTimeInterval, float p_addtionalSpeedPerIncrease, float p_intervalBetweenSpeedIncrease, int p_maxGoodBubblesAllowed, int p_maxBadBubbles) {
+		this.bubbleTimeInterval = p_bubbleTimeInterval;
+		this.addtionalSpeedPerIncrease = p_addtionalSpeedPerIncrease;
+		this.intervalBetweenSpeedIncrease = p_intervalBetweenSpeedIncrease;
+		this.maxGoodBubblesAllowed = p_maxGoodBubblesAllowed;
+		this.maxBadBubbles = p_maxBadBubbles;
+	}
 }
 
 public class BubbleCreator : MonoBehaviour {
@@ -134,11 +143,12 @@ public class BubbleCreator : MonoBehaviour {
 		generateBubbles = false;
 	}
 
-	public void StartEndlessMode(float p_bubbleTimeInterval, float p_addtionalSpeedPerIncrease, float p_intervalBetweenSpeedIncrease, int p_maxGoodBubblesAllowed) {
-		endlessModeSettings.bubbleTimeInterval = p_bubbleTimeInterval;
-		endlessModeSettings.addtionalSpeedPerIncrease = p_addtionalSpeedPerIncrease;
-		endlessModeSettings.intervalBetweenSpeedIncrease = p_intervalBetweenSpeedIncrease;
-		endlessModeSettings.maxGoodBubblesAllowed = p_maxGoodBubblesAllowed;
+	public void StartEndlessMode(EndlessModeSettings p_settings) {
+		endlessModeSettings.bubbleTimeInterval = p_settings.bubbleTimeInterval;
+		endlessModeSettings.addtionalSpeedPerIncrease = p_settings.addtionalSpeedPerIncrease;
+		endlessModeSettings.intervalBetweenSpeedIncrease = p_settings.intervalBetweenSpeedIncrease;
+		endlessModeSettings.maxGoodBubblesAllowed = p_settings.maxGoodBubblesAllowed;
+		endlessModeSettings.maxBadBubbles = p_settings.maxBadBubbles;
 
 		m_origBubbleTimeInterval = endlessModeSettings.bubbleTimeInterval;
 		m_timeOfNextBubble = Time.time;
@@ -173,7 +183,7 @@ public class BubbleCreator : MonoBehaviour {
 		int _randomGoodBuble = Random.Range(0, m_stageBubbles.Length);
 		GameObject _bubbleType = m_stageBubbles[_randomGoodBuble].bubble;
 
-		if(p_bubbleType == BubbleType.randomBubble) {
+		if(p_bubbleType == BubbleType.randomBubble && badBubblesCount < endlessModeSettings.maxBadBubbles) {
 			bool _isBadBubble = (m_badBubbleChance >= Random.Range(0, 100)) ? true : false;
 			if(_isBadBubble) {
 				_bubbleType = m_badBubble;
