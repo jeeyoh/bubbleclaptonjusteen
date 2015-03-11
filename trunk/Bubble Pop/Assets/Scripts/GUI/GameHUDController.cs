@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -15,6 +15,8 @@ public class GameHUDController : MonoBehaviour {
 	[SerializeField] private Text m_stopWatchText;
 	[SerializeField] private Text m_bubblesText;
 	[SerializeField] private Text m_bubblesCountText;
+	[SerializeField] private GameObject m_returnMenu;
+	[SerializeField] private GameObject m_blocker;
 
 	private float m_timeStopWatch;
 	private bool m_isTimeRunning;
@@ -30,7 +32,9 @@ public class GameHUDController : MonoBehaviour {
 	}
 
 	private void Init() {
-		SoundController.instance.PlayInGameBGM(1.5f);
+		m_returnMenu.SetActive(false);
+		m_blocker.SetActive(false);
+		SoundController.instance.PlayMenuBGM(1f);
 		if(GameController.instance.gameModeType == GameModeType.timeMode) {
 			m_timeModeImg.SetActive(true);
 			m_endlessModeImg.SetActive(false);
@@ -116,8 +120,24 @@ public class GameHUDController : MonoBehaviour {
 		m_bubblesCount = p_count;
 	}
 
+	public void OpenReturnMenu() {
+		Time.timeScale = 0;
+		SoundController.instance.SetSounds(false, true);
+		m_returnMenu.SetActive(true);
+		m_blocker.SetActive(true);
+	}
+
 	public void ReturnToMain() {
+		Time.timeScale = 1;
+		SoundController.instance.SetSounds(true, true);
 		GameController.instance.ChangeState(GameState.main);
+	}
+
+	public void CloseReturnMenu() {
+		Time.timeScale = 1;
+		SoundController.instance.SetSounds(true, true);
+		m_returnMenu.SetActive(false);
+		m_blocker.SetActive(false);
 	}
 	
 	void Update() {

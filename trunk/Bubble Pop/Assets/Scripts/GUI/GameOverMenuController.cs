@@ -147,10 +147,10 @@ public class GameOverMenuController : MonoBehaviour {
 
 	private IEnumerator ChangeState(GameState p_gameState, float p_delay) {
 		SoundController.instance.PlayBubblePoppedSFX();
-		SoundController.instance.StopMusic();
 		m_targetBubbleAnimator.Play("Bubble_Pop");
 		m_blocker.SetActive(true);
 		yield return new WaitForSeconds(p_delay);
+		SoundController.instance.StopMusic();
 		GameController.instance.ChangeState(p_gameState);
 	}
 }

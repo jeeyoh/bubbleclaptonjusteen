@@ -29,6 +29,7 @@ public class MainMenuController : MonoBehaviour {
 		isSoundOn = GameController.instance.AllowSound;
 		if(isSoundOn) {
 			m_soundToggle.sprite = m_soundOn;
+			SoundController.instance.StopMusic();
 			SoundController.instance.PlayMenuBGM(1f);
 		} else {
 			m_soundToggle.sprite = m_soundOff;
@@ -55,7 +56,7 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartTimeMode(int p_mode) {
-		SoundController.instance.StopMusic();
+//		SoundController.instance.StopMusic();
 		SoundController.instance.PlayBubblePoppedSFX();
 		GameController.instance.gameModeType = GameModeType.timeMode;
 		switch(p_mode) {
@@ -84,7 +85,7 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void StartEndlessMode(int p_mode) {
-		SoundController.instance.StopMusic();
+//		SoundController.instance.StopMusic();
 		SoundController.instance.PlayBubblePoppedSFX();
 		GameController.instance.gameModeType = GameModeType.endlessMode;
 		switch(p_mode) {
