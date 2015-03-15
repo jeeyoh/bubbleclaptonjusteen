@@ -23,12 +23,23 @@ public class GameHUDController : MonoBehaviour {
 	private int m_bubblesCount;
 	private int m_maxBubbles;
 
+	public bool isGameOver = false;
+
 	void Awake() {
 		instance = this;
 	}
 
 	void Start() {
 		Init ();
+		GameController.instance.OnGameOver += GameOver;
+	}
+	
+	void OnDisable() {
+		GameController.instance.OnGameOver -= GameOver;
+	}
+
+	private void GameOver() {
+		isGameOver = true;
 	}
 
 	private void Init() {
@@ -121,6 +132,8 @@ public class GameHUDController : MonoBehaviour {
 	}
 
 	public void OpenReturnMenu() {
+		if(isGameOver) return;
+
 		Time.timeScale = 0;
 		SoundController.instance.SetSounds(false, true);
 		m_returnMenu.SetActive(true);

@@ -82,13 +82,13 @@ public class BubbleCreator : MonoBehaviour {
 		GameController.instance.OnGameOver += GameOver;
 	}
 
+	void OnDisable() {
+		GameController.instance.OnGameOver -= GameOver;
+	}
+
 	private void Init() {
 		m_checkGoodBubblesCount = false;
 		gameModeType = GameController.instance.gameModeType;
-	}
-	
-	void OnDisable() {
-		GameController.instance.OnGameOver -= GameOver;
 	}
 
 	void Update() {
