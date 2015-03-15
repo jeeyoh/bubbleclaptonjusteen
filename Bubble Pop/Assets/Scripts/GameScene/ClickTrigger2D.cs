@@ -45,6 +45,7 @@ public class ClickTrigger2D : MonoBehaviour {
 //				BubbleCreator.instance.isGameOver = true;
 				myHit.collider.GetComponent<Bubble>().BadBubbleClicked();
 				isGameOver = true;
+				GameHUDController.instance.isGameOver = true;
 				Invoke("SetGameOver", 1f);
 			}
 		}
