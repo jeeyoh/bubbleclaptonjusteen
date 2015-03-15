@@ -21,6 +21,8 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private GameObject m_blocker;
 
 	private Animator m_targetBubbleAnimator;
+	
+	[SerializeField] private GameObject m_SharePanel;
 
 	void Awake() {
 		instance = this;
@@ -137,6 +139,7 @@ public class GameOverMenuController : MonoBehaviour {
 		m_targetBubbleAnimator.Play("Bubble_Pop");
 		SoundController.instance.PlayBubblePoppedSFX();
 		SoundController.instance.StopMusic();
+		EnableSharePanel(true);
 	}
 
 	public void PlayAgain() {
@@ -152,5 +155,38 @@ public class GameOverMenuController : MonoBehaviour {
 		yield return new WaitForSeconds(p_delay);
 		SoundController.instance.StopMusic();
 		GameController.instance.ChangeState(p_gameState);
+	}
+
+	void EnableSharePanel ( bool isEnable )
+	{
+		if ( isEnable )
+		{
+			m_SharePanel.gameObject.SetActive(true);
+		}
+		else
+		{
+			m_SharePanel.gameObject.SetActive(false);
+		}		
+	}
+
+	public void HideSharePanel ()
+	{
+		EnableSharePanel(false);
+	}
+
+	public void ShareToFacebook ()
+	{
+		if ( ThirdPartyController.Instance != null )
+		{
+			ThirdPartyController.Instance.ShareScoreToFacebook(GameController.instance.playerTimeScore);
+		}
+	}
+
+	public void ShareToTwitter ()
+	{
+		if ( ThirdPartyController.Instance != null )
+		{
+			ThirdPartyController.Instance.ShareScoreToTwitter(GameController.instance.playerTimeScore);
+		}
 	}
 }

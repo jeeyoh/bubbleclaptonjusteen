@@ -40,7 +40,7 @@ public class ConfigManager
 	#elif UNITY_ANDROID
 	public const string MAT_ADVERTISER_ID = "19512";
 	public const string MAT_CONVERSION_KEY = "bf719e4c5efcbd96e08ef752e83ae230";
-	public const string MAT_PACKAGE_NAME = "com.mtvn.Nickelodeon.UnityTemplateProject";
+	public const string MAT_PACKAGE_NAME = "com.mavlabs.bubblepop";
 	//public const string MAT_SITE_ID = "";
 	#else
 	public const string MAT_ADVERTISER_ID = "";
@@ -51,13 +51,21 @@ public class ConfigManager
 	
 	#endregion
 
+	#region Twitter
+
+	public const string TWITTER_CONSUMER_KEY = "7u6kRvv6fonKkxmekajjiRgos";
+	public const string TWITTER_CONSUMER_SECRET = "sEhKiXoZD8GDplBgI8q7n1KRQP3sbMwng4HBnmEnfvOP5RUCft";
+	public const string TWITTER_OWNER_ID = "3021945414";
+	
+	#endregion
+
 	
 	#region InApp Purchases
 	
 	#if UNITY_IPHONE
-	public const string INAPP_API_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArk7/qgZ0F/Y5ZKBM85dalsH7bRF+ePe8CnGquy4SuNy3uFP8J3UKBXl1Rdszkes6G5IdnpP517SPsAn44yAFj2zm6TwE+qHcEiA+Ph4PM96vND8QtDNzTVQO4Hvlo5vehOUCvXrjPzmgzfT1+Uk9mEuX3j978KMU2xRnofwZhTquWSdyRSzbo5o5zy1FrLgWChdqOxsyXhCEn0l3F2Tr29Y5JL1xfunSCzBzUcCyy2FDbSL1ThkRQ3V7vGTx33kgadRMQ0kGKzbn+1rBIw52L4KHnuSF5aPs6Xz8AlDg8SwYJRU9U4vOV5Ui+0WUUXfjzvaV7I3ft6y7DG//OG9qZwIDAQAB";
+	public const string INAPP_API_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLy+sOBHu1WAUSMssllrcasc0+yvhqYlDBd5biMkUom8Er5ucfEYj1DNQ6VtwugQMj8Vy2JCwMvsL2TXcNUXxK/ymwreKAFVG997vA5di+y5O1GSaWV6nBYmXMFiqwJZCHvL2ctEj3ctCMlgLE//XJCuGB5tWYrchtIsHyx/Uhyx49UFVAacP5S5u/4SEoC/tHuJR18uhXLSGhlSWgIsToPKOEnOysie4165KhTMcpe87VxdHoXIUnS2h1FcLp8PYJf4EYWunXStuvcO+6AjLv1RlPkFCIHaDwU+TLxrm6gLtlSLz+k7VEHLZHGgTitO6apAOs8PWQA+04lH2ygq8QIDAQAB";
 	#elif UNITY_ANDROID
-	public const string INAPP_API_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArk7/qgZ0F/Y5ZKBM85dalsH7bRF+ePe8CnGquy4SuNy3uFP8J3UKBXl1Rdszkes6G5IdnpP517SPsAn44yAFj2zm6TwE+qHcEiA+Ph4PM96vND8QtDNzTVQO4Hvlo5vehOUCvXrjPzmgzfT1+Uk9mEuX3j978KMU2xRnofwZhTquWSdyRSzbo5o5zy1FrLgWChdqOxsyXhCEn0l3F2Tr29Y5JL1xfunSCzBzUcCyy2FDbSL1ThkRQ3V7vGTx33kgadRMQ0kGKzbn+1rBIw52L4KHnuSF5aPs6Xz8AlDg8SwYJRU9U4vOV5Ui+0WUUXfjzvaV7I3ft6y7DG//OG9qZwIDAQAB";
+	public const string INAPP_API_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLy+sOBHu1WAUSMssllrcasc0+yvhqYlDBd5biMkUom8Er5ucfEYj1DNQ6VtwugQMj8Vy2JCwMvsL2TXcNUXxK/ymwreKAFVG997vA5di+y5O1GSaWV6nBYmXMFiqwJZCHvL2ctEj3ctCMlgLE//XJCuGB5tWYrchtIsHyx/Uhyx49UFVAacP5S5u/4SEoC/tHuJR18uhXLSGhlSWgIsToPKOEnOysie4165KhTMcpe87VxdHoXIUnS2h1FcLp8PYJf4EYWunXStuvcO+6AjLv1RlPkFCIHaDwU+TLxrm6gLtlSLz+k7VEHLZHGgTitO6apAOs8PWQA+04lH2ygq8QIDAQAB";
 	#else
 	public const string INAPP_API_KEY = "";
 	#endif

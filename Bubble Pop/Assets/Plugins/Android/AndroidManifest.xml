@@ -26,12 +26,12 @@
 	  
     <!-- Google Play Games data (required by google-play-services.jar) -->
     <meta-data android:name="com.google.android.gms.version" android:value="6587000" />
-    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ APP_ID" />
-    <meta-data android:name="com.google.android.gms.appstate.APP_ID" android:value="\ APP_ID" />
+    <meta-data android:name="com.google.android.gms.games.com.mavlabs.bubblepop" android:value="\ com.mavlabs.bubblepop" />
+    <meta-data android:name="com.google.android.gms.appstate.com.mavlabs.bubblepop" android:value="\ com.mavlabs.bubblepop" />
     
     <!-- Social Networking --> 
     <activity configChanges="orientation|screenLayout|screenSize" android:name="com.facebook.LoginActivity" />
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ YOUR_APP_ID" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 1626847630861757" />
     <meta-data android:name="com.prime31.FacebookPlugin" android:value="UnityPlayerActivityProxy" />
     <meta-data android:name="com.prime31.TwitterPlugin" android:value="UnityPlayerActivityProxy" />
       

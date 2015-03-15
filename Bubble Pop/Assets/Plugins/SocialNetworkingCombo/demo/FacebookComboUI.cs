@@ -39,6 +39,8 @@ public class FacebookComboUI : MonoBehaviourGUI
 
 		// optionally enable logging of all requests that go through the Facebook class
 		//Facebook.instance.debugRequests = true;
+
+		FacebookCombo.init();
 	}
 
 
@@ -49,10 +51,10 @@ public class FacebookComboUI : MonoBehaviourGUI
 
 		beginColumn();
 
-		if( GUILayout.Button( "Initialize Facebook" ) )
-		{
-			FacebookCombo.init();
-		}
+//		if( GUILayout.Button( "Initialize Facebook" ) )
+//		{
+//			FacebookCombo.init();
+//		}
 
 
 		if( GUILayout.Button( "Login" ) )
