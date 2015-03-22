@@ -11,6 +11,7 @@ public static class PlayerPrefsManager {
 	public const string ENDLESS_MODE_5_BEST_TIME = "EndlessMode5BestTime";
 	public const string ENDLESS_MODE_25_BEST_TIME = "EndlessMode25BestTime";
 	public const string ENDLESS_MODE_50_BEST_TIME = "EndlessMode50BestTime";
+	public const string NO_BLACK_BUBBLES_COUNT = "NoBlackBubblesCount";
 
 	public static bool GetBool (string p_key, bool p_defaultValue) {
 		if(PlayerPrefs.HasKey(p_key)) {
@@ -39,6 +40,21 @@ public static class PlayerPrefsManager {
 
 	public static void SetFloat (string p_key, float p_value) {
 		PlayerPrefs.SetFloat(p_key, p_value);
+		PlayerPrefs.Save();
+	}
+
+	public static int GetInt (string p_key, int p_defaultValue) {
+		if(PlayerPrefs.HasKey(p_key)) {
+			return PlayerPrefs.GetInt(p_key);
+		} else {
+			PlayerPrefs.SetInt(p_key, p_defaultValue);
+			PlayerPrefs.Save();
+			return p_defaultValue;
+		}
+	}
+	
+	public static void SetInt (string p_key, int p_value) {
+		PlayerPrefs.SetInt(p_key, p_value);
 		PlayerPrefs.Save();
 	}
 }

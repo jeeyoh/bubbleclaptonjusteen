@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour {
 	public float endlessMode50BestTime;
 	public bool isPaused = false;
 	public bool deletePlayerPrefs;
+	public int noBlackBubblesCount;
 
 	public delegate void GameOverEvent();
 	public event GameOverEvent OnGameOver;
@@ -135,6 +136,17 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public int NoBlackBubblesCount {
+		get {
+			noBlackBubblesCount = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT, 0);
+			return noBlackBubblesCount;
+		}
+		set {
+			noBlackBubblesCount = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT, value);
+		}
+	}
+
 	void Awake() {
 		if(instance != null && instance != this) {
 			Destroy(this.gameObject);
@@ -159,6 +171,7 @@ public class GameController : MonoBehaviour {
 		endlessMode5BestTime = EndlessMode5BestTime;
 		endlessMode25BestTime = EndlessMode25BestTime;
 		endlessMode50BestTime = EndlessMode50BestTime;
+		noBlackBubblesCount = NoBlackBubblesCount;
 	}
 
 	public void ChangeState(GameState p_newState) {
@@ -279,6 +292,19 @@ public class GameController : MonoBehaviour {
 				break;
 			}
 			break;
+		}
+	}
+
+	public void AddNoBlackBubbles(int p_count) {
+		NoBlackBubblesCount += p_count;
+	}
+
+	public bool IsNoBlackBubbles() {
+		if(NoBlackBubblesCount > 0) {
+			NoBlackBubblesCount--;
+			return true;
+		} else {
+			return false;
 		}
 	}
 

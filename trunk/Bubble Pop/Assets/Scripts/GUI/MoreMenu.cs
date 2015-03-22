@@ -4,18 +4,18 @@ using System.Collections;
 public class MoreMenu : MonoBehaviour {
 
 	public void LikeUsOnFacebook() {
-		Debug.Log("Like us on facebook!");
-		ThirdPartyController.Instance.LikeUsOnFacebook();
+		bool _likedOnFB = ThirdPartyController.Instance.LikeUsOnFacebook();
+		if(_likedOnFB) GameController.instance.AddNoBlackBubbles(1);
 	}
 
 	public void FollowUsOnTwitter() {
-		Debug.Log("Follow us on twitter!");
-		ThirdPartyController.Instance.FollowUsOnTwitter();
+		bool _followOnTwitter = ThirdPartyController.Instance.FollowUsOnTwitter();
+		if(_followOnTwitter) GameController.instance.AddNoBlackBubbles(1); 
 	}
 
 	public void RateOurGame() {
-		Debug.Log("Rate our game!");
-		ThirdPartyController.Instance.RateOurApp();
+		bool _rateOurGame = ThirdPartyController.Instance.RateOurApp();
+		if(_rateOurGame) GameController.instance.AddNoBlackBubbles(1); 
 	}
 
 	public void ShowRewards() {
