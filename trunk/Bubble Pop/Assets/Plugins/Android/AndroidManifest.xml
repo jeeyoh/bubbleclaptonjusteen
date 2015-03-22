@@ -14,26 +14,61 @@
 	 	android:xlargeScreens="true" 
 	 	android:anyDensity="true" />
 	 	
-    <!-- Sort of permissions requires by Flurry -->
+    <!-- Sort of permissions requires by plugins -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     
   <application 
 	  android:icon="@drawable/app_icon" 
 	  android:label="@string/app_name" 
 	  android:debuggable="true">
 	  
+	<uses-library android:name="com.google.android.maps" />
+	  
     <!-- Google Play Games data (required by google-play-services.jar) -->
-    <meta-data android:name="com.google.android.gms.version" android:value="6587000" />
-    <meta-data android:name="com.google.android.gms.games.com.mavlabs.bubblepop" android:value="\ com.mavlabs.bubblepop" />
-    <meta-data android:name="com.google.android.gms.appstate.com.mavlabs.bubblepop" android:value="\ com.mavlabs.bubblepop" />
+	<meta-data android:name="com.google.android.gms.version" android:value="6587000" />
+	<meta-data android:name="com.google.android.gms.games.76107458773" android:value="\ 76107458773" />
+	<meta-data android:name="com.google.android.gms.appstate.76107458773" android:value="\ 76107458773" />
     
     <!-- Social Networking --> 
     <activity configChanges="orientation|screenLayout|screenSize" android:name="com.facebook.LoginActivity" />
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 1626847630861757" />
     <meta-data android:name="com.prime31.FacebookPlugin" android:value="UnityPlayerActivityProxy" />
     <meta-data android:name="com.prime31.TwitterPlugin" android:value="UnityPlayerActivityProxy" />
+    
+	<!-- Tapjoy -->
+	<activity
+	    android:name="com.tapjoy.TJCOffersWebView"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	<activity
+	    android:name="com.tapjoy.TapjoyFullScreenAdWebView"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	<activity
+	    android:name="com.tapjoy.TapjoyDailyRewardAdWebView"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	<activity
+	    android:name="com.tapjoy.TapjoyVideoView"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	<activity
+	    android:name="com.tapjoy.TJAdUnitView"
+	    android:configChanges="keyboardHidden|orientation|screenSize"
+	    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+	    android:hardwareAccelerated="true" />
+	<activity
+	    android:name="com.tapjoy.mraid.view.ActionHandler"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	<activity
+	    android:name="com.tapjoy.mraid.view.Browser"
+	    android:configChanges="keyboardHidden|orientation|screenSize" />
+	    
+	<activity android:name="com.unity3d.player.VideoPlayer" android:label="@string/app_name" 
+		android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
+	</activity>
       
     <!-- Default Unity 3D activity --> 
     <activity 

@@ -9,11 +9,13 @@ public class ThirdPartyController : MonoBehaviour
 	TwitterController twitterHandler;
 	FacebookController fbHandler;
 
-	const string FB_LINK = "http://prime31.com";
+
+
+	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
 	const string FB_LINK_NAME = "My best time in Bubble Poppp is xxx seconds!";
 	const string FB_IMAGE_LINK = "http://prime31.com/assets/images/prime31logo.png";
-	const string FB_CAPTION = "BUBBLE POPPP";
-	const string FB_DESCRIPTION = "Play bubble poppp now!";
+	const string FB_CAPTION = "Play bubble poppp now!";
+	const string FB_DESCRIPTION = "Fun and addicting bubble popping game!";
 	
 	const string TWITTER_DESCRIPTION = "My best time in Bubble Poppp is xxx seconds!";
 
@@ -44,6 +46,73 @@ public class ThirdPartyController : MonoBehaviour
 		TwitterManager.loginFailedEvent -= twitterloginFailed;
 	}
 
+	void Start ()
+	{
+		if ( Application.loadedLevelName == "Initialization" )
+			Application.LoadLevel("MainScene");
+	}
+
+	public void LikeUsOnFacebook ()
+	{
+		//Like ( ConfigManager.FACEBOOK_APP_ID );
+		Application.OpenURL("http://www.facebook.com/pages/Bubble-Pop/844026942305921" );
+
+		if ( PlayerPrefs.GetInt ( "LIKE_FACEBOOK" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "LIKE_FACEBOOK", 1 );
+			PlayerPrefs.Save();
+			//add 1 no black bubble
+		}
+	}
+
+	public void FollowUsOnTwitter ()
+	{
+		Application.OpenURL( "http://twitter.com/BubblePopppGame" );
+
+		if ( PlayerPrefs.GetInt ( "FOLLOW_TWITTER" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "FOLLOW_TWITTER", 1 );
+			PlayerPrefs.Save();
+			//add 1 no black bubble
+		}
+	}
+
+	public void RateOurApp ()
+	{
+		Application.OpenURL( ConfigManager.APP_STORE );
+
+		if ( PlayerPrefs.GetInt ( "RATE_APP" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "RATE_APP", 1 );
+			PlayerPrefs.Save();
+			//add 1 no black bubble
+		}
+	}	
+
+	public void ShowRewards ()
+	{
+	}
+
+	public void Like(string likeID)
+	{
+		Facebook.instance.graphRequest(
+			likeID+"/likes",
+			HTTPVerb.POST,
+			( error, obj ) =>
+			{
+			if (obj != null)
+			{
+				Prime31.Utils.logObject( obj );
+			}
+			if( error != null )
+			{
+				Debug.Log("Error liking:"+error);
+				return;
+			}
+			Debug.Log( "like finished: " );
+		});
+	}
+
 	public void LoginToFacebook ()
 	{
 		if ( !fbHandler.isSessionValid() )
@@ -69,7 +138,7 @@ public class ThirdPartyController : MonoBehaviour
 			                          FB_DESCRIPTION);
 		}
 	}
-	
+
 	public void LoginToTwitter ()
 	{
 		if ( !twitterHandler.isLoggedIn() )

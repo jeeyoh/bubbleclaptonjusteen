@@ -29,25 +29,25 @@ public class ConfigManager
 	public const string FLURRY_ANDROID_KEY = "8MW3KX97RZFNZTFRS77H";
 
 	#endregion
-	
-	#region Facebook
+
+	#region Tapjoy
 	
 	#if UNITY_IPHONE
-	public const string MAT_ADVERTISER_ID = "19512";
-	public const string MAT_CONVERSION_KEY = "bf719e4c5efcbd96e08ef752e83ae230";
-	public const string MAT_PACKAGE_NAME = "com.mtvn.Nickelodeon.UnityTemplateProject";
-	//public const string MAT_SITE_ID = "";
+	public const string TAPJOY_ID = "bfdba7cb-e52d-40d9-8006-002459d42230";
+	public const string TAPJOY_KEY = "oUdX6LbfcMSyk35DPQ3Y";
 	#elif UNITY_ANDROID
-	public const string MAT_ADVERTISER_ID = "19512";
-	public const string MAT_CONVERSION_KEY = "bf719e4c5efcbd96e08ef752e83ae230";
-	public const string MAT_PACKAGE_NAME = "com.mavlabs.bubblepop";
-	//public const string MAT_SITE_ID = "";
+	public const string TAPJOY_ID = "2fa280f2-7595-4bc3-bdc0-a6611aa1e29e";
+	public const string TAPJOY_KEY = "GTrAk9lZR6lNB02YCYoQ";
 	#else
-	public const string MAT_ADVERTISER_ID = "";
-	public const string MAT_CONVERSION_KEY = "";
-	public const string MAT_PACKAGE_NAME = "";
-	//public const string MAT_SITE_ID = "";
+	public const string TAPJOY_ID = "2fa280f2-7595-4bc3-bdc0-a6611aa1e29e";
+	public const string TAPJOY_KEY = "GTrAk9lZR6lNB02YCYoQ";
 	#endif
+	
+	#endregion
+	
+	#region Facebook
+
+	public const string FACEBOOK_APP_ID = "1626847630861757";
 	
 	#endregion
 
@@ -59,6 +59,15 @@ public class ConfigManager
 	
 	#endregion
 
+	#region App Store
+
+	#if UNITY_ANDROID
+	public const string APP_STORE = "market://details?id=com.mavlabs.bubblepop";
+	#else
+	public const string APP_STORE = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=973525203";
+	#endif
+
+	#endregion
 	
 	#region InApp Purchases
 	
