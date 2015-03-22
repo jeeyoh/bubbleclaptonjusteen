@@ -142,13 +142,15 @@ public class GameHUDController : MonoBehaviour {
 
 	public void ReturnToMain() {
 		Time.timeScale = 1;
-		SoundController.instance.SetSounds(true, true);
+		bool _sound = GameController.instance.AllowSound;
+		SoundController.instance.SetSounds(_sound, _sound);
 		GameController.instance.ChangeState(GameState.main);
 	}
 
 	public void CloseReturnMenu() {
 		Time.timeScale = 1;
-		SoundController.instance.SetSounds(true, true);
+		bool _sound = GameController.instance.AllowSound;
+		SoundController.instance.SetSounds(_sound, _sound);
 		m_returnMenu.SetActive(false);
 		m_blocker.SetActive(false);
 	}
