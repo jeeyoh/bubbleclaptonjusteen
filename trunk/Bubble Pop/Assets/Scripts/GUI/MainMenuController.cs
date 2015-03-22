@@ -7,7 +7,9 @@ public class MainMenuController : MonoBehaviour {
 	public static MainMenuController instance {get; private set;}
 
 	[SerializeField] private GameObject m_splashScreen;
-	[SerializeField] private GameObject m_mainMenu;	
+	[SerializeField] private GameObject m_mainMenu;
+	[SerializeField] private GameObject m_moreMenu;
+	[SerializeField] private GameObject m_powerUpMenu;
 	[SerializeField] private GameObject[] TimeModeButtons = default ( GameObject[] );
 	[SerializeField] private GameObject[] EndlessModeButtons = default ( GameObject[] );
 	[SerializeField] private Image m_soundToggle;
@@ -37,6 +39,8 @@ public class MainMenuController : MonoBehaviour {
 		m_soundToggle.SetNativeSize();
 		m_splashScreen.SetActive(true);
 		m_mainMenu.SetActive(false);
+		m_moreMenu.SetActive(false);
+		m_powerUpMenu.SetActive(false);
 		m_blocker.SetActive(false);
 		Invoke ("CloseSplashScreen", 1f);
 	}
@@ -111,16 +115,24 @@ public class MainMenuController : MonoBehaviour {
 	}
 
 	public void OpenPowerUpMenu() {
-		Debug.Log("OpenPowerUpMenu");
 		PopTimeModeBubbles();
 		PopEndlessModeBubbles();
+		m_powerUpMenu.SetActive(true);
 	}
 
+//	public void ClosePowerUpMenu() {
+//		m_powerUpMenu.SetActive(false);
+//	}
+
 	public void OpenMoreMenu() {
-		Debug.Log("OpenMoreMenu");
 		PopTimeModeBubbles();
 		PopEndlessModeBubbles();
+		m_moreMenu.SetActive(true);
 	}
+
+//	public void CloseMoreMenu() {
+//		m_moreMenu.SetActive(false);
+//	}
 
 	private void PopTimeModeBubbles(int p_exempt = -1) {
 		for (int i = 0; i < TimeModeButtons.Length; i++) {

@@ -7,6 +7,10 @@ public class LevelController : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
+
+		if(!GameController.instance.AllowSound) {
+			GetComponent<AudioSource>().enabled = false;
+		}
 	}
 
 	void Start() {
