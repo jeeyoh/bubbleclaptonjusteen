@@ -5,6 +5,7 @@ public class PowerUpMenu : MonoBehaviour {
 
 	public void NoBlackBubbles() {
 		Debug.Log("No black bubbles!");
+		GameController.instance.AddNoBlackBubbles(1);
 	}
 
 	public void RemoveAds() {

@@ -101,7 +101,7 @@ public class GameOverMenuController : MonoBehaviour {
 				if(GameController.instance.playerTimeScore <= _bestTime) {
 					SoundController.instance.PlaySuccessBGM();
 				} else {
-					SoundController.instance.PlayMenuBGM(1.5f);
+					SoundController.instance.PlayMenuBGM(1f);
 				}
 				m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
 			} else {
@@ -135,7 +135,6 @@ public class GameOverMenuController : MonoBehaviour {
 	}
 
 	public void ShareGame() {
-		Debug.Log("Share score!");
 		m_targetBubbleAnimator.Play("Bubble_Pop");
 		SoundController.instance.PlayBubblePoppedSFX();
 		SoundController.instance.StopMusic();

@@ -52,41 +52,47 @@ public class ThirdPartyController : MonoBehaviour
 			Application.LoadLevel("MainScene");
 	}
 
-	public void LikeUsOnFacebook ()
+	public bool LikeUsOnFacebook ()
 	{
-		//Like ( ConfigManager.FACEBOOK_APP_ID );
+		Like ( ConfigManager.FACEBOOK_APP_ID );
 		Application.OpenURL("http://www.facebook.com/pages/Bubble-Pop/844026942305921" );
 
-//		if ( PlayerPrefs.GetInt ( "LIKE_FACEBOOK" ) == 0 )
-//		{
-//			PlayerPrefs.SetInt ( "LIKE_FACEBOOK", 1 );
-//			PlayerPrefs.Save();
-//			//add 1 no black bubble
-//		}
+		if ( PlayerPrefs.GetInt ( "LIKE_FACEBOOK" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "LIKE_FACEBOOK", 1 );
+			PlayerPrefs.Save();
+			return true;
+		} 
+
+		return false;
 	}
 
-	public void FollowUsOnTwitter ()
+	public bool FollowUsOnTwitter ()
 	{
 		Application.OpenURL( "http://twitter.com/BubblePopppGame" );
 
-//		if ( PlayerPrefs.GetInt ( "FOLLOW_TWITTER" ) == 0 )
-//		{
-//			PlayerPrefs.SetInt ( "FOLLOW_TWITTER", 1 );
-//			PlayerPrefs.Save();
-//			//add 1 no black bubble
-//		}
+		if ( PlayerPrefs.GetInt ( "FOLLOW_TWITTER" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "FOLLOW_TWITTER", 1 );
+			PlayerPrefs.Save();
+			return true;
+		}
+
+		return false;
 	}
 
-	public void RateOurApp ()
+	public bool RateOurApp ()
 	{
 		Application.OpenURL( ConfigManager.APP_STORE );
 
-//		if ( PlayerPrefs.GetInt ( "RATE_APP" ) == 0 )
-//		{
-//			PlayerPrefs.SetInt ( "RATE_APP", 1 );
-//			PlayerPrefs.Save();
-//			//add 1 no black bubble
-//		}
+		if ( PlayerPrefs.GetInt ( "RATE_APP" ) == 0 )
+		{
+			PlayerPrefs.SetInt ( "RATE_APP", 1 );
+			PlayerPrefs.Save();
+			return true;
+		}
+
+		return false;
 	}	
 
 	public void ShowRewards ()
