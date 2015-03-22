@@ -59,13 +59,13 @@ public class TwitterController : MonoBehaviour
 
 	public void PostScore ( string score )
 	{
-		TwitterCombo.postStatusUpdate( "I've scored " + score + " in Bubble Poppp!");
+		TwitterCombo.postStatusUpdate( score );
 	}
 
 	public void PostScoreWithImage ( string score, string imagePath )
 	{
 		//var pathToImage = Application.persistentDataPath + "/" + FacebookComboUI.screenshotFilename;
-		TwitterCombo.postStatusUpdate( "I've scored " + score + " in Bubble Poppp!", imagePath);
+		TwitterCombo.postStatusUpdate( score, imagePath);
 	}
 
 	public void CustomRequest ()

@@ -13,7 +13,7 @@ public class ThirdPartyController : MonoBehaviour
 
 	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
 	const string FB_LINK_NAME = "My best time in Bubble Poppp is xxx seconds!";
-	const string FB_IMAGE_LINK = "http://prime31.com/assets/images/prime31logo.png";
+	const string FB_IMAGE_LINK = "http://pbs.twimg.com/profile_images/579612165415444480/yJ4s17Ul.png";
 	const string FB_CAPTION = "Play bubble poppp now!";
 	const string FB_DESCRIPTION = "Fun and addicting bubble popping game!";
 	
@@ -57,36 +57,36 @@ public class ThirdPartyController : MonoBehaviour
 		//Like ( ConfigManager.FACEBOOK_APP_ID );
 		Application.OpenURL("http://www.facebook.com/pages/Bubble-Pop/844026942305921" );
 
-		if ( PlayerPrefs.GetInt ( "LIKE_FACEBOOK" ) == 0 )
-		{
-			PlayerPrefs.SetInt ( "LIKE_FACEBOOK", 1 );
-			PlayerPrefs.Save();
-			//add 1 no black bubble
-		}
+//		if ( PlayerPrefs.GetInt ( "LIKE_FACEBOOK" ) == 0 )
+//		{
+//			PlayerPrefs.SetInt ( "LIKE_FACEBOOK", 1 );
+//			PlayerPrefs.Save();
+//			//add 1 no black bubble
+//		}
 	}
 
 	public void FollowUsOnTwitter ()
 	{
 		Application.OpenURL( "http://twitter.com/BubblePopppGame" );
 
-		if ( PlayerPrefs.GetInt ( "FOLLOW_TWITTER" ) == 0 )
-		{
-			PlayerPrefs.SetInt ( "FOLLOW_TWITTER", 1 );
-			PlayerPrefs.Save();
-			//add 1 no black bubble
-		}
+//		if ( PlayerPrefs.GetInt ( "FOLLOW_TWITTER" ) == 0 )
+//		{
+//			PlayerPrefs.SetInt ( "FOLLOW_TWITTER", 1 );
+//			PlayerPrefs.Save();
+//			//add 1 no black bubble
+//		}
 	}
 
 	public void RateOurApp ()
 	{
 		Application.OpenURL( ConfigManager.APP_STORE );
 
-		if ( PlayerPrefs.GetInt ( "RATE_APP" ) == 0 )
-		{
-			PlayerPrefs.SetInt ( "RATE_APP", 1 );
-			PlayerPrefs.Save();
-			//add 1 no black bubble
-		}
+//		if ( PlayerPrefs.GetInt ( "RATE_APP" ) == 0 )
+//		{
+//			PlayerPrefs.SetInt ( "RATE_APP", 1 );
+//			PlayerPrefs.Save();
+//			//add 1 no black bubble
+//		}
 	}	
 
 	public void ShowRewards ()
