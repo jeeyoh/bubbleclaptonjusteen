@@ -183,9 +183,12 @@ public class GameController : MonoBehaviour {
 		switch(gameState) {
 		case GameState.main:
 			LoadMainScene();
+//			ThirdPartyController.Instance.ShowInterstitial(true);
+//			ThirdPartyController.Instance.ShowBanner(false);
 			break;
 		case GameState.startGame:
 			LoadGameScene();
+			ThirdPartyController.Instance.ShowBanner(false);
 			break;
 		case GameState.playing:
 			Resume();
@@ -195,9 +198,12 @@ public class GameController : MonoBehaviour {
 			break;
 		case GameState.gameOver:
 			GameOver();
+//			ThirdPartyController.Instance.ShowBanner(true);
+//			ThirdPartyController.Instance.ShowInterstitial(true);
 			break;
 		case GameState.playAgain:
-//			PlayAgain();
+			//			PlayAgain();
+			ThirdPartyController.Instance.ShowBanner(false);
 			break;
 		}
 	}

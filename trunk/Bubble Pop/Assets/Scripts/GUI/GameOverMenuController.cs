@@ -26,6 +26,9 @@ public class GameOverMenuController : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
+		
+		ThirdPartyController.Instance.ShowBanner(true);
+		ThirdPartyController.Instance.ShowInterstitial(true);
 	}
 
 	void Start() {
@@ -175,17 +178,31 @@ public class GameOverMenuController : MonoBehaviour {
 
 	public void ShareToFacebook ()
 	{
+		float timeScore = GameController.instance.playerTimeScore;
+
+		if ( timeScore < 0 )
+			timeScore = 0;
+		else
+			timeScore = Mathf.Round(timeScore);
+
 		if ( ThirdPartyController.Instance != null )
 		{
-			ThirdPartyController.Instance.ShareScoreToFacebook(GameController.instance.playerTimeScore);
+			ThirdPartyController.Instance.ShareScoreToFacebook(timeScore);
 		}
 	}
 
 	public void ShareToTwitter ()
 	{
+		float timeScore = GameController.instance.playerTimeScore;
+		
+		if ( timeScore < 0 )
+			timeScore = 0;
+		else
+			timeScore = Mathf.Round(timeScore);
+
 		if ( ThirdPartyController.Instance != null )
 		{
-			ThirdPartyController.Instance.ShareScoreToTwitter(GameController.instance.playerTimeScore);
+			ThirdPartyController.Instance.ShareScoreToTwitter(timeScore);
 		}
 	}
 }

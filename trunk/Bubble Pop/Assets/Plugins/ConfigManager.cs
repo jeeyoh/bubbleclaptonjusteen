@@ -59,6 +59,21 @@ public class ConfigManager
 	
 	#endregion
 
+	#region AdMob
+	
+	#if UNITY_IPHONE
+	public const string ADMOB_BANNER_ID = "ca-app-pub-1399003609876804/1975816575";
+	public const string ADMOB_INTERSTITIAL_ID = "ca-app-pub-1399003609876804/3195197777";
+	#elif UNITY_ANDROID
+	public const string ADMOB_BANNER_ID = "ca-app-pub-1399003609876804/1755490575";
+	public const string ADMOB_INTERSTITIAL_ID = "ca-app-pub-1399003609876804/1718464578";
+	#else
+	public const string ADMOB_BANNER_ID = "NOT iphone or android";
+	public const string ADMOB_INTERSTITIAL_ID = "NOT iphone or android";
+	#endif
+
+	#endregion
+
 	#region App Store
 
 	#if UNITY_ANDROID

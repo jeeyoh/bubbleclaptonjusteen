@@ -5,12 +5,11 @@ using Prime31;
 public class ThirdPartyController : MonoBehaviour 
 {
 	public static ThirdPartyController Instance;
-
+	
 	TwitterController twitterHandler;
 	FacebookController fbHandler;
-
-
-
+	AdmobController admobHandler;
+	
 	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
 	const string FB_LINK_NAME = "My best time in Bubble Poppp is xxx seconds!";
 	const string FB_IMAGE_LINK = "http://pbs.twimg.com/profile_images/579612165415444480/yJ4s17Ul.png";
@@ -36,6 +35,10 @@ public class ThirdPartyController : MonoBehaviour
 
 		fbHandler = FacebookController.Instance;
 		twitterHandler = TwitterController.Instance;
+		admobHandler = AdmobController.Instance;
+
+		AdmobController.Instance.RequestBanner();
+		AdmobController.Instance.RequestInterstitial();
 	}
 
 	void OnDisable ()
@@ -48,8 +51,34 @@ public class ThirdPartyController : MonoBehaviour
 
 	void Start ()
 	{
+
 		if ( Application.loadedLevelName == "Initialization" )
 			Application.LoadLevel("MainScene");
+	}
+
+	public void ShowBanner ( bool willShow )
+	{
+		if ( willShow )
+		{
+			AdmobController.Instance.bannerView.Show();
+		}
+		else
+		{
+			AdmobController.Instance.bannerView.Hide();
+		}
+	}
+
+	public void ShowInterstitial ( bool willShow )
+	{
+		
+		if ( willShow )
+		{
+			AdmobController.Instance.ShowInterstitial();
+		}
+		else
+		{
+			AdmobController.Instance.interstitial.Destroy();
+		}
 	}
 
 	public bool LikeUsOnFacebook ()

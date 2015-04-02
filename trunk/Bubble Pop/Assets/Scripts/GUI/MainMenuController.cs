@@ -21,10 +21,15 @@ public class MainMenuController : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
+
+
 	}
 
 	void Start() {
 		Init ();
+
+		ThirdPartyController.Instance.ShowInterstitial(true);
+		ThirdPartyController.Instance.ShowBanner(false);
 	}
 
 	void Init() {
