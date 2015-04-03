@@ -16,8 +16,11 @@ public class GameHUDController : MonoBehaviour {
 	[SerializeField] private Text m_bubblesText;
 	[SerializeField] private Text m_bubblesCountText;
 	[SerializeField] private GameObject m_returnMenu;
+	[SerializeField] private GameObject m_guide;
+	[SerializeField] private Text m_timeModeGuideText;
+	[SerializeField] private Text m_endlessModeGuideText;
 	[SerializeField] private GameObject m_blocker;
-
+	
 	private float m_timeStopWatch;
 	private bool m_isTimeRunning;
 	private int m_bubblesCount;
@@ -44,7 +47,8 @@ public class GameHUDController : MonoBehaviour {
 
 	private void Init() {
 		m_returnMenu.SetActive(false);
-		m_blocker.SetActive(false);
+		m_blocker.SetActive(true);
+		ShowGuide();
 		SoundController.instance.PlayMenuBGM(1f);
 		if(GameController.instance.gameModeType == GameModeType.timeMode) {
 			m_timeModeImg.SetActive(true);
@@ -57,6 +61,7 @@ public class GameHUDController : MonoBehaviour {
 //		m_startBtn.SetActive(true);
 		ResetTime();
 		InitBubbleCounter();
+		Invoke("HideGuide", 2f);
 	}
 
 	private void InitBubbleCounter() {
@@ -100,6 +105,34 @@ public class GameHUDController : MonoBehaviour {
 			m_bubblesCountText.text = m_bubblesCount + "/" + m_maxBubbles;
 			break;
 		}
+	}
+
+	private void ShowGuide() {
+		if(GameController.instance.gameModeType == GameModeType.timeMode) {
+			m_timeModeGuideText.gameObject.SetActive(true);
+			m_endlessModeGuideText.gameObject.SetActive(false);
+		} else if (GameController.instance.gameModeType == GameModeType.endlessMode) {
+			m_endlessModeGuideText.gameObject.SetActive(true);
+			m_timeModeGuideText.gameObject.SetActive(false);
+			string _guideText = "Don't let those \nbubbles reach "; // 6!";
+			switch(GameController.instance.gameMode) {
+			case GameMode.endlessMode5:
+				_guideText += "6!";
+				break;
+			case GameMode.endlessMode25:
+				_guideText += "26!";
+				break;
+			case GameMode.endlessMode50:
+				_guideText += "51!";
+				break;
+			}
+			m_endlessModeGuideText.text = _guideText;
+		}
+	}
+
+	private void HideGuide() {
+		m_guide.SetActive(false);
+		m_blocker.SetActive(false);
 	}
 
 //	public void StartGame() {

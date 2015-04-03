@@ -53,7 +53,11 @@ public class ThirdPartyController : MonoBehaviour
 	{
 
 		if ( Application.loadedLevelName == "Initialization" )
-			Application.LoadLevel("MainScene");
+			Invoke("LoadMainScene", 2f);
+	}
+
+	private void LoadMainScene() {
+		Application.LoadLevel("MainScene");
 	}
 
 	public void ShowBanner ( bool willShow )

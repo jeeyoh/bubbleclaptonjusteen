@@ -5,8 +5,7 @@ using System.Collections;
 public class MainMenuController : MonoBehaviour {
 
 	public static MainMenuController instance {get; private set;}
-
-	[SerializeField] private GameObject m_splashScreen;
+	
 	[SerializeField] private GameObject m_mainMenu;
 	[SerializeField] private GameObject m_moreMenu;
 	[SerializeField] private GameObject m_powerUpMenu;
@@ -42,17 +41,8 @@ public class MainMenuController : MonoBehaviour {
 			m_soundToggle.sprite = m_soundOff;
 		}
 		m_soundToggle.SetNativeSize();
-		m_splashScreen.SetActive(true);
-		m_mainMenu.SetActive(false);
-		m_moreMenu.SetActive(false);
-		m_powerUpMenu.SetActive(false);
 		m_blocker.SetActive(false);
-		Invoke ("CloseSplashScreen", 1f);
-	}
 
-	public void CloseSplashScreen() {
-		m_splashScreen.SetActive(false);
-		m_mainMenu.SetActive(true);
 		SoundController.instance.SetSounds(isSoundOn, isSoundOn);
 		if(isSoundOn) SoundController.instance.PlayMenuBGM(1f);
 	}

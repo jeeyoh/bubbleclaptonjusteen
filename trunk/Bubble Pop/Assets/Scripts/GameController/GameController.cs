@@ -155,6 +155,7 @@ public class GameController : MonoBehaviour {
 
 		instance = this;
 		DontDestroyOnLoad(this.gameObject);
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
 	
 	void Start() {
