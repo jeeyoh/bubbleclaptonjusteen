@@ -25,16 +25,16 @@ public class AdmobController : MonoBehaviour
 		}
 	}
 
-	void OnGUI ()
-	{
-		GUI.Label(new Rect(10,10,200,30), statsbanner);
-		GUI.Label(new Rect(10,50,200,30), statspopup);
-	}
+//	void OnGUI ()
+//	{
+//		GUI.Label(new Rect(10,10,200,30), statsbanner);
+//		GUI.Label(new Rect(10,50,200,30), statspopup);
+//	}
 
 	public void RequestBanner()
 	{
 		// Create a 320x30 banner at the top of the screen.
-		bannerView = new BannerView(ConfigManager.ADMOB_BANNER_ID, AdSize.SmartBanner, AdPosition.Bottom);
+		bannerView = new BannerView(ConfigManager.ADMOB_BANNER_ID, AdSize.SmartBanner, AdPosition.Top);
 		// Register for ad events.
 		bannerView.AdLoaded += HandleAdLoaded;
 		bannerView.AdFailedToLoad += HandleAdFailedToLoad;

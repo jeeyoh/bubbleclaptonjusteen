@@ -24,6 +24,8 @@ public class GameOverMenuController : MonoBehaviour {
 	
 	[SerializeField] private GameObject m_SharePanel;
 
+	bool isTimeMode = false;
+
 	void Awake() {
 		instance = this;
 		
@@ -58,6 +60,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(false);
 			m_targetBubbleAnimator = m_timeMode50Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.TimeMode50BestTime;
+			isTimeMode = true;
 			break;
 		case GameMode.timeMode100:
 			m_timeMode100Img.SetActive(true);
@@ -65,6 +68,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(false);
 			m_targetBubbleAnimator = m_timeMode100Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.TimeMode100BestTime;
+			isTimeMode = true;
 			break;
 		case GameMode.timeMode150:
 			m_timeMode150Img.SetActive(true);
@@ -72,6 +76,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(false);
 			m_targetBubbleAnimator = m_timeMode150Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.TimeMode150BestTime;
+			isTimeMode = true;
 			break;
 		case GameMode.endlessMode5:
 			m_endlessMode5Img.SetActive(true);
@@ -79,6 +84,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(true);
 			m_targetBubbleAnimator = m_endlessMode5Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.EndlessMode5BestTime;
+			isTimeMode = false;
 			break;
 		case GameMode.endlessMode25:
 			m_endlessMode25Img.SetActive(true);
@@ -86,6 +92,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(true);
 			m_targetBubbleAnimator = m_endlessMode25Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.EndlessMode25BestTime;
+			isTimeMode = false;
 			break;
 		case GameMode.endlessMode50:
 			m_endlessMode50Img.SetActive(true);
@@ -93,6 +100,7 @@ public class GameOverMenuController : MonoBehaviour {
 			m_endlessModePanel.SetActive(true);
 			m_targetBubbleAnimator = m_endlessMode50Img.GetComponent<Animator>();
 			_bestTime = GameController.instance.EndlessMode50BestTime;
+			isTimeMode = false;
 			break;
 		}
 		m_targetBubbleAnimator.SetTrigger("Show");
@@ -178,31 +186,35 @@ public class GameOverMenuController : MonoBehaviour {
 
 	public void ShareToFacebook ()
 	{
-		float timeScore = GameController.instance.playerTimeScore;
-
-		if ( timeScore < 0 )
-			timeScore = 0;
-		else
-			timeScore = Mathf.Round(timeScore);
+		float timeScore =  float.Parse(GameController.instance.playerTimeScore.ToString("F2"));
 
 		if ( ThirdPartyController.Instance != null )
 		{
-			ThirdPartyController.Instance.ShareScoreToFacebook(timeScore);
+			ThirdPartyController.MODE thisMode = ThirdPartyController.MODE.ENDLESS;
+
+			if ( isTimeMode )
+				thisMode = ThirdPartyController.MODE.TIME;
+			else
+				thisMode = ThirdPartyController.MODE.ENDLESS;
+
+			ThirdPartyController.Instance.ShareScoreToFacebook(thisMode, timeScore);
 		}
 	}
 
 	public void ShareToTwitter ()
 	{
-		float timeScore = GameController.instance.playerTimeScore;
-		
-		if ( timeScore < 0 )
-			timeScore = 0;
-		else
-			timeScore = Mathf.Round(timeScore);
+		float timeScore = float.Parse(GameController.instance.playerTimeScore.ToString("F2"));
 
 		if ( ThirdPartyController.Instance != null )
 		{
-			ThirdPartyController.Instance.ShareScoreToTwitter(timeScore);
+			ThirdPartyController.MODE thisMode = ThirdPartyController.MODE.ENDLESS;
+			
+			if ( isTimeMode )
+				thisMode = ThirdPartyController.MODE.TIME;
+			else
+				thisMode = ThirdPartyController.MODE.ENDLESS;
+
+			ThirdPartyController.Instance.ShareScoreToTwitter(thisMode, timeScore);
 		}
 	}
 }
