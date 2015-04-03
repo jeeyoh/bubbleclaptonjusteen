@@ -4,14 +4,24 @@ using Prime31;
 
 public class ThirdPartyController : MonoBehaviour 
 {
+	public enum MODE
+	{
+		ENDLESS,
+		TIME,
+	};
+
 	public static ThirdPartyController Instance;
 	
 	TwitterController twitterHandler;
 	FacebookController fbHandler;
 	AdmobController admobHandler;
-	
+
+	const string ENDLESS_DESCRIPTION = "I did xxx seconds in Bubble Poppp Endless Mode!";
+	const string TIME_DESCRIPTION = "I completed Bubble Poppp Time Mode in xxx seconds!";
+	const string FAILED_DESCRIPTION = "I failed in Bubble Poppp.";
+
 	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
-	const string FB_LINK_NAME = "My best time in Bubble Poppp is xxx seconds!";
+	const string FB_LINK_NAME = "I did xxx seconds in Bubble Poppp Endless Mode!";
 	const string FB_IMAGE_LINK = "http://pbs.twimg.com/profile_images/579612165415444480/yJ4s17Ul.png";
 	const string FB_CAPTION = "Play bubble poppp now!";
 	const string FB_DESCRIPTION = "Fun and addicting bubble popping game!";
@@ -21,6 +31,7 @@ public class ThirdPartyController : MonoBehaviour
 	bool fbLoginToPost = false;
 	bool twitterLoginToPost = false;
 	float gameScore = 0;
+	string gameShareText = "";
 
 	void Awake () 
 	{
@@ -158,10 +169,22 @@ public class ThirdPartyController : MonoBehaviour
 			fbHandler.Login();
 	}
 
-	public void ShareScoreToFacebook ( float score ) 
+	public void ShareScoreToFacebook ( MODE gameMode, float score ) 
 	{
 		gameScore = score;
-		string newDesc =  FB_LINK_NAME.Replace("xxx", gameScore.ToString());
+		string newDesc =  FB_LINK_NAME;
+
+		if ( gameMode == MODE.TIME )
+			newDesc =  TIME_DESCRIPTION.Replace("xxx", gameScore.ToString());
+		else if ( gameMode == MODE.ENDLESS )
+			newDesc =  ENDLESS_DESCRIPTION.Replace("xxx", gameScore.ToString());
+
+		if ( score < 0 )
+			newDesc = FAILED_DESCRIPTION;
+
+		gameShareText = newDesc;
+
+		Debug.Log(newDesc);
 
 		if ( !fbHandler.isSessionValid() )
 		{
@@ -184,10 +207,22 @@ public class ThirdPartyController : MonoBehaviour
 			twitterHandler.Login();
 	}
 
-	public void ShareScoreToTwitter ( float score ) 
+	public void ShareScoreToTwitter ( MODE gameMode, float score )  
 	{
 		gameScore = score;
-		string newDesc =  TWITTER_DESCRIPTION.Replace("xxx", gameScore.ToString());
+		string newDesc =  TWITTER_DESCRIPTION;
+		
+		if ( gameMode == MODE.TIME )
+			newDesc =  TIME_DESCRIPTION.Replace("xxx", gameScore.ToString());
+		else if ( gameMode == MODE.ENDLESS )
+			newDesc =  ENDLESS_DESCRIPTION.Replace("xxx", gameScore.ToString());
+		
+		if ( score < 0 )
+			newDesc = FAILED_DESCRIPTION;
+
+		gameShareText = newDesc;
+
+		Debug.Log(newDesc);
 
 		if ( !twitterHandler.isLoggedIn() )
 		{
@@ -205,9 +240,8 @@ public class ThirdPartyController : MonoBehaviour
 	{
 		if ( fbLoginToPost )
 		{
-			string newDesc =  FB_LINK_NAME.Replace("xxx", gameScore.ToString());
 			fbHandler.ShowShareDialog(FB_LINK,
-			                          newDesc,
+			                          gameShareText,
 			                          FB_IMAGE_LINK,
 			                          FB_CAPTION,
 			                          FB_DESCRIPTION);
@@ -225,8 +259,7 @@ public class ThirdPartyController : MonoBehaviour
 	{
 		if ( twitterLoginToPost )
 		{
-			string newDesc =  TWITTER_DESCRIPTION.Replace("xxx", gameScore.ToString());
-			twitterHandler.PostScore(newDesc);
+			twitterHandler.PostScore(gameShareText);
 			twitterLoginToPost = false;
 		}
 		//		Debug.Log( "Successfully logged in to Twitter: " + username );
