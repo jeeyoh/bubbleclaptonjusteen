@@ -108,6 +108,7 @@ public class GameHUDController : MonoBehaviour {
 	}
 
 	private void ShowGuide() {
+		m_guide.SetActive(true);
 		if(GameController.instance.gameModeType == GameModeType.timeMode) {
 			m_timeModeGuideText.gameObject.SetActive(true);
 			m_endlessModeGuideText.gameObject.SetActive(false);

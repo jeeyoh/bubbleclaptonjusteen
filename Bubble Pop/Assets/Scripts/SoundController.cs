@@ -89,7 +89,7 @@ public class SoundController : MonoBehaviour {
 		audioSource.clip = POPS_ALL_BUBBLES_ON_TIME_CLIP;
 		audioSource.loop = false;
 		audioSource.pitch = 1f;
-		audioSource.volume = 1;
+		audioSource.volume = 0.3f;
 		audioSource.Play();
 	}
 	
