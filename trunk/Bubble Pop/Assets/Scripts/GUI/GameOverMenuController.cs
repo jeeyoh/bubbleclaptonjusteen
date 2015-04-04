@@ -110,9 +110,9 @@ public class GameOverMenuController : MonoBehaviour {
 		case GameModeType.timeMode:
 			if(GameController.instance.timeModeSuccess) {
 				if(GameController.instance.playerTimeScore <= _bestTime) {
-					SoundController.instance.PlaySuccessBGM();
+					SoundController.instance.PlayNewBestTimeBGM();
 				} else {
-					SoundController.instance.PlayMenuBGM(1f);
+					SoundController.instance.PlaySuccessBGM();
 				}
 				m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
 			} else {
@@ -130,8 +130,7 @@ public class GameOverMenuController : MonoBehaviour {
 			if(GameController.instance.playerTimeScore >= _bestTime) {
 				SoundController.instance.PlayNewBestTimeBGM();
 			} else {
-				SoundController.instance.PlayMenuBGM(1);
-//				SoundController.instance.PlayGameOverBGM();
+				SoundController.instance.PlaySuccessBGM();
 			}
 			m_timeScoreLbl.text = GameController.instance.playerTimeScore.ToString("F2");
 			m_bestTimeScoreLbl.text = _bestTime.ToString("F2");
