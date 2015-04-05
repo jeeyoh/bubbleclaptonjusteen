@@ -9,6 +9,7 @@ public class MainMenuController : MonoBehaviour {
 	[SerializeField] private GameObject m_mainMenu;
 	[SerializeField] private GameObject m_moreMenu;
 	[SerializeField] private GameObject m_powerUpMenu;
+	[SerializeField] private GameObject m_quitMenu;
 	[SerializeField] private GameObject[] TimeModeButtons = default ( GameObject[] );
 	[SerializeField] private GameObject[] EndlessModeButtons = default ( GameObject[] );
 	[SerializeField] private Image m_soundToggle;
@@ -20,8 +21,6 @@ public class MainMenuController : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
-
-
 	}
 
 	void Start() {
@@ -29,6 +28,12 @@ public class MainMenuController : MonoBehaviour {
 
 		ThirdPartyController.Instance.ShowInterstitial(true);
 		ThirdPartyController.Instance.ShowBanner(false);
+	}
+
+	void Update() {
+		if(Input.GetKey(KeyCode.Escape)) {
+			if(!m_quitMenu.activeSelf) OpenQuitMenu();
+		}
 	}
 
 	void Init() {
@@ -41,6 +46,7 @@ public class MainMenuController : MonoBehaviour {
 			m_soundToggle.sprite = m_soundOff;
 		}
 		m_soundToggle.SetNativeSize();
+		m_quitMenu.SetActive(false);
 		m_blocker.SetActive(false);
 
 		SoundController.instance.SetSounds(isSoundOn, isSoundOn);
@@ -128,6 +134,20 @@ public class MainMenuController : MonoBehaviour {
 //	public void CloseMoreMenu() {
 //		m_moreMenu.SetActive(false);
 //	}
+	
+	public void OpenQuitMenu() {
+		m_quitMenu.SetActive(true);
+		m_blocker.SetActive(true);
+	}
+
+	public void CloseQuitMenu() {
+		m_quitMenu.SetActive(false);
+		m_blocker.SetActive(false);
+	}
+
+	public void QuitApplication() {
+		Application.Quit();
+	}
 
 	private void PopTimeModeBubbles(int p_exempt = -1) {
 		for (int i = 0; i < TimeModeButtons.Length; i++) {
