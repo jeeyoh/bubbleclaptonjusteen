@@ -11,7 +11,8 @@ public class ThirdPartyController : MonoBehaviour
 	};
 
 	public static ThirdPartyController Instance;
-	
+
+	AnalyticsController analyticsHandler;
 	TwitterController twitterHandler;
 	FacebookController fbHandler;
 	AdmobController admobHandler;
@@ -22,7 +23,7 @@ public class ThirdPartyController : MonoBehaviour
 
 	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
 	const string FB_LINK_NAME = "I did xxx seconds in Bubble Poppp Endless Mode!";
-	const string FB_IMAGE_LINK = "http://pbs.twimg.com/profile_images/579612165415444480/yJ4s17Ul.png";
+	const string FB_IMAGE_LINK = "https://pbs.twimg.com/profile_images/583975470179332097/rF3HcnZr.jpg";
 	const string FB_CAPTION = "Play bubble poppp now!";
 	const string FB_DESCRIPTION = "Fun and addicting bubble popping game!";
 	
@@ -44,6 +45,7 @@ public class ThirdPartyController : MonoBehaviour
 		TwitterManager.loginSucceededEvent += twitterloginSucceeded;
 		TwitterManager.loginFailedEvent += twitterloginFailed;
 
+		analyticsHandler = AnalyticsController.Instance;
 		fbHandler = FacebookController.Instance;
 		twitterHandler = TwitterController.Instance;
 		admobHandler = AdmobController.Instance;
@@ -59,9 +61,15 @@ public class ThirdPartyController : MonoBehaviour
 		TwitterManager.loginSucceededEvent -= twitterloginSucceeded;
 		TwitterManager.loginFailedEvent -= twitterloginFailed;
 	}
+		
+	void OnDestroy ()
+	{
+		analyticsHandler.LogUserEvent("GameEnded");
+	}
 
 	void Start ()
 	{
+		analyticsHandler.LogUserEvent("GameStarted");
 
 		if ( Application.loadedLevelName == "Initialization" )
 			Invoke("LoadMainScene", 2f);
@@ -183,8 +191,10 @@ public class ThirdPartyController : MonoBehaviour
 			newDesc = FAILED_DESCRIPTION;
 
 		gameShareText = newDesc;
-
+		
+		#if UNITY_EDITOR
 		Debug.Log(newDesc);
+		#endif
 
 		if ( !fbHandler.isSessionValid() )
 		{
@@ -222,7 +232,9 @@ public class ThirdPartyController : MonoBehaviour
 
 		gameShareText = newDesc;
 
+		#if UNITY_EDITOR
 		Debug.Log(newDesc);
+		#endif
 
 		if ( !twitterHandler.isLoggedIn() )
 		{
