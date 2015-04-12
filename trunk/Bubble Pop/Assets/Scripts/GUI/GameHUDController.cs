@@ -61,7 +61,7 @@ public class GameHUDController : MonoBehaviour {
 //		m_startBtn.SetActive(true);
 		ResetTime();
 		InitBubbleCounter();
-		Invoke("HideGuide", 2f);
+//		Invoke("HideGuide", 2f);
 	}
 
 	private void InitBubbleCounter() {
@@ -129,6 +129,12 @@ public class GameHUDController : MonoBehaviour {
 			}
 			m_endlessModeGuideText.text = _guideText;
 		}
+	}
+
+	public void StartGame() {
+		HideGuide();
+		BubbleCreator.instance.StartGame();
+		StartTime();
 	}
 
 	private void HideGuide() {

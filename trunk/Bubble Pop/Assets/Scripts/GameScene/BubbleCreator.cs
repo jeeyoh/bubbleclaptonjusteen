@@ -135,26 +135,38 @@ public class BubbleCreator : MonoBehaviour {
 		endlessModeSettings.bubbleTimeInterval -= endlessModeSettings.addtionalSpeedPerIncrease;
 	}
 
-	public void StartTimeMode(int p_goodBubblesCount, int p_badBubblesCount) {
+	public void SetTimeModeSetttings(int p_goodBubblesCount, int p_badBubblesCount) {
 		timeModeSettings.goodBubblesCount = p_goodBubblesCount;
 		timeModeSettings.badBubblesCount = p_badBubblesCount;
-		CreateStartingBubbles(p_goodBubblesCount, BubbleType.goodBubble);
-		CreateStartingBubbles(p_badBubblesCount, BubbleType.badBubble);
+//		CreateStartingBubbles(p_goodBubblesCount, BubbleType.goodBubble);
+//		CreateStartingBubbles(p_badBubblesCount, BubbleType.badBubble);
 		generateBubbles = false;
 	}
 
-	public void StartEndlessMode(EndlessModeSettings p_settings) {
+	public void SetEndlessModeSettings(EndlessModeSettings p_settings) {
 		endlessModeSettings.bubbleTimeInterval = p_settings.bubbleTimeInterval;
 		endlessModeSettings.addtionalSpeedPerIncrease = p_settings.addtionalSpeedPerIncrease;
 		endlessModeSettings.intervalBetweenSpeedIncrease = p_settings.intervalBetweenSpeedIncrease;
 		endlessModeSettings.maxGoodBubblesAllowed = p_settings.maxGoodBubblesAllowed;
 		endlessModeSettings.maxBadBubbles = p_settings.maxBadBubbles;
-
 		m_origBubbleTimeInterval = endlessModeSettings.bubbleTimeInterval;
-		m_timeOfNextBubble = Time.time;
-		m_timeUntilNextSpeedIncrease = endlessModeSettings.intervalBetweenSpeedIncrease + Time.time;
-		generateBubbles = true;
-		m_checkGoodBubblesCount = true;
+//		m_timeOfNextBubble = Time.time;
+//		m_timeUntilNextSpeedIncrease = endlessModeSettings.intervalBetweenSpeedIncrease + Time.time;
+//		generateBubbles = true;
+//		m_checkGoodBubblesCount = true;
+	}
+
+	public void StartGame() {
+		if(GameController.instance.gameModeType == GameModeType.timeMode) {
+			CreateStartingBubbles(timeModeSettings.goodBubblesCount, BubbleType.goodBubble);
+			CreateStartingBubbles(timeModeSettings.badBubblesCount, BubbleType.badBubble);
+		} else if(GameController.instance.gameModeType == GameModeType.endlessMode) {
+			m_timeOfNextBubble = Time.time;
+			m_timeUntilNextSpeedIncrease = endlessModeSettings.intervalBetweenSpeedIncrease + Time.time;
+			generateBubbles = true;
+			m_checkGoodBubblesCount = true;
+		}
+		if(GameController.instance.AllowSound) this.GetComponent<AudioSource>().Play();
 	}
 
 	public void CreateStartingBubbles(int p_count, BubbleType p_bubbleType) {
@@ -167,6 +179,7 @@ public class BubbleCreator : MonoBehaviour {
 			CreateBubble(p_bubbleType);
 			yield return new WaitForSeconds(0.05f);
 		}
+		yield return new WaitForSeconds(1f);
 		m_checkGoodBubblesCount = true;
 	}
 
