@@ -1,11 +1,7 @@
 // Copyright 2014 Google Inc. All Rights Reserved.
 
-#import <Foundation/Foundation.h>
-
-#import "GADRequest.h"
-
-/// Constant to pass to the addTestDevice method to getting test ads on the simulator.
-#define GADU_SIMULATOR_ID @"SIMULATOR"
+@import Foundation;
+@import GoogleMobileAds;
 
 /// Genders to help deliver more relevant ads.
 typedef NS_ENUM(NSInteger, GADUGender) {
@@ -21,13 +17,13 @@ typedef NS_ENUM(NSInteger, GADUGender) {
 - (id)init;
 
 /// An array of device identifiers to receive test ads.
-@property(nonatomic, retain) NSMutableArray *testDevices;
+@property(nonatomic, strong) NSMutableArray *testDevices;
 
 /// Words or phrase describing the current activity of the user.
-@property(nonatomic, retain) NSMutableArray *keywords;
+@property(nonatomic, strong) NSMutableArray *keywords;
 
 /// The user's birthday may be used to deliver more relevant ads.
-@property(nonatomic, retain) NSDate *birthday;
+@property(nonatomic, strong) NSDate *birthday;
 
 /// The user's gender may be used to deliver more relevant ads.
 @property(nonatomic, assign) GADGender *gender;
@@ -38,7 +34,7 @@ typedef NS_ENUM(NSInteger, GADUGender) {
 @property(nonatomic, assign) BOOL tagForChildDirectedTreatment;
 
 /// Extra parameters to be sent up in the ad request.
-@property(nonatomic, retain) NSMutableDictionary *extras;
+@property(nonatomic, strong) NSMutableDictionary *extras;
 
 /// Convenience method for adding a single test device.
 - (void)addTestDevice:(NSString *)deviceID;

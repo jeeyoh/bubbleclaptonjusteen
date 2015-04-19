@@ -1,18 +1,15 @@
 // Copyright 2014 Google Inc. All Rights Reserved.
 
-#import <CoreGraphics/CoreGraphics.h>
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+@import CoreGraphics;
+@import Foundation;
+@import GoogleMobileAds;
+@import UIKit;
 
 #import "GADUInterstitial.h"
 
-#import "GADAdMobExtras.h"
-#import "GADAdSize.h"
-#import "GADInterstitial.h"
-#import "GADInterstitialDelegate.h"
 #import "UnityAppController.h"
 
-@interface GADUInterstitial ()<GADInterstitialDelegate>
+@interface GADUInterstitial () <GADInterstitialDelegate>
 @end
 
 @implementation GADUInterstitial
@@ -35,8 +32,6 @@
 
 - (void)dealloc {
   _interstitial.delegate = nil;
-  [_interstitial release];
-  [super dealloc];
 }
 
 - (void)loadRequest:(GADRequest *)request {
