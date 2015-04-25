@@ -3,15 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Prime31;
 
+
 public class TwitterComboUI : MonoBehaviourGUI
 {
 #if UNITY_IPHONE || UNITY_ANDROID
 	void Start()
 	{
 		Application.CaptureScreenshot( FacebookComboUI.screenshotFilename );
-
-		// Replace these with your own CONSUMER_KEY and CONSUMER_SECRET!
-		TwitterCombo.init( ConfigManager.TWITTER_CONSUMER_KEY , ConfigManager.TWITTER_CONSUMER_SECRET );
 	}
 
 
@@ -29,11 +27,11 @@ public class TwitterComboUI : MonoBehaviourGUI
 	{
 		beginColumn();
 
-//		if( GUILayout.Button( "Initialize Twitter" ) )
-//		{
-//			// Replace these with your own CONSUMER_KEY and CONSUMER_SECRET!
-//			TwitterCombo.init( ConfigManager.TWITTE , "lZDRqdzWJq3cATgfXMDjk0kaYajsP9450wKXYXAnpw" );
-//		}
+		if( GUILayout.Button( "Initialize Twitter" ) )
+		{
+			// Replace these with your own CONSUMER_KEY and CONSUMER_SECRET!
+			TwitterCombo.init( "I1hxdhKOrQm6IsR0szOxQ", "lZDRqdzWJq3cATgfXMDjk0kaYajsP9450wKXYXAnpw" );
+		}
 
 
 		if( GUILayout.Button( "Login with Oauth" ) )
