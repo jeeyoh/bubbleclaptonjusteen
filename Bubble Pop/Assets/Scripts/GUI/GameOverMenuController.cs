@@ -19,6 +19,7 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private Text m_timeScoreLbl;
 	[SerializeField] private Text m_bestTimeScoreLbl;
 	[SerializeField] private GameObject m_blocker;
+	[SerializeField] private GameObject m_rewardPopup;
 
 	private Animator m_targetBubbleAnimator;
 	
@@ -36,6 +37,7 @@ public class GameOverMenuController : MonoBehaviour {
 	void Start() {
 		Init() ;
 		SetScore();
+		Invoke("CheckForReward", 1f);
 	}
 
 	private void Init() {
@@ -48,6 +50,27 @@ public class GameOverMenuController : MonoBehaviour {
 		m_endlessMode25Img.SetActive(false);
 		m_endlessMode50Img.SetActive(false);
 		m_blocker.SetActive(false);
+		m_rewardPopup.SetActive(false);
+	}
+
+	private void CheckForReward() {
+		GameModeType _gameModeType = GameController.instance.gameModeType;
+		switch(_gameModeType) {
+		case GameModeType.timeMode:
+			if(GameController.instance.TimeModeSucceedingWins >= 3) {
+				GameController.instance.TimeModeSucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		case GameModeType.endlessMode:
+			if(GameController.instance.EndlessModeSucceedingWins >= 3) {
+				GameController.instance.EndlessModeSucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		}
 	}
 
 	private void SetScore() {
@@ -142,6 +165,10 @@ public class GameOverMenuController : MonoBehaviour {
 //		m_targetBubbleAnimator.SetTrigger("Pop");
 //		GameController.instance.ChangeState(GameState.main);
 		StartCoroutine(ChangeState(GameState.main, 1f));
+	}
+
+	public void CloseRewardPopup() {
+		m_rewardPopup.SetActive(false);
 	}
 
 	public void ShareGame() {

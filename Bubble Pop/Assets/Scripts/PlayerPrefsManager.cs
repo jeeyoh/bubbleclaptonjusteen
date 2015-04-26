@@ -12,6 +12,8 @@ public static class PlayerPrefsManager {
 	public const string ENDLESS_MODE_25_BEST_TIME = "EndlessMode25BestTime";
 	public const string ENDLESS_MODE_50_BEST_TIME = "EndlessMode50BestTime";
 	public const string NO_BLACK_BUBBLES_COUNT = "NoBlackBubblesCount";
+	public const string TIME_MODE_SUCCEEDING_WINS = "TimeModeSucceedingWins";
+	public const string ENDLESS_MODE_SUCCEEDING_WINS = "EndlessModeSucceedingWins";
 
 	public static bool GetBool (string p_key, bool p_defaultValue) {
 		if(PlayerPrefs.HasKey(p_key)) {

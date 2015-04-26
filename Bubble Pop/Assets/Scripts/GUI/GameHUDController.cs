@@ -115,16 +115,16 @@ public class GameHUDController : MonoBehaviour {
 		} else if (GameController.instance.gameModeType == GameModeType.endlessMode) {
 			m_endlessModeGuideText.gameObject.SetActive(true);
 			m_timeModeGuideText.gameObject.SetActive(false);
-			string _guideText = "Don't let those \nbubbles reach "; // 6!";
+			string _guideText = "Don't let those \nbubbles exceed "; // 5!";
 			switch(GameController.instance.gameMode) {
 			case GameMode.endlessMode5:
-				_guideText += "6!";
+				_guideText += "5!";
 				break;
 			case GameMode.endlessMode25:
-				_guideText += "26!";
+				_guideText += "25!";
 				break;
 			case GameMode.endlessMode50:
-				_guideText += "51!";
+				_guideText += "50!";
 				break;
 			}
 			m_endlessModeGuideText.text = _guideText;

@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour {
 	
 	[SerializeField] private GameObject m_mainMenu;
 	[SerializeField] private GameObject m_moreMenu;
+	[SerializeField] private GameObject m_rewardPopup;
 	[SerializeField] private GameObject m_powerUpMenu;
 	[SerializeField] private GameObject m_quitMenu;
 	[SerializeField] private GameObject[] TimeModeButtons = default ( GameObject[] );
@@ -46,6 +47,7 @@ public class MainMenuController : MonoBehaviour {
 			m_soundToggle.sprite = m_soundOff;
 		}
 		m_soundToggle.SetNativeSize();
+		m_rewardPopup.SetActive(false);
 		m_quitMenu.SetActive(false);
 		m_blocker.SetActive(false);
 
@@ -134,6 +136,14 @@ public class MainMenuController : MonoBehaviour {
 //	public void CloseMoreMenu() {
 //		m_moreMenu.SetActive(false);
 //	}
+
+	public void OpenRewardPopup() {
+		m_rewardPopup.SetActive(true);
+	}
+
+	public void CloseRewardPopup() {
+		m_rewardPopup.SetActive(false);
+	}
 	
 	public void OpenQuitMenu() {
 		m_quitMenu.SetActive(true);
