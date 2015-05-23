@@ -41,7 +41,7 @@ public class GameOverMenuController : MonoBehaviour {
 	}
 
 	private void Init() {
-//		SoundController.instance.PlayMenuBGM();
+//		SoundController.instance. ();
 		m_failedPanel.SetActive(false);
 		m_timeMode50Img.SetActive(false);
 		m_timeMode100Img.SetActive(false);
@@ -54,18 +54,46 @@ public class GameOverMenuController : MonoBehaviour {
 	}
 
 	private void CheckForReward() {
-		GameModeType _gameModeType = GameController.instance.gameModeType;
-		switch(_gameModeType) {
-		case GameModeType.timeMode:
-			if(GameController.instance.TimeModeSucceedingWins >= 3) {
-				GameController.instance.TimeModeSucceedingWins = 0;
+		GameMode _gameMode = GameController.instance.gameMode;
+		switch (_gameMode) {
+		case GameMode.timeMode50:
+			if(GameController.instance.TimeMode50SucceedingWins >= 3) {
+				GameController.instance.TimeMode50SucceedingWins = 0;
 				GameController.instance.AddNoBlackBubbles(1);
 				m_rewardPopup.SetActive(true);
 			}
 			break;
-		case GameModeType.endlessMode:
-			if(GameController.instance.EndlessModeSucceedingWins >= 3) {
-				GameController.instance.EndlessModeSucceedingWins = 0;
+		case GameMode.timeMode100:
+			if(GameController.instance.TimeMode100SucceedingWins >= 3) {
+				GameController.instance.TimeMode100SucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		case GameMode.timeMode150:
+			if(GameController.instance.TimeMode150SucceedingWins >= 3) {
+				GameController.instance.TimeMode150SucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		case GameMode.endlessMode5:
+			if(GameController.instance.EndlessMode5SucceedingWins >= 3) {
+				GameController.instance.EndlessMode5SucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		case GameMode.endlessMode25:
+			if(GameController.instance.EndlessMode25SucceedingWins >= 3) {
+				GameController.instance.EndlessMode25SucceedingWins = 0;
+				GameController.instance.AddNoBlackBubbles(1);
+				m_rewardPopup.SetActive(true);
+			}
+			break;
+		case GameMode.endlessMode50:
+			if(GameController.instance.EndlessMode50SucceedingWins >= 3) {
+				GameController.instance.EndlessMode50SucceedingWins = 0;
 				GameController.instance.AddNoBlackBubbles(1);
 				m_rewardPopup.SetActive(true);
 			}
@@ -152,6 +180,8 @@ public class GameOverMenuController : MonoBehaviour {
 		case GameModeType.endlessMode:
 			if(GameController.instance.playerTimeScore >= _bestTime) {
 				SoundController.instance.PlayNewBestTimeBGM();
+//			} else if(GameController.instance.isBlackBubbleClicked) {
+//				SoundController.instance.PlayGameOverBGM();
 			} else {
 				SoundController.instance.PlaySuccessBGM();
 			}

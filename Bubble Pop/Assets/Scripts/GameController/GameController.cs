@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour {
 	public bool allowAds;
 	public bool allowSound;
 	public bool timeModeSuccess;
+	public bool isBlackBubbleClicked;
 	public float playerTimeScore;
 	public float timeMode50BestTime;
 	public float timeMode100BestTime;
@@ -43,9 +44,18 @@ public class GameController : MonoBehaviour {
 	public float endlessMode50BestTime;
 	public bool isPaused = false;
 	public bool deletePlayerPrefs;
-	public int noBlackBubblesCount;
-	public int timeModeSucceedingWins;
-	public int endlessModeSucceedingWins;
+	public int noBlackBubblesCountTimeMode50;
+	public int noBlackBubblesCountTimeMode100;
+	public int noBlackBubblesCountTimeMode150;
+	public int noBlackBubblesCountEndlessMode5;
+	public int noBlackBubblesCountEndlessMode25;
+	public int noBlackBubblesCountEndlessMode50;
+	public int timeMode50SucceedingWins;
+	public int timeMode100SucceedingWins;
+	public int timeMode150SucceedingWins;
+	public int endlessMode5SucceedingWins;
+	public int endlessMode25SucceedingWins;
+	public int endlessMode50SucceedingWins;
 
 	public delegate void GameOverEvent();
 	public event GameOverEvent OnGameOver;
@@ -138,36 +148,135 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public int NoBlackBubblesCount {
+	public int NoBlackBubblesCountTimeMode50 {
 		get {
-			noBlackBubblesCount = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT, 0);
-			return noBlackBubblesCount;
+			noBlackBubblesCountTimeMode50 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_50, 0);
+			return noBlackBubblesCountTimeMode50;
 		}
 		set {
-			noBlackBubblesCount = value;
-			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT, value);
+			noBlackBubblesCountTimeMode50 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_50, value);
 		}
 	}
 
-	public int TimeModeSucceedingWins {
+	public int NoBlackBubblesCountTimeMode100 {
 		get {
-			timeModeSucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.TIME_MODE_SUCCEEDING_WINS, 0);
-			return timeModeSucceedingWins;
+			noBlackBubblesCountTimeMode100 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_100, 0);
+			return noBlackBubblesCountTimeMode100;
 		}
 		set {
-			timeModeSucceedingWins = value;
-			PlayerPrefsManager.SetInt(PlayerPrefsManager.TIME_MODE_SUCCEEDING_WINS, value);
+			noBlackBubblesCountTimeMode100 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_100, value);
 		}
 	}
 
-	public int EndlessModeSucceedingWins {
+	public int NoBlackBubblesCountTimeMode150 {
 		get {
-			endlessModeSucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.ENDLESS_MODE_SUCCEEDING_WINS, 0);
-			return endlessModeSucceedingWins;
+			noBlackBubblesCountTimeMode150 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_150, 0);
+			return noBlackBubblesCountTimeMode150;
 		}
 		set {
-			endlessModeSucceedingWins = value;
-			PlayerPrefsManager.SetInt(PlayerPrefsManager.ENDLESS_MODE_SUCCEEDING_WINS, value);
+			noBlackBubblesCountTimeMode150 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_TIME_MODE_150, value);
+		}
+	}
+
+	public int NoBlackBubblesCountEndlessMode5 {
+		get {
+			noBlackBubblesCountEndlessMode5 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_5, 0);
+			return noBlackBubblesCountEndlessMode5;
+		}
+		set {
+			noBlackBubblesCountEndlessMode5 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_5, value);
+		}
+	}
+
+	public int NoBlackBubblesCountEndlessMode25 {
+		get {
+			noBlackBubblesCountEndlessMode25 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_25, 0);
+			return noBlackBubblesCountEndlessMode25;
+		}
+		set {
+			noBlackBubblesCountEndlessMode25 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_25, value);
+		}
+	}
+
+	public int NoBlackBubblesCountEndlessMode50 {
+		get {
+			noBlackBubblesCountEndlessMode50 = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_50, 0);
+			return noBlackBubblesCountEndlessMode50;
+		}
+		set {
+			noBlackBubblesCountEndlessMode50 = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_ENDLESS_MODE_50, value);
+		}
+	}
+
+	public int TimeMode50SucceedingWins {
+		get {
+			timeMode50SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.TIME_MODE_50_SUCCEEDING_WINS, 0);
+			return timeMode50SucceedingWins;
+		}
+		set {
+			timeMode50SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.TIME_MODE_50_SUCCEEDING_WINS, value);
+		}
+	}
+
+	public int TimeMode100SucceedingWins {
+		get {
+			timeMode100SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.TIME_MODE_100_SUCCEEDING_WINS, 0);
+			return timeMode100SucceedingWins;
+		}
+		set {
+			timeMode100SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.TIME_MODE_100_SUCCEEDING_WINS, value);
+		}
+	}
+
+	public int TimeMode150SucceedingWins {
+		get {
+			timeMode150SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.TIME_MODE_150_SUCCEEDING_WINS, 0);
+			return timeMode150SucceedingWins;
+		}
+		set {
+			timeMode150SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.TIME_MODE_150_SUCCEEDING_WINS, value);
+		}
+	}
+
+	public int EndlessMode5SucceedingWins {
+		get {
+			endlessMode5SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.ENDLESS_MODE_5_SUCCEEDING_WINS, 0);
+			return endlessMode5SucceedingWins;
+		}
+		set {
+			endlessMode5SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.ENDLESS_MODE_5_SUCCEEDING_WINS, value);
+		}
+	}
+
+	public int EndlessMode25SucceedingWins {
+		get {
+			endlessMode25SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.ENDLESS_MODE_25_SUCCEEDING_WINS, 0);
+			return endlessMode25SucceedingWins;
+		}
+		set {
+			endlessMode25SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.ENDLESS_MODE_25_SUCCEEDING_WINS, value);
+		}
+	}
+
+	public int EndlessMode50SucceedingWins {
+		get {
+			endlessMode50SucceedingWins = PlayerPrefsManager.GetInt(PlayerPrefsManager.ENDLESS_MODE_50_SUCCEEDING_WINS, 0);
+			return endlessMode50SucceedingWins;
+		}
+		set {
+			endlessMode50SucceedingWins = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.ENDLESS_MODE_50_SUCCEEDING_WINS, value);
 		}
 	}
 
@@ -196,9 +305,18 @@ public class GameController : MonoBehaviour {
 		endlessMode5BestTime = EndlessMode5BestTime;
 		endlessMode25BestTime = EndlessMode25BestTime;
 		endlessMode50BestTime = EndlessMode50BestTime;
-		noBlackBubblesCount = NoBlackBubblesCount;
-		timeModeSucceedingWins = TimeModeSucceedingWins;
-		endlessModeSucceedingWins = EndlessModeSucceedingWins;
+		noBlackBubblesCountTimeMode50 = NoBlackBubblesCountTimeMode50;
+		noBlackBubblesCountTimeMode100 = NoBlackBubblesCountTimeMode100;
+		noBlackBubblesCountTimeMode150 = NoBlackBubblesCountTimeMode150;
+		noBlackBubblesCountEndlessMode5 = NoBlackBubblesCountEndlessMode5;
+		noBlackBubblesCountEndlessMode25 = NoBlackBubblesCountEndlessMode25;
+		noBlackBubblesCountEndlessMode50 = NoBlackBubblesCountEndlessMode50;
+		timeMode50SucceedingWins = TimeMode50SucceedingWins;
+		timeMode100SucceedingWins = TimeMode100SucceedingWins;
+		timeMode150SucceedingWins = TimeMode150SucceedingWins;
+		endlessMode5SucceedingWins = EndlessMode5SucceedingWins;
+		endlessMode25SucceedingWins = EndlessMode25SucceedingWins;
+		endlessMode50SucceedingWins = EndlessMode50SucceedingWins;
 	}
 
 	public void ChangeState(GameState p_newState) {
@@ -241,6 +359,7 @@ public class GameController : MonoBehaviour {
 
 	private void LoadGameScene() {
 		timeModeSuccess = false;
+		isBlackBubbleClicked = false;
 		StartCoroutine(LoadScene("GameScene", 0));
 	}
 
@@ -272,9 +391,9 @@ public class GameController : MonoBehaviour {
 		case GameModeType.timeMode:
 			if(timeModeSuccess) {
 				playerTimeScore = GameHUDController.instance.GetTime();
-				TimeModeSucceedingWins++;
 				switch(gameMode) {
 				case GameMode.timeMode50:
+					TimeMode50SucceedingWins++;
 					if(TimeMode50BestTime == -1) {
 						TimeMode50BestTime = playerTimeScore;
 					} else {
@@ -282,6 +401,7 @@ public class GameController : MonoBehaviour {
 					}
 					break;
 				case GameMode.timeMode100:
+					TimeMode100SucceedingWins++;
 					if(TimeMode100BestTime == -1) {
 						TimeMode100BestTime = playerTimeScore;
 					} else {
@@ -289,6 +409,7 @@ public class GameController : MonoBehaviour {
 					}
 					break;
 				case GameMode.timeMode150:
+					TimeMode150SucceedingWins++;
 					if(TimeMode150BestTime == -1) {
 						TimeMode150BestTime = playerTimeScore;
 					} else {
@@ -304,7 +425,7 @@ public class GameController : MonoBehaviour {
 			playerTimeScore = GameHUDController.instance.GetTime();
 			switch(gameMode) {
 			case GameMode.endlessMode5:
-				if(playerTimeScore >= 35f) EndlessModeSucceedingWins++;
+				if(playerTimeScore >= 35f) EndlessMode5SucceedingWins++;
 				if(EndlessMode5BestTime == 0) {
 					EndlessMode5BestTime = playerTimeScore;
 				} else {
@@ -312,7 +433,7 @@ public class GameController : MonoBehaviour {
 				}
 				break;
 			case GameMode.endlessMode25:
-				if(playerTimeScore >= 40f) EndlessModeSucceedingWins++;
+				if(playerTimeScore >= 40f) EndlessMode25SucceedingWins++;
 				if(EndlessMode25BestTime == 0) {
 					EndlessMode25BestTime = playerTimeScore;
 				} else {
@@ -320,7 +441,7 @@ public class GameController : MonoBehaviour {
 				}
 				break;
 			case GameMode.endlessMode50:
-				if(playerTimeScore >= 45f) EndlessModeSucceedingWins++;
+				if(playerTimeScore >= 45f) EndlessMode50SucceedingWins++;
 				if(EndlessMode50BestTime == 0) {
 					EndlessMode50BestTime = playerTimeScore;
 				} else {
@@ -333,16 +454,69 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void AddNoBlackBubbles(int p_count) {
-		NoBlackBubblesCount += p_count;
+		switch (gameMode) {
+		case GameMode.timeMode50:
+			NoBlackBubblesCountTimeMode50 += p_count;
+			break;
+		case GameMode.timeMode100:
+			NoBlackBubblesCountTimeMode100 += p_count;
+			break;
+		case GameMode.timeMode150:
+			NoBlackBubblesCountTimeMode150 += p_count;
+			break;
+		case GameMode.endlessMode5:
+			NoBlackBubblesCountEndlessMode5 += p_count;
+			break;
+		case GameMode.endlessMode25:
+			NoBlackBubblesCountEndlessMode25 += p_count;
+			break;
+		case GameMode.endlessMode50:
+			NoBlackBubblesCountEndlessMode50 += p_count;
+			break;
+		}
 	}
 
 	public bool IsNoBlackBubbles() {
-		if(NoBlackBubblesCount > 0) {
-			NoBlackBubblesCount--;
-			return true;
-		} else {
-			return false;
+		switch (gameMode) {
+		case GameMode.timeMode50:
+			if(NoBlackBubblesCountTimeMode50 > 0) {
+				NoBlackBubblesCountTimeMode50--;
+				return true;
+			} 
+			break;
+		case GameMode.timeMode100:
+			if(NoBlackBubblesCountTimeMode100 > 0) {
+				NoBlackBubblesCountTimeMode100--;
+				return true;
+			} 
+			break;
+		case GameMode.timeMode150:
+			if(NoBlackBubblesCountTimeMode150 > 0) {
+				NoBlackBubblesCountTimeMode150--;
+				return true;
+			} 
+			break;
+		case GameMode.endlessMode5:
+			if(NoBlackBubblesCountEndlessMode5 > 0) {
+				NoBlackBubblesCountEndlessMode5--;
+				return true;
+			} 
+			break;
+		case GameMode.endlessMode25:
+			if(NoBlackBubblesCountEndlessMode25 > 0) {
+				NoBlackBubblesCountEndlessMode25--;
+				return true;
+			} 
+			break;
+		case GameMode.endlessMode50:
+			if(NoBlackBubblesCountEndlessMode50 > 0) {
+				NoBlackBubblesCountEndlessMode50--;
+				return true;
+			} 
+			break;
 		}
+
+		return false;
 	}
 
 	public void TimeModeSuccess() {
