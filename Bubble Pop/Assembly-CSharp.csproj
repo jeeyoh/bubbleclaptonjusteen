@@ -190,6 +190,7 @@
      <Compile Include="Assets\Scripts\GUI\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\GUI\MoreMenu.cs" />
      <Compile Include="Assets\Scripts\GUI\PowerUpMenu.cs" />
+     <Compile Include="Assets\Scripts\GUI\RewardMeter.cs" />
      <Compile Include="Assets\Scripts\GameController\GameController.cs" />
      <Compile Include="Assets\Scripts\GameScene\Bubble.cs" />
      <Compile Include="Assets\Scripts\GameScene\BubbleCreator.cs" />
