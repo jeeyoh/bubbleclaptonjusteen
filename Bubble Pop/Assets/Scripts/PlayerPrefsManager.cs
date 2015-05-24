@@ -11,6 +11,7 @@ public static class PlayerPrefsManager {
 	public const string ENDLESS_MODE_5_BEST_TIME = "EndlessMode5BestTime";
 	public const string ENDLESS_MODE_25_BEST_TIME = "EndlessMode25BestTime";
 	public const string ENDLESS_MODE_50_BEST_TIME = "EndlessMode50BestTime";
+	public const string NO_BLACK_BUBBLES_COUNT_All_MODES = "NoBlackBubblesCountAllModes";
 	public const string NO_BLACK_BUBBLES_COUNT_TIME_MODE_50 = "NoBlackBubblesCountTimeMode50";
 	public const string NO_BLACK_BUBBLES_COUNT_TIME_MODE_100 = "NoBlackBubblesCountTimeMode100";
 	public const string NO_BLACK_BUBBLES_COUNT_TIME_MODE_150 = "NoBlackBubblesCountTimeMode150";

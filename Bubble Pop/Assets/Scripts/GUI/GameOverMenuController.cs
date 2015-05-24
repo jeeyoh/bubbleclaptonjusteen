@@ -19,11 +19,12 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private Text m_timeScoreLbl;
 	[SerializeField] private Text m_bestTimeScoreLbl;
 	[SerializeField] private GameObject m_blocker;
+	[SerializeField] private GameObject m_rewardMeter;
 	[SerializeField] private GameObject m_rewardPopup;
+	[SerializeField] private GameObject m_SharePanel;
 
 	private Animator m_targetBubbleAnimator;
-	
-	[SerializeField] private GameObject m_SharePanel;
+	private int m_currentSucceedingWinsCount;
 
 	bool isTimeMode = false;
 
@@ -37,11 +38,11 @@ public class GameOverMenuController : MonoBehaviour {
 	void Start() {
 		Init() ;
 		SetScore();
-		Invoke("CheckForReward", 1f);
+		m_currentSucceedingWinsCount = GetCurrentSucceedingWins();
+		if(m_currentSucceedingWinsCount > 0) Invoke("ShowRewardMeter", 0.5f);
 	}
 
 	private void Init() {
-//		SoundController.instance. ();
 		m_failedPanel.SetActive(false);
 		m_timeMode50Img.SetActive(false);
 		m_timeMode100Img.SetActive(false);
@@ -50,7 +51,38 @@ public class GameOverMenuController : MonoBehaviour {
 		m_endlessMode25Img.SetActive(false);
 		m_endlessMode50Img.SetActive(false);
 		m_blocker.SetActive(false);
+		m_rewardMeter.SetActive(false);
 		m_rewardPopup.SetActive(false);
+	}
+
+	private int GetCurrentSucceedingWins() {
+		GameMode _gameMode = GameController.instance.gameMode;
+		switch (_gameMode) {
+		case GameMode.timeMode50:
+			return GameController.instance.TimeMode50SucceedingWins;
+			break;
+		case GameMode.timeMode100:
+			return GameController.instance.TimeMode100SucceedingWins;
+			break;
+		case GameMode.timeMode150:
+			return GameController.instance.TimeMode150SucceedingWins;
+			break;
+		case GameMode.endlessMode5:
+			return GameController.instance.EndlessMode5SucceedingWins;
+			break;
+		case GameMode.endlessMode25:
+			return GameController.instance.EndlessMode25SucceedingWins;
+			break;
+		case GameMode.endlessMode50:
+			return GameController.instance.EndlessMode50SucceedingWins;
+			break;
+		}
+		return 0;
+	}
+
+	private void ShowRewardMeter() {
+		m_rewardMeter.SetActive(true);
+		m_rewardMeter.GetComponent<RewardMeter>().SetMeter(m_currentSucceedingWinsCount - 1, m_currentSucceedingWinsCount);
 	}
 
 	private void CheckForReward() {
@@ -195,6 +227,11 @@ public class GameOverMenuController : MonoBehaviour {
 //		m_targetBubbleAnimator.SetTrigger("Pop");
 //		GameController.instance.ChangeState(GameState.main);
 		StartCoroutine(ChangeState(GameState.main, 1f));
+	}
+
+	public void CloseRewardMeter() {
+		m_rewardMeter.SetActive(false);
+		Invoke("CheckForReward", 0.5f);
 	}
 
 	public void CloseRewardPopup() {

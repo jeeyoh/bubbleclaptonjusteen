@@ -6,7 +6,7 @@ public class MoreMenu : MonoBehaviour {
 	public void LikeUsOnFacebook() {
 		bool _likedOnFB = ThirdPartyController.Instance.LikeUsOnFacebook();
 		if(_likedOnFB) {
-			GameController.instance.AddNoBlackBubbles(1);
+			GameController.instance.AddNoBlackBubbles(1, true);
 			MainMenuController.instance.Invoke("OpenRewardPopup", 1f);
 		}
 	}
@@ -14,7 +14,7 @@ public class MoreMenu : MonoBehaviour {
 	public void FollowUsOnTwitter() {
 		bool _followOnTwitter = ThirdPartyController.Instance.FollowUsOnTwitter();
 		if(_followOnTwitter) {
-			GameController.instance.AddNoBlackBubbles(1); 
+			GameController.instance.AddNoBlackBubbles(1, true); 
 			MainMenuController.instance.Invoke("OpenRewardPopup", 1f);
 		}
 	}
@@ -22,7 +22,7 @@ public class MoreMenu : MonoBehaviour {
 	public void RateOurGame() {
 		bool _rateOurGame = ThirdPartyController.Instance.RateOurApp();
 		if(_rateOurGame) {
-			GameController.instance.AddNoBlackBubbles(1); 
+			GameController.instance.AddNoBlackBubbles(1, true); 
 			MainMenuController.instance.Invoke("OpenRewardPopup", 1f);
 		}
 	}
