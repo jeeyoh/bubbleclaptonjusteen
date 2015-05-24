@@ -182,6 +182,8 @@ public class GameHUDController : MonoBehaviour {
 
 	public void ReturnToMain() {
 		Time.timeScale = 1;
+		
+		ThirdPartyController.Instance.IncreaseAdsCounter ();
 		bool _sound = GameController.instance.AllowSound;
 		SoundController.instance.SetSounds(_sound, _sound);
 		GameController.instance.ChangeState(GameState.main);

@@ -27,7 +27,10 @@ public class MainMenuController : MonoBehaviour {
 	void Start() {
 		Init ();
 
-		ThirdPartyController.Instance.ShowInterstitial(true);
+		bool showInterstitial = ThirdPartyController.Instance.CheckAdsCounter ();
+		if ( showInterstitial )
+			ThirdPartyController.Instance.ShowInterstitial(true);
+
 		ThirdPartyController.Instance.ShowBanner(false);
 	}
 

@@ -34,6 +34,8 @@ public class ThirdPartyController : MonoBehaviour
 	float gameScore = 0;
 	string gameShareText = "";
 
+	public bool showInterstitial = false;
+
 	void Awake () 
 	{
 		Instance = this;
@@ -93,7 +95,11 @@ public class ThirdPartyController : MonoBehaviour
 
 	public void ShowInterstitial ( bool willShow )
 	{
-		
+		showInterstitial = CheckAdsCounter ();
+
+		if ( !showInterstitial )
+			return;
+
 		if ( willShow )
 		{
 			AdmobController.Instance.ShowInterstitial();
@@ -102,6 +108,28 @@ public class ThirdPartyController : MonoBehaviour
 		{
 			AdmobController.Instance.interstitial.Destroy();
 		}
+	}
+
+	public bool CheckAdsCounter ()
+	{
+		int adsCounter = PlayerPrefs.GetInt ( "ADS_COUNTER" );
+		if ( adsCounter >= 3 )
+		{
+			return true;
+		} 
+		else
+		{
+			return false;
+		}
+	}
+
+	public void IncreaseAdsCounter ()
+	{
+		int adsCounter = PlayerPrefs.GetInt ( "ADS_COUNTER" );
+		adsCounter++;
+
+		PlayerPrefs.SetInt ( "ADS_COUNTER", adsCounter );
+		PlayerPrefs.Save();
 	}
 
 	public bool LikeUsOnFacebook ()

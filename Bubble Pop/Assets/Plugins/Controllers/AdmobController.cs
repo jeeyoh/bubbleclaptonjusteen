@@ -8,6 +8,9 @@ public class AdmobController : MonoBehaviour
 	string statsbanner = "none";
 	string statspopup = "none";
 
+	public delegate void AdsController();
+	public static event AdsController OnInterstitialClosed;
+
 	public BannerView bannerView;
 	public InterstitialAd interstitial;
 	
@@ -140,7 +143,13 @@ public class AdmobController : MonoBehaviour
 	}
 	
 	public void HandleInterstitialFailedToLoad(object sender, AdFailedToLoadEventArgs args)
-	{
+	{		
+		if ( OnInterstitialClosed != null )
+		OnInterstitialClosed ();
+		
+		PlayerPrefs.SetInt ( "ADS_COUNTER", 0 );
+		PlayerPrefs.Save();
+
 		statspopup = "HandleInterstitialFailedToLoad event received with message: " + args.Message;
 //		print("HandleInterstitialFailedToLoad event received with message: " + args.Message);
 	}
@@ -153,13 +162,18 @@ public class AdmobController : MonoBehaviour
 	
 	void HandleInterstitialClosing(object sender, EventArgs args)
 	{
+		if ( OnInterstitialClosed != null )
+			OnInterstitialClosed ();
+		
+		PlayerPrefs.SetInt ( "ADS_COUNTER", 0 );
+		PlayerPrefs.Save();
+
 		statspopup = "HandleInterstitialClosing event received";
 //		print("HandleInterstitialClosing event received");
 	}
 	
 	public void HandleInterstitialClosed(object sender, EventArgs args)
 	{
-		
 		RequestInterstitial();
 		statspopup = "HandleInterstitialClosed event received";
 //		print("HandleInterstitialClosed event received");

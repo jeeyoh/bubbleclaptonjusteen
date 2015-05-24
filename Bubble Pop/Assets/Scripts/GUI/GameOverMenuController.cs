@@ -30,9 +30,22 @@ public class GameOverMenuController : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
-		
+
+		AdmobController.OnInterstitialClosed += HandleOnInterstitialClosed;
+
 		ThirdPartyController.Instance.ShowBanner(true);
-		ThirdPartyController.Instance.ShowInterstitial(true);
+		ThirdPartyController.Instance.IncreaseAdsCounter ();
+//		ThirdPartyController.Instance.ShowInterstitial(true);
+	}
+
+	void OnDestroy ()
+	{
+		AdmobController.OnInterstitialClosed -= HandleOnInterstitialClosed;
+	}
+
+	void HandleOnInterstitialClosed ()
+	{
+		StartCoroutine(ChangeState(GameState.startGame, 1f));
 	}
 
 	void Start() {
@@ -248,7 +261,13 @@ public class GameOverMenuController : MonoBehaviour {
 	public void PlayAgain() {
 //		m_targetBubbleAnimator.SetTrigger("Pop");
 //		GameController.instance.ChangeState(GameState.startGame);
-		StartCoroutine(ChangeState(GameState.startGame, 1f));
+
+		bool showInterstitial = ThirdPartyController.Instance.CheckAdsCounter ();
+
+		if ( showInterstitial )
+			ThirdPartyController.Instance.ShowInterstitial(true);
+		else
+			StartCoroutine(ChangeState(GameState.startGame, 1f));
 	}
 
 	private IEnumerator ChangeState(GameState p_gameState, float p_delay) {
