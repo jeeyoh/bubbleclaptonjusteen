@@ -44,6 +44,7 @@ public class GameController : MonoBehaviour {
 	public float endlessMode50BestTime;
 	public bool isPaused = false;
 	public bool deletePlayerPrefs;
+	public int noBlackBubblesCountAllModes;
 	public int noBlackBubblesCountTimeMode50;
 	public int noBlackBubblesCountTimeMode100;
 	public int noBlackBubblesCountTimeMode150;
@@ -145,6 +146,17 @@ public class GameController : MonoBehaviour {
 		set {
 			endlessMode50BestTime = value;
 			PlayerPrefsManager.SetFloat(PlayerPrefsManager.ENDLESS_MODE_50_BEST_TIME, value);
+		}
+	}
+
+	public int NoBlackBubblesCountAllModes {
+		get {
+			noBlackBubblesCountAllModes = PlayerPrefsManager.GetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_All_MODES, 0);
+			return noBlackBubblesCountAllModes;
+		}
+		set {
+			noBlackBubblesCountAllModes = value;
+			PlayerPrefsManager.SetInt(PlayerPrefsManager.NO_BLACK_BUBBLES_COUNT_All_MODES, value);
 		}
 	}
 
@@ -292,8 +304,8 @@ public class GameController : MonoBehaviour {
 	}
 	
 	void Start() {
-		Init ();
 		if(deletePlayerPrefs) PlayerPrefs.DeleteAll();
+		Init ();
 	}
 
 	private void Init() {
@@ -305,6 +317,7 @@ public class GameController : MonoBehaviour {
 		endlessMode5BestTime = EndlessMode5BestTime;
 		endlessMode25BestTime = EndlessMode25BestTime;
 		endlessMode50BestTime = EndlessMode50BestTime;
+		noBlackBubblesCountAllModes = NoBlackBubblesCountAllModes;
 		noBlackBubblesCountTimeMode50 = NoBlackBubblesCountTimeMode50;
 		noBlackBubblesCountTimeMode100 = NoBlackBubblesCountTimeMode100;
 		noBlackBubblesCountTimeMode150 = NoBlackBubblesCountTimeMode150;
@@ -453,67 +466,76 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void AddNoBlackBubbles(int p_count) {
-		switch (gameMode) {
-		case GameMode.timeMode50:
-			NoBlackBubblesCountTimeMode50 += p_count;
-			break;
-		case GameMode.timeMode100:
-			NoBlackBubblesCountTimeMode100 += p_count;
-			break;
-		case GameMode.timeMode150:
-			NoBlackBubblesCountTimeMode150 += p_count;
-			break;
-		case GameMode.endlessMode5:
-			NoBlackBubblesCountEndlessMode5 += p_count;
-			break;
-		case GameMode.endlessMode25:
-			NoBlackBubblesCountEndlessMode25 += p_count;
-			break;
-		case GameMode.endlessMode50:
-			NoBlackBubblesCountEndlessMode50 += p_count;
-			break;
+	public void AddNoBlackBubbles(int p_count, bool p_allModes = false) {
+		if (p_allModes) {
+			NoBlackBubblesCountAllModes += p_count;
+		} else {
+			switch (gameMode) {
+			case GameMode.timeMode50:
+				NoBlackBubblesCountTimeMode50 += p_count;
+				break;
+			case GameMode.timeMode100:
+				NoBlackBubblesCountTimeMode100 += p_count;
+				break;
+			case GameMode.timeMode150:
+				NoBlackBubblesCountTimeMode150 += p_count;
+				break;
+			case GameMode.endlessMode5:
+				NoBlackBubblesCountEndlessMode5 += p_count;
+				break;
+			case GameMode.endlessMode25:
+				NoBlackBubblesCountEndlessMode25 += p_count;
+				break;
+			case GameMode.endlessMode50:
+				NoBlackBubblesCountEndlessMode50 += p_count;
+				break;
+			}
 		}
 	}
 
 	public bool IsNoBlackBubbles() {
-		switch (gameMode) {
-		case GameMode.timeMode50:
-			if(NoBlackBubblesCountTimeMode50 > 0) {
-				NoBlackBubblesCountTimeMode50--;
-				return true;
-			} 
-			break;
-		case GameMode.timeMode100:
-			if(NoBlackBubblesCountTimeMode100 > 0) {
-				NoBlackBubblesCountTimeMode100--;
-				return true;
-			} 
-			break;
-		case GameMode.timeMode150:
-			if(NoBlackBubblesCountTimeMode150 > 0) {
-				NoBlackBubblesCountTimeMode150--;
-				return true;
-			} 
-			break;
-		case GameMode.endlessMode5:
-			if(NoBlackBubblesCountEndlessMode5 > 0) {
-				NoBlackBubblesCountEndlessMode5--;
-				return true;
-			} 
-			break;
-		case GameMode.endlessMode25:
-			if(NoBlackBubblesCountEndlessMode25 > 0) {
-				NoBlackBubblesCountEndlessMode25--;
-				return true;
-			} 
-			break;
-		case GameMode.endlessMode50:
-			if(NoBlackBubblesCountEndlessMode50 > 0) {
-				NoBlackBubblesCountEndlessMode50--;
-				return true;
-			} 
-			break;
+		if (NoBlackBubblesCountAllModes > 0) {
+			NoBlackBubblesCountAllModes--;
+			return true;
+		} else {
+			switch (gameMode) {
+			case GameMode.timeMode50:
+				if(NoBlackBubblesCountTimeMode50 > 0) {
+					NoBlackBubblesCountTimeMode50--;
+					return true;
+				} 
+				break;
+			case GameMode.timeMode100:
+				if(NoBlackBubblesCountTimeMode100 > 0) {
+					NoBlackBubblesCountTimeMode100--;
+					return true;
+				} 
+				break;
+			case GameMode.timeMode150:
+				if(NoBlackBubblesCountTimeMode150 > 0) {
+					NoBlackBubblesCountTimeMode150--;
+					return true;
+				} 
+				break;
+			case GameMode.endlessMode5:
+				if(NoBlackBubblesCountEndlessMode5 > 0) {
+					NoBlackBubblesCountEndlessMode5--;
+					return true;
+				} 
+				break;
+			case GameMode.endlessMode25:
+				if(NoBlackBubblesCountEndlessMode25 > 0) {
+					NoBlackBubblesCountEndlessMode25--;
+					return true;
+				} 
+				break;
+			case GameMode.endlessMode50:
+				if(NoBlackBubblesCountEndlessMode50 > 0) {
+					NoBlackBubblesCountEndlessMode50--;
+					return true;
+				} 
+				break;
+			}
 		}
 
 		return false;
