@@ -82,6 +82,10 @@ public class BubbleCreator : MonoBehaviour {
 		GameController.instance.OnGameOver += GameOver;
 	}
 
+	void OnDestroy (){
+		GameObject.Destroy (instance);
+	}
+
 	void OnDisable() {
 		GameController.instance.OnGameOver -= GameOver;
 	}
@@ -207,7 +211,7 @@ public class BubbleCreator : MonoBehaviour {
 
 		float _x = Random.Range(bubbleArea.left, bubbleArea.right);
 		float _y = Random.Range(bubbleArea.top, bubbleArea.bottom);
-		float _z = Random.Range(0f, 1f);
+		float _z = Random.Range(0f, 0.1f);
 		Vector3 _pos = new Vector3(_x, _y, _z);
 		float _zRot = Random.Range(0f, 1f) * 360;
 		Vector3 _rot = new Vector3(0f, 0f, _zRot);

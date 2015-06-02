@@ -438,7 +438,10 @@ public class GameController : MonoBehaviour {
 			playerTimeScore = GameHUDController.instance.GetTime();
 			switch(gameMode) {
 			case GameMode.endlessMode5:
-				if(playerTimeScore >= 35f) EndlessMode5SucceedingWins++;
+				if(playerTimeScore >= 35f) {
+					timeModeSuccess = true;
+					EndlessMode5SucceedingWins++;
+				}
 				if(EndlessMode5BestTime == 0) {
 					EndlessMode5BestTime = playerTimeScore;
 				} else {
@@ -446,7 +449,10 @@ public class GameController : MonoBehaviour {
 				}
 				break;
 			case GameMode.endlessMode25:
-				if(playerTimeScore >= 40f) EndlessMode25SucceedingWins++;
+				if(playerTimeScore >= 40f) {
+					timeModeSuccess = true;
+					EndlessMode25SucceedingWins++;
+				}
 				if(EndlessMode25BestTime == 0) {
 					EndlessMode25BestTime = playerTimeScore;
 				} else {
@@ -454,7 +460,10 @@ public class GameController : MonoBehaviour {
 				}
 				break;
 			case GameMode.endlessMode50:
-				if(playerTimeScore >= 45f) EndlessMode50SucceedingWins++;
+				if(playerTimeScore >= 45f) {
+					timeModeSuccess = true;
+					EndlessMode50SucceedingWins++;
+				}
 				if(EndlessMode50BestTime == 0) {
 					EndlessMode50BestTime = playerTimeScore;
 				} else {

@@ -34,6 +34,10 @@ public class MainMenuController : MonoBehaviour {
 		ThirdPartyController.Instance.ShowBanner(false);
 	}
 
+	void OnDestroy (){
+		GameObject.Destroy (instance);
+	}
+
 	void Update() {
 		if(Input.GetKey(KeyCode.Escape)) {
 			if(!m_quitMenu.activeSelf) OpenQuitMenu();

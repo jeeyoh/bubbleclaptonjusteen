@@ -36,6 +36,10 @@ public class GameHUDController : MonoBehaviour {
 		Init ();
 		GameController.instance.OnGameOver += GameOver;
 	}
+
+	void OnDestroy (){
+		GameObject.Destroy (instance);
+	}
 	
 	void OnDisable() {
 		GameController.instance.OnGameOver -= GameOver;
