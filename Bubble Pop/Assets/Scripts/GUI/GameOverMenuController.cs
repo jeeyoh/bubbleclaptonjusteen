@@ -41,6 +41,7 @@ public class GameOverMenuController : MonoBehaviour {
 	void OnDestroy ()
 	{
 		AdmobController.OnInterstitialClosed -= HandleOnInterstitialClosed;
+		GameObject.Destroy (instance);
 	}
 
 	void HandleOnInterstitialClosed ()
@@ -52,7 +53,12 @@ public class GameOverMenuController : MonoBehaviour {
 		Init() ;
 		SetScore();
 		m_currentSucceedingWinsCount = GetCurrentSucceedingWins();
-		if(m_currentSucceedingWinsCount > 0) Invoke("ShowRewardMeter", 0.5f);
+		if(GameController.instance.timeModeSuccess) {
+			ShowRewardMeter(m_currentSucceedingWinsCount - 1, m_currentSucceedingWinsCount);
+		} else {
+			ShowRewardMeter(m_currentSucceedingWinsCount, m_currentSucceedingWinsCount);
+		}
+		Invoke("CheckForReward", 1f);
 	}
 
 	private void Init() {
@@ -93,9 +99,9 @@ public class GameOverMenuController : MonoBehaviour {
 		return 0;
 	}
 
-	private void ShowRewardMeter() {
+	private void ShowRewardMeter(int p_initialValue, int p_finalValue) {
 		m_rewardMeter.SetActive(true);
-		m_rewardMeter.GetComponent<RewardMeter>().SetMeter(m_currentSucceedingWinsCount - 1, m_currentSucceedingWinsCount);
+		m_rewardMeter.GetComponent<RewardMeter>().SetMeter(p_initialValue, p_finalValue);
 	}
 
 	private void CheckForReward() {
@@ -259,15 +265,15 @@ public class GameOverMenuController : MonoBehaviour {
 	}
 
 	public void PlayAgain() {
-//		m_targetBubbleAnimator.SetTrigger("Pop");
-//		GameController.instance.ChangeState(GameState.startGame);
+		m_targetBubbleAnimator.SetTrigger("Pop");
+		GameController.instance.ChangeState(GameState.startGame);
 
-		bool showInterstitial = ThirdPartyController.Instance.CheckAdsCounter ();
-
-		if ( showInterstitial )
-			ThirdPartyController.Instance.ShowInterstitial(true);
-		else
-			StartCoroutine(ChangeState(GameState.startGame, 1f));
+//		bool showInterstitial = ThirdPartyController.Instance.CheckAdsCounter ();
+//
+//		if ( showInterstitial )
+//			ThirdPartyController.Instance.ShowInterstitial(true);
+//		else
+//			StartCoroutine(ChangeState(GameState.startGame, 1f));
 	}
 
 	private IEnumerator ChangeState(GameState p_gameState, float p_delay) {

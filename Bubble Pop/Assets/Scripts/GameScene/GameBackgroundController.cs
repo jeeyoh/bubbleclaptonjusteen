@@ -16,6 +16,10 @@ public class GameBackgroundController : MonoBehaviour {
 		SetRandomBackground();
 	}
 
+	void OnDestroy (){
+		GameObject.Destroy (instance);
+	}
+
 	public void SetRandomBackground() {
 		int _randomImg = Random.Range(0, m_backgroundImages.Length);
 		m_backgroundImageHolder.sprite = m_backgroundImages[_randomImg];

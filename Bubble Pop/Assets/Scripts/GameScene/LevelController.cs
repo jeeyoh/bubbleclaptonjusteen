@@ -13,6 +13,10 @@ public class LevelController : MonoBehaviour {
 		Init ();
 	}
 
+	void OnDestroy (){
+		GameObject.Destroy (instance);
+	}
+
 	public void Init() {
 		SetGameSettings();
 	}
@@ -20,7 +24,7 @@ public class LevelController : MonoBehaviour {
 	public void SetGameSettings() {
 		GameController.instance.ChangeState(GameState.playing);
 		bool _isNoBlackBubbles = GameController.instance.IsNoBlackBubbles();
-		Debug.Log("No Black Bubbles : " + _isNoBlackBubbles);
+//		Debug.Log("No Black Bubbles : " + _isNoBlackBubbles);
 		int _blackBubblesCount = 0;
 
 		GameMode _gameMode = GameController.instance.gameMode;
