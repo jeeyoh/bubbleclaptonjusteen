@@ -100,6 +100,8 @@ public class ThirdPartyController : MonoBehaviour
 		if ( !showInterstitial )
 			return;
 
+		Debug.Log("show ad");
+
 		if ( willShow )
 		{
 			AdmobController.Instance.ShowInterstitial();

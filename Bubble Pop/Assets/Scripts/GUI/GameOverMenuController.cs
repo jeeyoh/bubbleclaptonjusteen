@@ -31,7 +31,7 @@ public class GameOverMenuController : MonoBehaviour {
 	void Awake() {
 		instance = this;
 
-		AdmobController.OnInterstitialClosed += HandleOnInterstitialClosed;
+//		AdmobController.OnInterstitialClosed += HandleOnInterstitialClosed;
 
 		ThirdPartyController.Instance.ShowBanner(true);
 		ThirdPartyController.Instance.IncreaseAdsCounter ();
@@ -40,14 +40,14 @@ public class GameOverMenuController : MonoBehaviour {
 
 	void OnDestroy ()
 	{
-		AdmobController.OnInterstitialClosed -= HandleOnInterstitialClosed;
+//		AdmobController.OnInterstitialClosed -= HandleOnInterstitialClosed;
 		GameObject.Destroy (instance);
 	}
 
-	void HandleOnInterstitialClosed ()
-	{
-		StartCoroutine(ChangeState(GameState.startGame, 1f));
-	}
+//	void HandleOnInterstitialClosed ()
+//	{
+//		StartCoroutine(ChangeState(GameState.startGame, 1f));
+//	}
 
 	void Start() {
 		Init() ;

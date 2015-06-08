@@ -30,6 +30,9 @@ public class GameHUDController : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
+
+		if ( ThirdPartyController.Instance.CheckAdsCounter () )
+			ThirdPartyController.Instance.ShowInterstitial(true);
 	}
 
 	void Start() {
