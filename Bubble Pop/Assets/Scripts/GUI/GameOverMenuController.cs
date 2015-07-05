@@ -23,6 +23,11 @@ public class GameOverMenuController : MonoBehaviour {
 	[SerializeField] private GameObject m_rewardPopup;
 	[SerializeField] private GameObject m_SharePanel;
 
+	[SerializeField] private GameObject m_twitterbtn;
+	[SerializeField] private GameObject m_fbbtn;
+	[SerializeField] private GameObject m_sharemsg;
+	[SerializeField] private GameObject[] m_sharebubbles;
+
 	private Animator m_targetBubbleAnimator;
 	private int m_currentSucceedingWinsCount;
 
@@ -30,24 +35,59 @@ public class GameOverMenuController : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
-
-//		AdmobController.OnInterstitialClosed += HandleOnInterstitialClosed;
-
+		
 		ThirdPartyController.Instance.ShowBanner(true);
 		ThirdPartyController.Instance.IncreaseAdsCounter ();
-//		ThirdPartyController.Instance.ShowInterstitial(true);
+
+		ThirdPartyController.OnTwitterLogin += HandleOnTwitterLogin;
+		ThirdPartyController.OnTwitterLoginSuccess += HandleOnTwitterLoginSuccess;
+		ThirdPartyController.OnTwitterLoginFail += HandleOnTwitterLoginFail;
+		ThirdPartyController.OnFacebookLogin += HandleOnFacebookLoginFail;
+		ThirdPartyController.OnFacebookSuccess += HandleOnFacebookLoginSuccess;
+		ThirdPartyController.OnFacebookLoginFail += HandleOnFacebookLoginFail;
+	}
+
+	const string sharingToTwitter = "Sharing to\n Twitter...";
+	const string sharingToFB = "Sharing to\n Facebook...";
+
+	void HandleOnTwitterLogin ()
+	{
+		m_sharemsg.GetComponent<Text>().text = sharingToTwitter;
+		EnableShareButtons (false);
+	}
+	void HandleOnTwitterLoginSuccess ()
+	{
+		EnableShareButtons (true);
+	}
+	void HandleOnTwitterLoginFail ()
+	{
+		EnableShareButtons (true);
+	}	
+
+	void HandleOnFacebookLogin ()
+	{
+		m_sharemsg.GetComponent<Text>().text = sharingToFB;
+		EnableShareButtons (false);
+	}
+	void HandleOnFacebookLoginSuccess ()
+	{
+		EnableShareButtons (true);
+	}
+	void HandleOnFacebookLoginFail ()
+	{
+		EnableShareButtons (true);
 	}
 
 	void OnDestroy ()
 	{
-//		AdmobController.OnInterstitialClosed -= HandleOnInterstitialClosed;
 		GameObject.Destroy (instance);
+		ThirdPartyController.OnTwitterLogin -= HandleOnTwitterLogin;
+		ThirdPartyController.OnTwitterLoginSuccess -= HandleOnTwitterLoginSuccess;
+		ThirdPartyController.OnTwitterLoginFail -= HandleOnTwitterLoginFail;
+		ThirdPartyController.OnFacebookLogin -= HandleOnFacebookLoginFail;
+		ThirdPartyController.OnFacebookSuccess -= HandleOnFacebookLoginSuccess;
+		ThirdPartyController.OnFacebookLoginFail -= HandleOnFacebookLoginFail;
 	}
-
-//	void HandleOnInterstitialClosed ()
-//	{
-//		StartCoroutine(ChangeState(GameState.startGame, 1f));
-//	}
 
 	void Start() {
 		Init() ;
@@ -72,6 +112,12 @@ public class GameOverMenuController : MonoBehaviour {
 		m_blocker.SetActive(false);
 		m_rewardMeter.SetActive(false);
 		m_rewardPopup.SetActive(false);
+
+		m_twitterbtn.SetActive(true);
+		m_fbbtn.SetActive(true);
+		m_sharebubbles[0].SetActive(true);
+		m_sharebubbles[1].SetActive(true);
+		m_sharemsg.SetActive(false);
 	}
 
 	private int GetCurrentSucceedingWins() {
@@ -334,5 +380,14 @@ public class GameOverMenuController : MonoBehaviour {
 
 			ThirdPartyController.Instance.ShareScoreToTwitter(thisMode, timeScore);
 		}
+	}
+
+	public void EnableShareButtons ( bool isEnable )
+	{		
+		m_twitterbtn.SetActive(isEnable);
+		m_fbbtn.SetActive(isEnable);
+		m_sharebubbles[0].SetActive(isEnable);
+		m_sharebubbles[1].SetActive(isEnable);
+		m_sharemsg.SetActive(!isEnable);
 	}
 }

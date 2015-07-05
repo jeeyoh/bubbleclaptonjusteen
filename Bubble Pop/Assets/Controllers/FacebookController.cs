@@ -79,10 +79,15 @@ public class FacebookController : MonoBehaviour
 		else if (!FB.IsLoggedIn)
 		{
 			lastResponse = "Login cancelled by Player";
+			
+			ThirdPartyController.Instance.fbLoginFail ();
 		}
 		else
 		{
 			lastResponse = "Login was successful!";
+
+			ThirdPartyController.Instance.ShareFB();
+			ThirdPartyController.Instance.fbLoginInSuccess ();
 		}
 	}
 	
