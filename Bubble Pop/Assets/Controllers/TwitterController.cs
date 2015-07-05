@@ -30,6 +30,16 @@ public class TwitterController : MonoBehaviour
 			Prime31.Utils.logObject( result );
 	}
 
+//	void OnEnable()
+//	{
+//		TwitterManager.loginSucceededEvent += loginSucceeded;
+//	}
+//	
+//	void loginSucceeded( string username )
+//	{
+//		PostScore(ThirdPartyController.Instance.twitterDescription);
+//	}
+
 	public void Initialize ()
 	{
 		TwitterCombo.init( ConfigManager.TWITTER_CONSUMER_KEY , ConfigManager.TWITTER_CONSUMER_SECRET );

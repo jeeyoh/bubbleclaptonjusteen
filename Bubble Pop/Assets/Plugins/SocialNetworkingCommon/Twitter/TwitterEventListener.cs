@@ -9,7 +9,7 @@ public class TwitterEventListener : MonoBehaviour
 	// Listens to all the events.  All event listeners MUST be removed before this object is disposed!
 	void OnEnable()
 	{
-		TwitterManager.twitterInitializedEvent += twitterInitializedEvent;
+//		TwitterManager.twitterInitializedEvent += twitterInitializedEvent;
 		TwitterManager.loginSucceededEvent += loginSucceeded;
 		TwitterManager.loginFailedEvent += loginFailed;
 		TwitterManager.requestDidFinishEvent += requestDidFinishEvent;
@@ -21,7 +21,7 @@ public class TwitterEventListener : MonoBehaviour
 	void OnDisable()
 	{
 		// Remove all the event handlers to avoid dangling references
-		TwitterManager.twitterInitializedEvent -= twitterInitializedEvent;
+//		TwitterManager.twitterInitializedEvent -= twitterInitializedEvent;
 		TwitterManager.loginSucceededEvent -= loginSucceeded;
 		TwitterManager.loginFailedEvent -= loginFailed;
 		TwitterManager.requestDidFinishEvent -= requestDidFinishEvent;
@@ -30,15 +30,16 @@ public class TwitterEventListener : MonoBehaviour
 	}
 
 
-	void twitterInitializedEvent()
-	{
-		Debug.Log( "twitterInitializedEvent" );
-	}
+//	void twitterInitializedEvent()
+//	{
+//		Debug.Log( "twitterInitializedEvent" );
+//	}
 
 
 	void loginSucceeded( string username )
 	{
 		Debug.Log( "Successfully logged in to Twitter: " + username );
+
 	}
 
 

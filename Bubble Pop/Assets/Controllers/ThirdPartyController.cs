@@ -21,7 +21,7 @@ public class ThirdPartyController : MonoBehaviour
 	const string TIME_DESCRIPTION = "I completed Bubble Poppp Time Mode in xxx seconds!";
 	const string FAILED_DESCRIPTION = "I failed in Bubble Poppp.";
 
-	const string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
+	string FB_LINK = "http://www.facebook.com/pages/Bubble-Pop/844026942305921";
 	const string FB_LINK_NAME = "I did xxx seconds in Bubble Poppp Endless Mode!";
 	const string FB_IMAGE_LINK = "https://pbs.twimg.com/profile_images/583975470179332097/rF3HcnZr.jpg";
 	const string FB_CAPTION = "Play bubble poppp now!";
@@ -36,10 +36,17 @@ public class ThirdPartyController : MonoBehaviour
 
 	public bool showInterstitial = false;
 
+	public delegate void ThirdPartyEvents();
+	public static event ThirdPartyEvents OnTwitterLogin;
+	public static event ThirdPartyEvents OnTwitterLoginSuccess;
+	public static event ThirdPartyEvents OnTwitterLoginFail;
+	public static event ThirdPartyEvents OnFacebookLogin;
+	public static event ThirdPartyEvents OnFacebookSuccess;
+	public static event ThirdPartyEvents OnFacebookLoginFail;
+
 	void Awake () 
 	{
 		Instance = this;
-
 		DontDestroyOnLoad( this.gameObject );
 		
 //		FacebookManager.sessionOpenedEvent += fbsessionOpenedEvent;
@@ -71,6 +78,8 @@ public class ThirdPartyController : MonoBehaviour
 
 	void Start ()
 	{
+//		FB_LINK = ConfigManager.APP_STORE;
+
 		analyticsHandler.LogUserEvent("GameStarted");
 
 		if ( Application.loadedLevelName == "Initialization" )
@@ -207,8 +216,12 @@ public class ThirdPartyController : MonoBehaviour
 //			fbHandler.Login();
 	}
 
+	string fbDescription = "";
 	public void ShareScoreToFacebook ( MODE gameMode, float score ) 
 	{
+		if ( OnFacebookLogin != null )
+			OnFacebookLogin ();
+
 		gameScore = score;
 		string newDesc =  FB_LINK_NAME;
 
@@ -221,6 +234,7 @@ public class ThirdPartyController : MonoBehaviour
 			newDesc = FAILED_DESCRIPTION;
 
 		gameShareText = newDesc;
+		fbDescription = newDesc;
 		
 		#if UNITY_EDITOR
 		Debug.Log(newDesc);
@@ -241,14 +255,28 @@ public class ThirdPartyController : MonoBehaviour
 		}
 	}
 
+	public void ShareFB ()
+	{
+		fbHandler.ShowShareDialog(FB_LINK,
+		                          fbDescription,
+		                          FB_IMAGE_LINK,
+		                          FB_CAPTION,
+		                          FB_DESCRIPTION);
+	}
+
 	public void LoginToTwitter ()
 	{
 		if ( !twitterHandler.isLoggedIn() )
 			twitterHandler.Login();
 	}
 
+	public string twitterDescription = "";
 	public void ShareScoreToTwitter ( MODE gameMode, float score )  
 	{
+
+		if ( OnTwitterLogin != null )
+			OnTwitterLogin ();
+
 		gameScore = score;
 		string newDesc =  TWITTER_DESCRIPTION;
 		
@@ -260,24 +288,51 @@ public class ThirdPartyController : MonoBehaviour
 		if ( score < 0 )
 			newDesc = FAILED_DESCRIPTION;
 
-		gameShareText = newDesc;
+		gameShareText = newDesc + " via @BubblePopppGame";
+		twitterDescription = gameShareText;
 
 		#if UNITY_EDITOR
 		Debug.Log(newDesc);
 		#endif
 
+
 		if ( !twitterHandler.isLoggedIn() )
 		{
 			twitterLoginToPost = true;
+
 			twitterHandler.Login();
 		}
 		else
 		{
-			twitterHandler.PostScore(newDesc);
+			twitterHandler.PostScore(newDesc + " via @BubblePopppGame");
+			StartCoroutine("TwitterSharingMessage");
 		}
 	}
 
+	IEnumerator TwitterSharingMessage ()
+	{
+		yield return new WaitForSeconds(1.5f);
+
+		if ( OnTwitterLoginSuccess != null )
+			OnTwitterLoginSuccess ();
+		
+		yield return null;
+	}
+
 	#region Listeners 
+
+	public void fbLoginInSuccess ()
+	{
+		if ( OnFacebookSuccess != null )
+			OnFacebookSuccess ();
+	}
+
+	public void fbLoginFail ()
+	{
+		if ( OnFacebookLoginFail != null )
+			OnFacebookLoginFail ();
+	}
+
 	void fbsessionOpenedEvent()
 	{
 		if ( fbLoginToPost )
@@ -301,14 +356,20 @@ public class ThirdPartyController : MonoBehaviour
 	{
 		if ( twitterLoginToPost )
 		{
+			if ( OnTwitterLoginSuccess != null )
+				OnTwitterLoginSuccess ();
+
 			twitterHandler.PostScore(gameShareText);
 			twitterLoginToPost = false;
 		}
+
 		//		Debug.Log( "Successfully logged in to Twitter: " + username );
 	}
 	
 	void twitterloginFailed( string error )
 	{
+		if ( OnTwitterLoginFail != null )
+			OnTwitterLoginFail ();
 		//		Debug.Log( "Twitter login failed: " + error );
 	}
 	#endregion
