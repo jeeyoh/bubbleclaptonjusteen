@@ -78,7 +78,7 @@ public class ThirdPartyController : MonoBehaviour
 
 	void Start ()
 	{
-		FB_LINK = ConfigManager.FB_APP_STORE;
+//		FB_LINK = ConfigManager.FB_APP_STORE;
 
 		analyticsHandler.LogUserEvent("GameStarted");
 
@@ -256,12 +256,20 @@ public class ThirdPartyController : MonoBehaviour
 		}
 		else
 		{
+//			fbHandler.ShowShareDialog(FB_LINK,
+//			                          "Bubble Poppp",
+//			                          FB_IMAGE_LINK,
+//			                          newDesc,
+//			                          FB_DESCRIPTION);
+
 			fbHandler.ShowShareDialog(FB_LINK,
 			                          newDesc,
 			                          FB_IMAGE_LINK,
 			                          FB_CAPTION,
 			                          FB_DESCRIPTION);
 		}
+
+
 	}
 
 //	string SpaceHere (string val) {
@@ -285,6 +293,13 @@ public class ThirdPartyController : MonoBehaviour
 //		                          FB_IMAGE_LINK,
 //		                          FB_DESCRIPTION,
 //		                          fbDescription);
+
+		
+//		fbHandler.ShowShareDialog(FB_LINK,
+//		                          "Bubble Poppp",
+//		                          FB_IMAGE_LINK,
+//		                          fbDescription,
+//		                          FB_DESCRIPTION);
 
 		fbHandler.ShowShareDialog(FB_LINK,
 		                          fbDescription,
