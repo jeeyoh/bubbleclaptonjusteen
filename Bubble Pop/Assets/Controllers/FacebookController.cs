@@ -125,6 +125,7 @@ public class FacebookController : MonoBehaviour
 		FeedLinkCaption = caption;
 		FeedLinkDescription = description;
 		FeedPicture = picture;
+		FeedActionLink = ConfigManager.FB_APP_STORE;
 
 		CallFBFeed ();
 	}
