@@ -83,6 +83,16 @@ public class ConfigManager
 	#endif
 
 	#endregion
+
+	#region App Store Share
+	
+	#if UNITY_ANDROID
+	public const string FB_APP_STORE = "https://play.google.com/store/apps/details?id=com.mavlabs.bubblepop";
+	#else
+	public const string FB_APP_STORE = "https://play.google.com/store/apps/details?id=com.mavlabs.bubblepop";
+	#endif
+	
+	#endregion
 	
 	#region InApp Purchases
 	

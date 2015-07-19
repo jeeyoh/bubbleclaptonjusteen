@@ -122,9 +122,9 @@ public class FacebookController : MonoBehaviour
 	{
 		FeedLink = link;
 		FeedLinkName = name;
-		FeedPicture = picture;
 		FeedLinkCaption = caption;
 		FeedLinkDescription = description;
+		FeedPicture = picture;
 
 		CallFBFeed ();
 	}
