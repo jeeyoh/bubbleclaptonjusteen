@@ -53,7 +53,7 @@ public class GameOverMenuController : MonoBehaviour {
 	void HandleOnTwitterLogin ()
 	{
 		m_sharemsg.GetComponent<Text>().text = sharingToTwitter;
-		EnableShareButtons (false);
+//		EnableShareButtons (false);
 	}
 	void HandleOnTwitterLoginSuccess ()
 	{
@@ -67,7 +67,7 @@ public class GameOverMenuController : MonoBehaviour {
 	void HandleOnFacebookLogin ()
 	{
 		m_sharemsg.GetComponent<Text>().text = sharingToFB;
-		EnableShareButtons (false);
+//		EnableShareButtons (false);
 	}
 	void HandleOnFacebookLoginSuccess ()
 	{

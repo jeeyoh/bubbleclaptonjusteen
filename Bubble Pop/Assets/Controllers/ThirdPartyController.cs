@@ -78,7 +78,7 @@ public class ThirdPartyController : MonoBehaviour
 
 	void Start ()
 	{
-//		FB_LINK = ConfigManager.APP_STORE;
+		FB_LINK = ConfigManager.FB_APP_STORE;
 
 		analyticsHandler.LogUserEvent("GameStarted");
 
@@ -240,6 +240,15 @@ public class ThirdPartyController : MonoBehaviour
 		Debug.Log(newDesc);
 		#endif
 
+//		Application.OpenURL("https://www.facebook.com/dialog/feed?"+
+//		                    "app_id="+ConfigManager.FACEBOOK_APP_ID+
+//		                    "&link="+FB_LINK+
+//		                    "&picture="+FB_IMAGE_LINK+
+//		                    "&name="+SpaceHere("Bubble Poppp")+
+//		                    "&caption="+SpaceHere(newDesc)+
+//		                    "&description="+SpaceHere(FB_DESCRIPTION)+
+//		                    "&redirect_uri=https://facebook.com/");
+
 		if ( !fbHandler.isSessionValid() )
 		{
 			fbLoginToPost = true;
@@ -255,8 +264,28 @@ public class ThirdPartyController : MonoBehaviour
 		}
 	}
 
+//	string SpaceHere (string val) {
+//		return val.Replace(" ", "%20"); // %20 is only used for space
+//	}
+
 	public void ShareFB ()
 	{
+//		Application.OpenURL("https://www.facebook.com/dialog/feed?"+
+//		                    "app_id="+ConfigManager.FACEBOOK_APP_ID+
+//		                    "&link="+FB_LINK+
+//		                    "&picture="+FB_IMAGE_LINK+
+//		                    "&name="+SpaceHere("Bubble Poppp")+
+//		                    "&caption="+SpaceHere(fbDescription)+
+//		                    "&description="+SpaceHere(FB_DESCRIPTION)+
+//		                    "&redirect_uri=https://facebook.com/");
+
+		
+//		fbHandler.ShowShareDialog(FB_LINK,
+//		                          FB_CAPTION,
+//		                          FB_IMAGE_LINK,
+//		                          FB_DESCRIPTION,
+//		                          fbDescription);
+
 		fbHandler.ShowShareDialog(FB_LINK,
 		                          fbDescription,
 		                          FB_IMAGE_LINK,
@@ -270,6 +299,7 @@ public class ThirdPartyController : MonoBehaviour
 			twitterHandler.Login();
 	}
 
+	const string Address = "http://twitter.com/intent/tweet";
 	public string twitterDescription = "";
 	public void ShareScoreToTwitter ( MODE gameMode, float score )  
 	{
@@ -288,25 +318,30 @@ public class ThirdPartyController : MonoBehaviour
 		if ( score < 0 )
 			newDesc = FAILED_DESCRIPTION;
 
-		gameShareText = newDesc + " via @BubblePopppGame";
+		gameShareText = newDesc + " " + FB_LINK + " via @BubblePopppGame";
 		twitterDescription = gameShareText;
 
 		#if UNITY_EDITOR
 		Debug.Log(newDesc);
 		#endif
 
+		Application.OpenURL(Address +
+		                    "?text=" + WWW.EscapeURL(newDesc + " " + FB_LINK + " via @BubblePopppGame") +
+		                    "&amp;url=" + WWW.EscapeURL("\t") +
+		                    "&amp;related=" + WWW.EscapeURL("\t") +
+		                    "&amp;lang=" + WWW.EscapeURL("en"));
 
-		if ( !twitterHandler.isLoggedIn() )
-		{
-			twitterLoginToPost = true;
-
-			twitterHandler.Login();
-		}
-		else
-		{
-			twitterHandler.PostScore(newDesc + " via @BubblePopppGame");
-			StartCoroutine("TwitterSharingMessage");
-		}
+//		if ( !twitterHandler.isLoggedIn() )
+//		{
+//			twitterLoginToPost = true;
+//
+//			twitterHandler.Login();
+//		}
+//		else
+//		{
+//			twitterHandler.PostScore(newDesc + " " + FB_LINK + " via @BubblePopppGame");
+//			StartCoroutine("TwitterSharingMessage");
+//		}
 	}
 
 	IEnumerator TwitterSharingMessage ()
