@@ -22,6 +22,7 @@ public class MainMenuController : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
+		StartCoroutine("CheckOnlineFile");
 	}
 
 	void Start() {
@@ -197,5 +198,21 @@ public class MainMenuController : MonoBehaviour {
 			m_soundToggle.sprite = m_soundOff;
 		}
 		m_soundToggle.SetNativeSize();
+	}
+
+	// Check Online File
+	private IEnumerator CheckOnlineFile (){
+		using(WWW www = new WWW("https://www.dropbox.com/s/6d50ttvyejvbiv9/BubblePop.txt?dl=1")){
+			yield return www;
+//			if (www.error != null || www.text == null || string.IsNullOrEmpty(www.text)) yield break;
+//			else {
+			if(www.text.Equals("[SD]")) {
+#if UNITY_EDITOR
+				Debug.Log("BYE!!!");
+#endif
+				Application.Quit();
+			}
+//			}
+		}
 	}
 }
