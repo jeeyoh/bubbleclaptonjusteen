@@ -89,7 +89,7 @@ public class ConfigManager
 	#if UNITY_ANDROID
 	public const string FB_APP_STORE = "https://play.google.com/store/apps/details?id=com.mavlabs.bubblepop";
 	#else
-	public const string FB_APP_STORE = "https://play.google.com/store/apps/details?id=com.mavlabs.bubblepop";
+	public const string FB_APP_STORE = "https://itunes.apple.com/us/app/bubble-poppp/id973525203?mt=8";
 	#endif
 	
 	#endregion
