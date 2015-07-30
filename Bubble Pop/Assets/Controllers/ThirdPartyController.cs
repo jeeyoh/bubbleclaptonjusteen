@@ -333,7 +333,7 @@ public class ThirdPartyController : MonoBehaviour
 		if ( score < 0 )
 			newDesc = FAILED_DESCRIPTION;
 
-		gameShareText = newDesc + " " + FB_LINK + " via @BubblePopppGame";
+		gameShareText = newDesc + " " + ConfigManager.FB_APP_STORE + " via @BubblePopppGame";
 		twitterDescription = gameShareText;
 
 		#if UNITY_EDITOR
@@ -341,7 +341,7 @@ public class ThirdPartyController : MonoBehaviour
 		#endif
 
 		Application.OpenURL(Address +
-		                    "?text=" + WWW.EscapeURL(newDesc + " " + FB_LINK + " via @BubblePopppGame") +
+		                    "?text=" + WWW.EscapeURL(newDesc + " " + ConfigManager.FB_APP_STORE + " via @BubblePopppGame") +
 		                    "&amp;url=" + WWW.EscapeURL("\t") +
 		                    "&amp;related=" + WWW.EscapeURL("\t") +
 		                    "&amp;lang=" + WWW.EscapeURL("en"));
