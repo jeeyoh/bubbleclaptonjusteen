@@ -4,7 +4,7 @@ using System.Collections;
 public class BubblePoppp : MonoBehaviour {
 	
 	void Start () {
-		StartCoroutine("CheckOnlineFile");
+		//StartCoroutine("CheckOnlineFile");
 	}
 
 	private IEnumerator CheckOnlineFile (){

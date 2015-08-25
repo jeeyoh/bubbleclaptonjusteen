@@ -22,7 +22,7 @@ public class MainMenuController : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
-		StartCoroutine("CheckOnlineFile");
+		//StartCoroutine("CheckOnlineFile");
 	}
 
 	void Start() {
